@@ -41,7 +41,7 @@
       (if (member font (font-family-list))
 	  (throw 'font font)))))
 
-(defun cabins/setup-font ()
+(defun tenon/setup-font ()
   "Font setup."
 
   (setq enfonts '("Cascadia Code"	; Windows 10
@@ -63,18 +63,18 @@
 	(enfont (get-font-available enfonts)))
     (if enfont
 	(set-face-attribute 'default nil
-			    :font (format "%s-%d" enfont 9))
+			    :font (format "%s-%d" enfont 10))
       (message "Failed to set default font."))
     (if cnfont
 	(dolist (charset '(kana han cjk-misc bopomofo chinese-gbk))
 	  (set-fontset-font "fontset-default" charset
-			    (font-spec :family cnfont :size 11.0)))
+			    (font-spec :family cnfont :size 12.5)))
       (message "Failed to set CJK font."))))
 
-(cabins/setup-font)
+(tenon/setup-font)
 
 ;; theme settings
-(load-theme 'leuven)
+(load-theme 'wombat)
 
 ;; settings for daemon mode
 (add-hook 'after-make-frame-functions
@@ -82,7 +82,7 @@
             (select-frame frame)
             (when (window-system frame)
 	      (toggle-frame-maximized)
-	      (cabins/setup-font))))
+	      (tenon/setup-font))))
 
 (provide 'init-ui)
 

@@ -9,7 +9,9 @@
 ;; (c) Cabins Kong, 2020-2021
 
 ;;; Code:
-(add-to-list 'load-path (expand-file-name (concat user-emacs-directory "lisp/")))
+(dolist (directory '("lisp/" "lisp/builtin" "lisp/langs"))
+  (add-to-list 'load-path (expand-file-name (concat user-emacs-directory directory))))
+
 (when (and (fboundp 'native-comp-available-p)
 	   (native-comp-available-p))
   (setq native-comp-async-report-warnings-errors nil
