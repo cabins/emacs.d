@@ -40,7 +40,6 @@
           (lambda (frame)
             (select-frame frame)
             (when (window-system frame)
-	      (toggle-frame-maximized)
 	      (tenon/setup-font))))
 
 (provide 'init-ui)
