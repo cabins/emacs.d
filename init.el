@@ -9,25 +9,14 @@
 ;; (c) Cabins Kong, 2020-2021
 
 ;;; Code:
-(dolist (directory '("lisp/" "lisp/builtin" "lisp/langs"))
-  (add-to-list 'load-path (expand-file-name (concat user-emacs-directory directory))))
 
-(when (and (fboundp 'native-comp-available-p)
-	   (native-comp-available-p))
-  (setq native-comp-async-report-warnings-errors nil
-	comp-deferred-compilation t
-	package-native-compile t)
-  (add-to-list 'native-comp-eln-load-path (expand-file-name "eln-cache" user-emacs-directory)))
+;;; trick for less start time
+(setq gc-cons-threshold most-positive-fixnum)
+(add-hook 'after-init-hook #'(lambda () (setq gc-cons-threshold 800000)))
 
-;; flymake cannot find load-path solution
-;; [reference] https://emacs-china.org/t/flymake/8323/19
-(setq elisp-flymake-byte-compile-load-path
-      (append elisp-flymake-byte-compile-load-path load-path))
-
-;; consts defination
-;; (defconst *is-mac* (eq system-type 'darwin) "Apple macOS platform.")
-;; (defconst *is-linux* (eq system-type 'gnu/linux) "GNU/Linux platform.")
-;; (defconst *is-windows* (memq system-type '(cygwin windows-nt ms-dos)) "Windows / DOS.")
+;; update load-path
+(dolist (dir '("lisp" "lisp/lang"))
+  (add-to-list 'load-path (expand-file-name (concat user-emacs-directory dir))))
 
 ;; settings for independent packages and etc.
 (require 'init-fn)
@@ -36,10 +25,10 @@
 (require 'init-package)
 (require 'init-builtin)
 (require 'init-kbd)
-(require 'init-ide)
+(require 'init-lang)
 (require 'init-ui)
 
-;; load custom file at last
+;;; load custom file at last
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (when (file-exists-p custom-file)
   (load custom-file))

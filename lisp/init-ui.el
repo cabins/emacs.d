@@ -1,80 +1,39 @@
 ;;; init-ui.el --- settings for Emacs UI -*- lexical-binding: t -*-
 
-;; Author: Cabins
-;; Maintainer: Cabins
-;; Version: 1.0
-;; Package-Requires: ()
-;; Homepage: https://github.com/cabins
-;; Keywords:
-
 ;;; Commentary:
 ;; (c) Cabins Kong, 2020-2021
 
 ;;; Code:
 
-;; settings for scrolling
-(setq-default scroll-step 1
-	      scroll-preserve-screen-position t
-	      scroll-up-aggressively 0.01
-	      scroll-down-aggressively 0.01
-	      redisplay-dont-pause t
-	      auto-window-vscroll nil
-	      ;; Mouse wheel scroll behavior
-	      mouse-wheel-scroll-amount '(1 ((shift) . 1))
-	      mouse-wheel-progressive-speed nil
-	      mouse-wheel-follow-mouse 't
-	      fast-but-imprecise-scrolling nil)
-
-;; disable the bars
-(if (and (display-graphic-p) (eq system-type 'darwin))
-    (menu-bar-mode 1)
-  (menu-bar-mode -1))
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-(toggle-frame-maximized)
-
 ;; adjust the fonts
-(defun get-font-available (font-list)
+(defun font-available (font-list)
   "Get the first available font from FONT-LIST."
   (catch 'font
     (dolist (font font-list)
       (if (member font (font-family-list))
 	  (throw 'font font)))))
 
+;;;###autoload
 (defun tenon/setup-font ()
   "Font setup."
 
-  (setq enfonts '("Cascadia Code"	; Windows 10
-		  "Source Code Pro"	; Common
-		  "Consolas"		; Windows
-		  "Courier New"		; Windows or macOS
-		  "Ubuntu Mono"		; Ubuntu
-		  "Monaco"		; macOS
-		  ))
-  (setq cnfonts '("STKaiti"		; macOS
-		  "华文楷体"		; Windows
-		  "STHeiti"		; macOS
-		  "微软雅黑"		; Windows
-		  "华文黑体"		; maybe macOS
-		  "文泉驿微米黑"	; GNU/Linux
-		  ))
-
-  (let ((cnfont (get-font-available cnfonts))
-	(enfont (get-font-available enfonts)))
+  (let* ((enfonts '("Cascadia Code" "Source Code Pro" "Consolas" "Ubuntu Mono" "Monaco"))
+	 (cnfonts '("STKaiti" "华文楷体" "STHeiti" "华文黑体" "微软雅黑" "文泉驿微米黑"))
+	 (cnfont (font-available cnfonts))
+	 (enfont (font-available enfonts)))
     (if enfont
 	(set-face-attribute 'default nil
-			    :font (format "%s-%d" enfont 10))
+			    :font (format "%s-%d" enfont 10.0))
       (message "Failed to set default font."))
     (if cnfont
-	(dolist (charset '(kana han cjk-misc bopomofo chinese-gbk))
-	  (set-fontset-font "fontset-default" charset
-			    (font-spec :family cnfont :size 12.5)))
-      (message "Failed to set CJK font."))))
+	(set-fontset-font "fontset-default" 'han
+			  (font-spec :family cnfont
+				     :size (if (eq system-type 'darwin) 12.5 11.0)))
+      (message "Failed to set Chinese font."))))
 
 (tenon/setup-font)
-
-;; theme settings
-(load-theme 'wombat)
+(tenon/cleaner-gui)
+(load-theme 'leuven)
 
 ;; settings for daemon mode
 (add-hook 'after-make-frame-functions

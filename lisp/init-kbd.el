@@ -12,16 +12,6 @@
 
 ;;; Code:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                    Global Keybinds Dependencies
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(use-package crux)
-(use-package hungry-delete)
-(use-package drag-stuff)
-(use-package format-all
-  :diminish " Fmt."
-  :init (add-hook 'prog-mode-hook 'format-all-mode))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;                   Global Key Bindings
 ;;
@@ -34,8 +24,6 @@
 
 ;;; Emacs Basic Keys ------------------------------
 (defalias 'yes-or-no-p 'y-or-n-p)
-
-(global-set-key (kbd "C-c ,") #'crux-find-user-init-file)	; Open Settings
 (global-set-key (kbd "C-c r") 'recentf-open-files) ; Open Recent Files
 
 ;; Window Move
@@ -47,17 +35,7 @@
 ;;; Code Editing ------------------------------
 ;; Comments（As C-x C-; is for comment-line, keep the postfix）
 (global-set-key (kbd "C-c C-;") #'comment-or-uncomment-region)
-;; Line Edit
-(global-set-key (kbd "M-<down>") #'drag-stuff-down)
-(global-set-key (kbd "M-<up>") #'drag-stuff-up)
-(global-set-key (kbd "C-c C-d") #'crux-duplicate-current-line-or-region)
-(global-set-key (kbd "C-a") #'crux-move-beginning-of-line)
-;; Delete
-(global-set-key (kbd "C-c <backspace>") #'hungry-delete-backward)
-(global-set-key (kbd "C-c <delete>") #'hungry-delete-forward)
-;; Code Beautify
-(global-set-key (kbd "C-o") #'yas-expand)
-(global-set-key (kbd "C-c f") #'format-all-buffer)
+
 ;; Syntax
 (global-set-key (kbd "M-n") #'flymake-goto-next-error)
 (global-set-key (kbd "M-p") #'flymake-goto-prev-error)
