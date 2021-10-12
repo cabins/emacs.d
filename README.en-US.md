@@ -5,6 +5,8 @@
 
 This is `NOT` a part of [GNU Emacs](https://www.gnu.org/software/emacs/) but a personal configuration maintained by © Cabins from China.
 
+Tenon, beautiful connect way of Chinese woodworking.
+
 # Target
 
 1. Emacs 28 oriented
