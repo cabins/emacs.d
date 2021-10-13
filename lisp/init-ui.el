@@ -17,24 +17,18 @@
 (defun tenon/setup-font ()
   "Font setup."
 
-  (let* ((enfonts '("Cascadia Code" "Source Code Pro" "Consolas" "Monaco"))
+  (let* ((enfonts '("Cascadia Code" "Source Code Pro" "Courier New" "Monaco"))
 	 (cnfonts '("STKaiti" "华文楷体" "STHeiti" "华文黑体" "微软雅黑"))
 	 (cnfont (font-available cnfonts))
 	 (enfont (font-available enfonts)))
-    (if enfont
-	(set-face-attribute 'default nil
-			    :font (format "%s-%d" enfont 10.0))
-      (message "Failed to set default font."))
-    (if cnfont (progn
-		 (set-fontset-font "fontset-default" 'han
-				   (font-spec :family cnfont))
-		 (setq face-font-rescale-alist
-		       '(("STKaiti" . 1.2)
-			 ("华文楷体" . 1.2)
-			 ("STHeiti" . 1.2)
-			 ("华文黑体" . 1.2)
-			 ("微软雅黑" . 1.2))))
-      (message "Failed to set Chinese font."))))
+    (when enfont
+      (set-face-attribute
+       'default nil :font (format "%s-%d" enfont 10.0)))
+    (when cnfont
+      (dolist (charset '(kana han cjk-misc bopomofo))
+	(set-fontset-font t charset cnfont))
+      (setq face-font-rescale-alist
+	    (mapcar (lambda (item) (cons item 1.2)) cnfonts)))))
 
 (tenon/setup-font)
 (tenon/cleaner-gui)
