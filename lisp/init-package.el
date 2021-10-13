@@ -14,6 +14,13 @@
 (use-package ace-window
   :init (bind-key "C-x o" #'ace-window))
 
+;; Auto update packages
+(use-package auto-package-update
+  :init
+  (setq auto-package-update-delete-old-versions t
+	auto-package-update-hide-results t))
+
+;; Never lose the cursor
 (use-package beacon
   :init (add-hook 'after-init-hook 'beacon-mode))
 
@@ -31,6 +38,7 @@
   :init
   (add-hook 'after-init-hook 'ivy-mode)
   (bind-key "C-s" #'swiper)
+  (bind-key "C-r" #'swiper-isearch-backward)
   (bind-key "M-x" #'counsel-M-x)
   (bind-key "C-x C-f" #'counsel-find-file)
   (setq ivy-use-virtual-buffers t
@@ -75,14 +83,18 @@
 ;; hungry delete
 (use-package hungry-delete
   :init
-  (bind-key "C-c <backspace>" #'hungry-delete-backward)
-  (bind-key "C-c <delete>" #'hungry-delete-forward))
+  (add-hook 'after-init-hook #'global-hungry-delete-mode))
 
 ;; Show the delimiters as rainbow color
 (use-package rainbow-delimiters
   :init (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 (use-package highlight-parentheses
   :init (add-hook 'prog-mode-hook 'highlight-parentheses-mode))
+
+;; undo tree
+(use-package undo-tree
+  :diminish
+  :init (add-hook 'after-init-hook 'global-undo-tree-mode))
 
 ;; Settings for which-key - suggest next key
 (use-package which-key-posframe

@@ -16,7 +16,7 @@
 
 ;; update load-path
 (dolist (dir '("lisp" "lisp/lang"))
-  (add-to-list 'load-path (expand-file-name (concat user-emacs-directory dir))))
+  (push (expand-file-name dir user-emacs-directory) load-path))
 
 ;; settings for independent packages and etc.
 (require 'init-fn)

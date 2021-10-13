@@ -19,12 +19,12 @@
   (unless (package-installed-p 'use-package)
     (package-refresh-contents)
     (package-install 'use-package))
-  (require 'use-package))
 
-;; configure use-package prior to loading it
-(setq use-package-always-ensure t
-      use-package-always-defer t
-      use-package-expand-minimally t)
+  (setq use-package-always-ensure t
+	use-package-always-defer t
+	use-package-enable-imenu-support t
+	use-package-expand-minimally t)
+  (require 'use-package))
 
 (provide 'init-elpa)
 

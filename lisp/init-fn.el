@@ -42,6 +42,21 @@
   (when (and (fboundp 'tooltip-mode) (not (eq tooltip-mode -1)))
     (tooltip-mode -1)))
 
+;;;###autoload
+(defun tenon/reload-init-file ()
+  "Reload emacs init file."
+
+  (interactive)
+  (load-file user-init-file))
+
+;;;###autoload
+(defun tenon/update-config ()
+  "Update tenon config."
+
+  (interactive)
+  (cd user-emacs-directory)
+  (shell-command "git pull"))
+
 (provide 'init-fn)
 
 ;; Local Variables:
