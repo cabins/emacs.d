@@ -43,9 +43,6 @@
   (bind-key "C-x C-f" #'counsel-find-file)
   (setq ivy-use-virtual-buffers t
 	enable-recursive-minibuffers t))
-(use-package ivy-posframe
-  :diminish
-  :init (add-hook 'ivy-mode-hook 'ivy-posframe-mode))
 
 ;; crux
 (use-package crux
@@ -116,11 +113,10 @@
   :init (add-hook 'after-init-hook 'global-undo-tree-mode))
 
 ;; Settings for which-key - suggest next key
-(use-package which-key-posframe
+(use-package which-key
   :diminish
   :init
-  (add-hook 'after-init-hook 'which-key-mode)
-  (add-hook 'which-key-mode-hook 'which-key-posframe-mode))
+  (add-hook 'after-init-hook 'which-key-mode))
 
 ;; Settings for yasnippet
 (use-package yasnippet
