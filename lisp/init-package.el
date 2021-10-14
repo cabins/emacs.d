@@ -1,4 +1,4 @@
-;;; init-package.el --- initialize the plugins -*- lexical-binding: t -*-
+;;; init-package.el --- initialize the plugins
 
 ;;; Commentary:
 ;; (c) Cabins Kong, 2020-2021
@@ -84,6 +84,25 @@
 (use-package hungry-delete
   :init
   (add-hook 'after-init-hook #'global-hungry-delete-mode))
+
+;; org-bullets
+(use-package org-bullets
+  :init
+  (add-hook 'org-mode-hook 'org-bullets-mode))
+
+;; popwin
+(use-package popwin
+  :init
+  (add-hook 'after-init-hook 'popwin-mode))
+
+;; powerline
+(use-package powerline
+  :commands (powerline-reset)
+  :init
+  ;; call powerline-reset after load new theme
+  (advice-add 'load-theme :after (lambda (theme &rest args) (powerline-reset)))
+  (advice-add 'disable-theme :after (lambda (theme) (powerline-reset)))
+  (add-hook 'after-init-hook 'powerline-default-theme))
 
 ;; Show the delimiters as rainbow color
 (use-package rainbow-delimiters

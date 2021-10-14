@@ -7,8 +7,8 @@
 ;;; Commentary:
 ;;; Code:
 
+(require 'init-eglot)
 (require 'init-elisp)
-(require 'init-lsp)
 (require 'init-go)
 (require 'init-python)
 (require 'init-rust)
