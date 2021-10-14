@@ -41,6 +41,7 @@
   ;; tooltips in echo-aera
   (when (and (fboundp 'tooltip-mode) (not (eq tooltip-mode -1)))
     (tooltip-mode -1)))
+(tenon/cleaner-gui)
 
 ;;;###autoload
 (defun tenon/reload-init-file ()

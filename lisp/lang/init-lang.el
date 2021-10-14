@@ -23,6 +23,8 @@
   (add-to-list 'auto-mode-alist '("\\.http\\'" . restclient-mode)))
 (use-package yaml-mode)
 
+(use-package quickrun)
+
 (provide 'init-lang)
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)

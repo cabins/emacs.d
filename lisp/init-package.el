@@ -84,6 +84,9 @@
   :init
   (add-hook 'after-init-hook #'global-hungry-delete-mode))
 
+;; magit
+(use-package magit)
+
 ;; org-bullets
 (use-package org-bullets
   :init
