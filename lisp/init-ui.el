@@ -30,9 +30,9 @@
       (setq face-font-rescale-alist
 	    (mapcar (lambda (item) (cons item 1.2)) cnfonts)))))
 
-(tenon/setup-font)
-(tenon/cleaner-gui)
-(load-theme 'leuven)
+(add-hook 'after-init-hook 'tenon/setup-font)
+(add-hook 'after-init-hook (lambda () (load-theme 'leuven)))
+(add-hook 'after-init-hook 'tenon/cleaner-gui)
 
 ;; settings for daemon mode
 (add-hook 'after-make-frame-functions
