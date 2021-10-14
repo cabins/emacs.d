@@ -29,6 +29,8 @@
   :diminish
   :defines (company-dabbrev-ignore-case company-dabbrev-downcase)
   :init
+  (setq company-idle-delay .01
+	company-minimum-prefix-length 2)
   (add-hook 'after-init-hook 'global-company-mode)
   (add-hook 'company-mode-hook 'company-posframe-mode))
 
