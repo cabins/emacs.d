@@ -4,6 +4,8 @@
 ;;; Code:
 
 (use-package eglot
+  ;; :config
+  ;; (setq eglot-ignored-server-capabilites '(:documentHighlightProvider))
   :init
   (dolist (hook '(go-mode-hook
 		  python-mode-hook
