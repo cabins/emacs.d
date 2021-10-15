@@ -25,13 +25,17 @@
   :init (add-hook 'after-init-hook 'beacon-mode))
 
 ;; Settings for company
+(use-package company
+  :diminish "Comp"
+  :init
+  (add-hook 'after-init-hook 'global-company-mode)
+  :config
+  (setq company-idle-delay 0
+	company-minimum-prefix-length 1))
 (use-package company-posframe
   :diminish
   :defines (company-dabbrev-ignore-case company-dabbrev-downcase)
   :init
-  (setq company-idle-delay .01
-	company-minimum-prefix-length 2)
-  (add-hook 'after-init-hook 'global-company-mode)
   (add-hook 'company-mode-hook 'company-posframe-mode))
 
 ;; Ivy & Counsel & Swiper
@@ -81,6 +85,7 @@
 
 ;; hungry delete
 (use-package hungry-delete
+  :diminish
   :init
   (add-hook 'after-init-hook #'global-hungry-delete-mode))
 
@@ -110,6 +115,7 @@
 (use-package rainbow-delimiters
   :init (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 (use-package highlight-parentheses
+  :diminish
   :init (add-hook 'prog-mode-hook 'highlight-parentheses-mode))
 
 ;; undo tree

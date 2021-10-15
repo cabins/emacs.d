@@ -4,12 +4,14 @@
 ;;; Code:
 
 ;; Lisp
-;; (use-package paredit :init (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode))
-
-;; lispy (iedit, hydra as dependency)
-(use-package lispy
+(use-package paredit
   :init
-  (add-hook 'emacs-lisp-mode-hook 'lispy-mode))
+  (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode))
+
+;; lispy (iedit, hydra as dependency), if you like vim style
+;; (use-package lispy
+;;   :init
+;;   (add-hook 'emacs-lisp-mode-hook 'lispy-mode))
 
 (provide 'init-elisp)
 ;; Local Variables:
