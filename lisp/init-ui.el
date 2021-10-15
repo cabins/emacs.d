@@ -23,7 +23,7 @@
 	 (enfont (font-available enfonts)))
     (when enfont
       (set-face-attribute
-       'default nil :font (format "%s-%d" enfont 10.0)))
+       'default nil :font (format "%s-%d" enfont 9.5)))
     (when cnfont
       (dolist (charset '(kana han cjk-misc bopomofo))
 	(set-fontset-font t charset cnfont))
