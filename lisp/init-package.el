@@ -97,6 +97,11 @@
   :init
   (add-hook 'org-mode-hook 'org-bullets-mode))
 
+;; pdf-tools
+(use-package pdf-tools
+  :init
+  (add-hook 'after-init-hook 'pdf-tools-install))
+
 ;; popwin
 (use-package popwin
   :init

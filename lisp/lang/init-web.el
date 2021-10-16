@@ -12,7 +12,6 @@
   (add-hook 'web-mode-hook #'emmet-mode)
   (add-hook 'css-mode-hook #'emmet-mode))
 
-
 (provide 'init-web)
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
