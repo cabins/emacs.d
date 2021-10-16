@@ -89,6 +89,11 @@
   :init
   (add-hook 'after-init-hook #'global-hungry-delete-mode))
 
+;; iedit
+(use-package iedit
+  :init
+  (add-hook 'prog-mode-hook 'iedit-mode))
+
 ;; magit
 (use-package magit)
 
