@@ -1,4 +1,4 @@
-;;; init-lang.el --- configuration for IDE programming -*- lexical-binding: t -*-
+;;; init-lang.el --- configuration for IDE programming -*- lexical-binding: nil -*-
 
 ;; Author: Cabins
 ;; Maintainer: Cabins
@@ -7,7 +7,10 @@
 ;;; Commentary:
 ;;; Code:
 
+;; ========== ide features
 (require 'init-eglot)
+
+;; ========== language features
 (require 'init-elisp)
 (require 'init-go)
 (require 'init-python)
@@ -23,6 +26,7 @@
   (add-to-list 'auto-mode-alist '("\\.http\\'" . restclient-mode)))
 (use-package yaml-mode)
 
+;; ========== code action features
 (use-package quickrun)
 
 (provide 'init-lang)

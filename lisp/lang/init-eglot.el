@@ -1,16 +1,19 @@
-;;; init-eglot.el --- config for eglot -*- lexical-binding: t -*-
+;;; init-eglot.el --- config for eglot -*- lexical-binding: nil -*-
 ;;; Commentary:
 
 ;;; Code:
 
 (use-package eglot
   ;; :config
-  ;; (setq eglot-ignored-server-capabilites '(:documentHighlightProvider))
+  ;; (setq eglot-ignored-server-capabilities '(:documentHighlightProvider))
   :init
-  (dolist (hook '(go-mode-hook
+  (dolist (hook '(c-mode-hook
+		  c++-mode-hook
+		  go-mode-hook
+		  java-mode-hook
+		  js-mode-hook
 		  python-mode-hook
-		  rust-mode-hook
-		  js-mode-hook))
+		  rust-mode-hook))
     (add-hook hook 'eglot-ensure)))
 
 (provide 'init-eglot)
