@@ -4,8 +4,8 @@
 ;;; Code:
 
 (use-package eglot
-  ;; :config
-  ;; (setq eglot-ignored-server-capabilities '(:documentHighlightProvider))
+  :config
+  (setq eglot-ignored-server-capabilities '(:documentHighlightProvider))
   :init
   (dolist (hook '(c-mode-hook
 		  c++-mode-hook
