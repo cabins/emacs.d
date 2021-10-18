@@ -23,8 +23,9 @@
 	 (cnfont (font-available cnfonts))
 	 (enfont (font-available enfonts)))
     (when enfont
-      (set-face-attribute
-       'default nil :font (format "%s" enfont)))
+      (set-face-attribute 'default nil :family enfont)
+      (set-face-attribute 'fixed-pitch nil :family enfont)
+      (set-face-attribute 'variable-pitch nil :family enfont))
     (when cnfont
       (dolist (charset '(kana han cjk-misc bopomofo))
 	(set-fontset-font t charset cnfont))
@@ -35,7 +36,7 @@
 
 (add-hook 'after-init-hook 'tenon/setup-font)
 (add-hook 'after-init-hook 'tenon/cleaner-gui)
-(add-hook 'after-init-hook (lambda () (load-theme 'leuven)))
+(add-hook 'after-init-hook (lambda () (load-theme 'modus-vivendi)))
 
 ;; settings for daemon mode
 (add-hook 'after-make-frame-functions

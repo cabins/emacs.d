@@ -12,7 +12,7 @@
 (add-hook 'after-init-hook 'delete-selection-mode)
 
 ;; Electric-Pair
-(add-hook 'after-init-hook 'electric-indent-mode)
+(add-hook 'prog-mode-hook 'electric-indent-mode)
 (add-hook 'prog-mode-hook 'electric-pair-mode)
 (add-hook 'prog-mode-hook 'electric-layout-mode)
 

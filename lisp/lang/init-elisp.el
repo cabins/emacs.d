@@ -4,9 +4,9 @@
 ;;; Code:
 
 ;; Lisp
-;; (use-package paredit
-;;   :init
-;;   (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode))
+(use-package paredit
+  :init
+  (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode))
 
 ;; lispy (iedit, hydra as dependency), if you like vim style
 ;; (use-package lispy
@@ -14,9 +14,9 @@
 ;;   (add-hook 'emacs-lisp-mode-hook 'lispy-mode))
 
 ;; maybe smartparens is enough, and NO C-, binding
-(use-package smartparens
-  :init
-  (add-hook 'prog-mode-hook 'smartparens-mode))
+;; (use-package smartparens
+;;   :init
+;;   (add-hook 'prog-mode-hook 'smartparens-mode))
 
 (provide 'init-elisp)
 ;; Local Variables:

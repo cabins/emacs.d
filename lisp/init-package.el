@@ -97,6 +97,12 @@
 ;; magit
 (use-package magit)
 
+;; olivetti
+(use-package olivetti
+  :init
+  (setq olivetti-body-width .7)
+  (add-hook 'org-mode-hook 'olivetti-mode))
+
 ;; org-bullets
 (use-package org-bullets
   :init
