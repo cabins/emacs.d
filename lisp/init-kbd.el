@@ -24,7 +24,6 @@
 
 ;;; Emacs Basic Keys ------------------------------
 (defalias 'yes-or-no-p 'y-or-n-p)
-(global-set-key (kbd "C-c r") 'recentf-open-files) ; Open Recent Files
 
 ;; Window Move
 (global-set-key (kbd "C-c <left>") 'windmove-left)

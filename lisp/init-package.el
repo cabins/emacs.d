@@ -50,6 +50,7 @@
   (bind-key "C-r" #'swiper-isearch-backward)
   (bind-key "M-x" #'counsel-M-x)
   (bind-key "C-x C-f" #'counsel-find-file)
+  (bind-key "C-c r" #'counsel-recentf)
   (setq ivy-use-virtual-buffers t
 	enable-recursive-minibuffers t))
 
@@ -100,6 +101,16 @@
 ;; magit
 (use-package magit)
 
+;; neotree
+(use-package neotree
+  :config
+  (setq neo-autorefresh t
+	neo-theme 'nerd
+	neo-click-changes-root t
+	neo-smart-open t)
+  :init
+  (bind-key "<f8>" 'neotree-toggle))
+
 ;; olivetti
 (use-package olivetti
   :init
@@ -114,7 +125,7 @@
 ;; pdf-tools
 (use-package pdf-tools
   :init
-  (add-hook 'after-init-hook 'pdf-tools-install))
+  (add-hook 'after-init-hook 'pdf-loader-install))
 
 ;; popwin
 (use-package popwin
