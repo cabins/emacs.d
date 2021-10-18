@@ -58,6 +58,17 @@
   (cd user-emacs-directory)
   (shell-command "git pull"))
 
+;;;###autoload
+(defun tenon/change-theme ()
+  "Change theme."
+
+  (interactive)
+  (when custom-enabled-themes
+    (let ((theme-list custom-enabled-themes))
+      (call-interactively 'load-theme)
+      (dolist (current-theme theme-list)
+	(disable-theme current-theme)))))
+
 (provide 'init-fn)
 
 ;; Local Variables:
