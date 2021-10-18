@@ -22,6 +22,9 @@
 
 ;; Never lose the cursor
 (use-package beacon
+  :config
+  (setq beacon-size 10
+	beacon-blink-when-window-scrolls nil)
   :init (add-hook 'after-init-hook 'beacon-mode))
 
 ;; Settings for company

@@ -30,9 +30,7 @@
       (dolist (charset '(kana han cjk-misc bopomofo))
 	(set-fontset-font t charset cnfont))
       (setq face-font-rescale-alist
-	    (mapcar (lambda (item)
-		      (cons item 1.2))
-		    cnfonts)))))
+	    (mapcar (lambda (item) (cons item 1.2)) cnfonts)))))
 
 (add-hook 'after-init-hook 'tenon/setup-font)
 (add-hook 'after-init-hook 'tenon/cleaner-gui)
