@@ -34,7 +34,6 @@
 
 (add-hook 'after-init-hook 'tenon/setup-font)
 (add-hook 'after-init-hook 'tenon/cleaner-gui)
-(add-hook 'after-init-hook (lambda () (load-theme 'modus-vivendi)))
 
 ;; settings for daemon mode
 (add-hook 'after-make-frame-functions

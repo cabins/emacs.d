@@ -37,14 +37,12 @@
 		show-paren-when-point-in-periphery t)
   :init (add-hook 'prog-mode-hook 'show-paren-mode))
 
-;; Recent Files
+;; Recentf
 (use-package recentf
   :config
   (setq-default recentf-max-menu-items 20
 		recentf-max-saved-items 20)
-  (add-to-list 'recentf-exclude '("~\/.emacs.d\/elpa\/"))
-  :init
-  (add-hook 'after-init-hook 'recentf-mode))
+  (add-to-list 'recentf-exclude '("~\/.emacs.d\/elpa\/")))
 
 ;; Diminish Builtins
 (dolist (elem '(abbrev-mode eldoc-mode))
