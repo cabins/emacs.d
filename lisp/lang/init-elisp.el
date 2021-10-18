@@ -16,7 +16,7 @@
 ;; maybe smartparens is enough, and NO C-, binding
 (use-package smartparens
   :init
-  (add-hook 'prog-mode-hook 'smartparens-strict-mode))
+  (add-hook 'prog-mode-hook 'smartparens-mode))
 
 (provide 'init-elisp)
 ;; Local Variables:

@@ -92,7 +92,7 @@
 ;; iedit
 (use-package iedit
   :init
-  (add-hook 'prog-mode-hook 'iedit-mode))
+  (bind-key "C-;" 'iedit-mode))
 
 ;; magit
 (use-package magit)
