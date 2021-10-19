@@ -5,7 +5,7 @@
 
 (use-package eglot
   :config
-  (setq eglot-ignored-server-capabilities '(:documentHighlightProvider))
+  ;; (setq eglot-ignored-server-capabilities '(:documentHighlightProvider))
   :init
   (dolist (hook '(c-mode-hook
 		  c++-mode-hook
