@@ -9,7 +9,6 @@
 
 ;; ========== ide features
 (require 'init-eglot)
-;; (require 'init-nox)
 
 ;; ========== language features
 (require 'init-elisp)
