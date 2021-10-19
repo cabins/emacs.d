@@ -83,7 +83,6 @@
   :init
   (add-hook 'prog-mode-hook 'format-all-mode)
   (add-hook 'format-all-mode-hook 'format-all-ensure-formatter)
-  (add-hook 'prog-mode-hook (lambda () (add-hook 'before-save-hook 'format-all-buffer)))
   (bind-key "C-c f" #'format-all-buffer))
 
 ;; gnu-elpa-keyring-update

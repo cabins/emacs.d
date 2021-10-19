@@ -13,6 +13,7 @@
 ;;; trick for less start time
 (setq gc-cons-threshold most-positive-fixnum)
 (add-hook 'after-init-hook #'(lambda () (setq gc-cons-threshold 800000)))
+(setq default-directory "~/")
 
 ;; update load-path
 (dolist (dir '("lisp" "lisp/lang"))
