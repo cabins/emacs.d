@@ -81,7 +81,8 @@
 (use-package format-all
   :diminish " Fmt"
   :init
-  (add-hook 'prog-mode-hook 'format-all-ensure-formatter)
+  (add-hook 'prog-mode-hook 'format-all-mode)
+  (add-hook 'format-all-mode-hook 'format-all-ensure-formatter)
   (bind-key "C-c f" #'format-all-buffer))
 
 ;; gnu-elpa-keyring-update
