@@ -32,15 +32,17 @@
       (setq face-font-rescale-alist
 	    (mapcar (lambda (item) (cons item 1.2)) cnfonts)))))
 
-(add-hook 'after-init-hook 'tenon/setup-font)
 (add-hook 'after-init-hook 'tenon/cleaner-gui)
 
 ;; settings for daemon mode
-(add-hook 'after-make-frame-functions
-          (lambda (frame)
-            (select-frame frame)
-            (when (window-system frame)
-	      (tenon/setup-font))))
+(if (daemonp)
+    (add-hook 'after-make-frame-functions
+              (lambda (frame)
+		(with-selected-frame frame
+		  (tenon/setup-font))
+		))
+  (tenon/setup-font))
+
 
 (provide 'init-ui)
 
