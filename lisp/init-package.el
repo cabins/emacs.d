@@ -81,8 +81,7 @@
 (use-package format-all
   :diminish " Fmt"
   :init
-  (add-hook 'prog-mode-hook 'format-all-mode)
-  (add-hook 'format-all-mode-hook 'format-all-ensure-formatter)
+  (add-hook 'prog-mode-hook 'format-all-ensure-formatter)
   (bind-key "C-c f" #'format-all-buffer))
 
 ;; gnu-elpa-keyring-update
@@ -150,9 +149,9 @@
   :init (add-hook 'prog-mode-hook 'highlight-parentheses-mode))
 
 ;; super save
-(use-package super-save
-  :init
-  (add-hook 'after-init-hook 'super-save-mode))
+;; (use-package super-save
+;;   :init
+;;   (add-hook 'after-init-hook 'super-save-mode))
 
 ;; undo tree
 (use-package undo-tree
