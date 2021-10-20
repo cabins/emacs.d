@@ -16,8 +16,8 @@
 		  rust-mode-hook))
     (add-hook hook 'eglot-ensure)
     (add-hook hook (lambda ()
-		     (add-hook 'before-save-hook #'eglot-code-action-organize-imports)
-		     (add-hook 'before-save-hook #'eglot-format-buffer)))))
+		     (add-hook 'before-save-hook (lambda ()
+						   (call-interactively 'eglot-code-action-organize-imports)))))))
 
 (provide 'init-eglot)
 ;; Local Variables:
