@@ -4,9 +4,7 @@
 
 ;;; Code:
 
-
-
-;;; settings for package archives
+;;; add melpa to package-archives
 (setq package-archives '(("gnu"   . "http://elpa.gnu.org/packages/")
                          ("melpa" . "http://melpa.org/packages/")))
 
@@ -16,22 +14,22 @@
 
 (setq package-check-signature nil
       load-prefer-newer t)
+(require 'package)
 
-(eval-when-compile
-  (require 'package)
-  ;; initialize the packages, avoiding a re-initialization
-  (unless (bound-and-true-p package--initialized)
-    (package-initialize))
-  ;; settings for use-package package
-  (unless (package-installed-p 'use-package)
-    (package-refresh-contents)
-    (package-install 'use-package))
+;; initialize the packages, avoiding a re-initialization
+(unless (bound-and-true-p package--initialized)
+  (package-initialize))
 
-  (setq use-package-always-ensure t
-	use-package-always-defer t
-	use-package-enable-imenu-support t
-	use-package-expand-minimally t)
-  (require 'use-package))
+;; settings for use-package package
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+(setq use-package-always-ensure t
+      use-package-always-defer t
+      use-package-enable-imenu-support t
+      use-package-expand-minimally t)
+(require 'use-package)
 
 (provide 'init-elpa)
 

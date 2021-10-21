@@ -5,6 +5,10 @@
 
 ;;; Code:
 
+(use-package benchmark-init
+  :config
+  (add-hook 'after-init-hook 'benchmark-init/deactivate))
+
 ;; All the icons
 ;; You may want to install the non-free font Symbola, when using Windows.
 ;; [Refs] https://github.com/seagle0128/doom-modeline
@@ -65,12 +69,6 @@
 (use-package diminish)
 (use-package delight)
 
-;; drag stuff
-(use-package drag-stuff
-  :init
-  (bind-key "M-<down>" #'drag-stuff-down)
-  (bind-key "M-<up>" #'drag-stuff-up))
-
 ;; Settings for exec-path-from-shell
 (use-package exec-path-from-shell
   :defer nil
@@ -99,8 +97,23 @@
   :init
   (bind-key "C-;" 'iedit-mode))
 
+;; info-colors
+(use-package info-colors
+  :init
+  (add-hook 'Info-selection-hook 'info-colors-fontify-node))
+
 ;; magit
 (use-package magit)
+
+;; marginalia: show description in minibuffer
+(use-package marginalia
+  :init
+  (add-hook 'after-init-hook 'marginalia-mode))
+
+;; move-text, move line or region with M-<up>/<down>
+(use-package move-text
+  :init
+  (add-hook 'after-init-hook 'move-text-default-bindings))
 
 ;; neotree
 (use-package neotree
