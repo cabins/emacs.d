@@ -28,22 +28,17 @@
   "Make GUI cleaner, with less UI elements."
 
   (interactive)
-  ;; scrollbar
-  (when (and (fboundp 'scroll-bar-mode) (not (eq scroll-bar-mode -1)))
-    (scroll-bar-mode -1))
-  ;; tool-bar
-  (when (and (fboundp 'tool-bar-mode) (not (eq tool-bar-mode -1)))
-    (tool-bar-mode -1))
+  (when (not (eq scroll-bar-mode -1)) (scroll-bar-mode -1))
+  (when (not (eq tool-bar-mode -1)) (tool-bar-mode -1))
   ;; menu-bar, keep on macos
-  (unless (memq (window-system) '(mac ns))
-    (when (and (fboundp 'menu-bar-mode) (not (eq menu-bar-mode -1)))
-      (menu-bar-mode -1)))
+  (if (and (display-graphic-p) (eq system-type 'darwin))
+      (menu-bar-mode 1)
+    (menu-bar-mode -1))
   ;; tooltips in echo-aera
-  (when (and (fboundp 'tooltip-mode) (not (eq tooltip-mode -1)))
-    (tooltip-mode -1))
+  (when (not (eq tooltip-mode -1)) (tooltip-mode -1))
   (fringe-mode 0))
 
-(tenon/cleaner-gui)
+(add-hook 'window-setup-hook 'tenon/cleaner-gui)
 
 ;;;###autoload
 (defun tenon/reload-init-file ()
@@ -71,6 +66,33 @@
 	(dolist (current-theme theme-list)
 	  (disable-theme current-theme)))
     (call-interactively 'load-theme)))
+
+
+(defun font-available (font-list)
+  "Get the first available font from FONT-LIST."
+  (catch 'font
+    (dolist (font font-list)
+      (if (member font (font-family-list))
+	  (throw 'font font)))))
+
+;;;###autoload
+(defun tenon/setup-font ()
+  "Font setup."
+
+  (interactive)
+  (let* ((enfonts '("Cascadia Code" "Source Code Pro" "Courier New" "Monaco"))
+	 (cnfonts '("STKaiti" "华文楷体" "STHeiti" "华文黑体" "微软雅黑"))
+	 (cnfont (font-available cnfonts))
+	 (enfont (font-available enfonts)))
+    (when enfont
+      (set-face-attribute 'default nil :family enfont)
+      (set-face-attribute 'fixed-pitch nil :family enfont)
+      (set-face-attribute 'variable-pitch nil :family enfont))
+    (when cnfont
+      (dolist (charset '(kana han cjk-misc bopomofo))
+	(set-fontset-font t charset cnfont))
+      (setq face-font-rescale-alist
+	    (mapcar (lambda (item) (cons item 1.2)) cnfonts)))))
 
 (provide 'init-fn)
 

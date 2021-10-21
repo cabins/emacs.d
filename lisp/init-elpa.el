@@ -5,18 +5,17 @@
 ;;; Code:
 
 ;;; add melpa to package-archives
-(setq package-archives '(("gnu"   . "http://elpa.gnu.org/packages/")
-                         ("melpa" . "http://melpa.org/packages/")))
+;; (setq package-archives '(("gnu"   . "http://elpa.gnu.org/packages/")
+;; ("melpa" . "http://melpa.org/packages/")))
 
-;; recently, mirrors in China are not sync right.
-;; (setq package-archives '(("melpa" . "http://mirrors.bfsu.edu.cn/elpa/melpa/")
-;;                          ("gnu" . "http://mirrors.bfsu.edu.cn/elpa/gnu/")))
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 
 (setq package-check-signature nil
       load-prefer-newer t)
 (require 'package)
 
 ;; initialize the packages, avoiding a re-initialization
+(message package--initialized)
 (unless (bound-and-true-p package--initialized)
   (package-initialize))
 
