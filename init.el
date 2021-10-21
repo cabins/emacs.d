@@ -3,7 +3,7 @@
 ;; Author: Cabins
 ;; Maintainer: Cabins
 ;; Version: 1.0
-;; Homepage: https://github.com/cabins
+;; Homepage: https://github.com/cabins/tenon-emacs
 
 ;;; Commentary:
 ;; (c) Cabins Kong, 2020-2021

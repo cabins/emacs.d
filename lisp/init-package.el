@@ -149,11 +149,6 @@
   :diminish
   :init (add-hook 'prog-mode-hook 'highlight-parentheses-mode))
 
-;; super save
-;; (use-package super-save
-;;   :init
-;;   (add-hook 'after-init-hook 'super-save-mode))
-
 ;; undo tree
 (use-package undo-tree
   :diminish
