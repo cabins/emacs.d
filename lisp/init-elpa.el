@@ -4,10 +4,17 @@
 
 ;;; Code:
 
+
+
 ;;; settings for package archives
-(setq package-archives '(("melpa" . "http://mirrors.bfsu.edu.cn/elpa/melpa/")
-                         ("gnu" . "http://mirrors.bfsu.edu.cn/elpa/gnu/"))
-      package-check-signature nil
+(setq package-archives '(("gnu"   . "http://elpa.gnu.org/packages/")
+                         ("melpa" . "http://melpa.org/packages/")))
+
+;; recently, mirrors in China are not sync right.
+;; (setq package-archives '(("melpa" . "http://mirrors.bfsu.edu.cn/elpa/melpa/")
+;;                          ("gnu" . "http://mirrors.bfsu.edu.cn/elpa/gnu/")))
+
+(setq package-check-signature nil
       load-prefer-newer t)
 
 (eval-when-compile

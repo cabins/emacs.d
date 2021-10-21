@@ -9,7 +9,8 @@
 
 ;; auto save when lose focus
 ;; (add-hook 'focus-out-hook 'save-buffer)	; save current buffer
-(add-hook 'focus-out-hook (lambda () (save-some-buffers t))) ; save all opened buffers
+(add-hook 'focus-out-hook
+	  (lambda () (save-some-buffers t))) ; save all opened buffers
 
 ;; Delete Behavior
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
