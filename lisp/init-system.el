@@ -4,11 +4,9 @@
 
 ;;; Code:
 
-;; load theme
-(load-theme 'deeper-blue)
-
 ;;; Emacs 28 native compile
-(when (and (fboundp 'native-comp-available-p)
+(when (and (> emacs-major-version 27)
+	   (fboundp 'native-comp-available-p)
 	   (native-comp-available-p))
   (setq native-comp-async-report-warnings-errors nil)
   (setq package-native-compile t)
@@ -57,9 +55,17 @@
   (setq mac-command-modifier 'meta
 	mac-option-modifier 'super))
 
+;;; daemon mode
+(if (daemonp)
+    (add-hook 'after-make-frame-functions
+              (lambda (frame)
+		(with-selected-frame frame
+		  (tenon/setup-font))))
+  (tenon/setup-font))
+
 (provide 'init-system)
+;;; init-system.el ends here
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
 ;; End:
-;;; init-system.el ends here

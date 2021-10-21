@@ -27,7 +27,6 @@
 (require 'init-builtin)
 (require 'init-kbd)
 (require 'init-lang)
-(require 'init-ui)
 
 ;;; load custom file at last
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
@@ -35,8 +34,8 @@
   (load custom-file))
 
 (provide 'init)
+;;; init.el ends here
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
 ;; End:
-;;; init.el ends here
