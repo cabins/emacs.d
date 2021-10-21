@@ -40,12 +40,14 @@
       (menu-bar-mode -1)))
   ;; tooltips in echo-aera
   (when (and (fboundp 'tooltip-mode) (not (eq tooltip-mode -1)))
-    (tooltip-mode -1)))
+    (tooltip-mode -1))
+  (fringe-mode 0))
+
 (tenon/cleaner-gui)
 
 ;;;###autoload
 (defun tenon/reload-init-file ()
-  "Reload emacs init file."
+  "Reload Emacs init file."
 
   (interactive)
   (load-file user-init-file))
@@ -63,11 +65,12 @@
   "Change theme."
 
   (interactive)
-  (when custom-enabled-themes
-    (let ((theme-list custom-enabled-themes))
-      (call-interactively 'load-theme)
-      (dolist (current-theme theme-list)
-	(disable-theme current-theme)))))
+  (if custom-enabled-themes
+      (let ((theme-list custom-enabled-themes))
+	(call-interactively 'load-theme)
+	(dolist (current-theme theme-list)
+	  (disable-theme current-theme)))
+    (call-interactively 'load-theme)))
 
 (provide 'init-fn)
 

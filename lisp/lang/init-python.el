@@ -30,6 +30,11 @@ eg.from datetime import datetime."
 		     (format "-i --remove-all-unused-imports %s"
 			     (buffer-file-name))))
 
+;; elpy
+(use-package elpy
+  :init
+  (advice-add 'python-mode :before 'elpy-enable))
+
 (add-hook
  'python-mode-hook
  (lambda ()

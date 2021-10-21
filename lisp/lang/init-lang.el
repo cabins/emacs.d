@@ -1,4 +1,4 @@
-;;; init-lang.el --- configuration for IDE programming -*- lexical-binding: nil -*-
+;;; init-lang.el --- configuration for IDE programming -*- lexical-binding: t -*-
 
 ;; Author: Cabins
 ;; Maintainer: Cabins
@@ -15,7 +15,6 @@
 (require 'init-go)
 (require 'init-python)
 (require 'init-rust)
-(require 'init-vue)
 (require 'init-web)
 
 (use-package json-mode)

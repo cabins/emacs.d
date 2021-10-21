@@ -12,6 +12,9 @@
 (add-hook 'focus-out-hook
 	  (lambda () (save-some-buffers t))) ; save all opened buffers
 
+;; auto revert
+(add-hook 'after-init-hook 'global-auto-revert-mode)
+
 ;; Delete Behavior
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
 (add-hook 'after-init-hook 'delete-selection-mode)
@@ -23,6 +26,7 @@
 
 ;; Flymake
 (add-hook 'prog-mode-hook 'flymake-mode)
+(remove-hook 'flymake-diagnostic-functions #'flymake-proc-legacy-flymake)
 
 ;; HideShow Minor Mode
 (add-hook 'prog-mode-hook 'hs-minor-mode)
