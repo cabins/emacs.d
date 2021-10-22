@@ -50,7 +50,8 @@
 (use-package recentf
   :config
   (setq-default recentf-max-menu-items 20
-		recentf-max-saved-items 20)
+		recentf-max-saved-items 20
+		recentf-auto-cleanup 'never)
   (add-to-list 'recentf-exclude '("~\/.emacs.d\/elpa\/")))
 
 ;; Diminish Builtins

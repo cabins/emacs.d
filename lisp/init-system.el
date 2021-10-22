@@ -40,7 +40,7 @@
       mouse-wheel-scroll-amount '(1 ((shift) . 1))
       mouse-wheel-progressive-speed nil
       mouse-wheel-follow-mouse t
-      next-line-add-newlines t
+      next-line-add-newlines nil
       read-process-output-max (* 64 1024)
       scroll-step 1
       scroll-conservatively 10000
