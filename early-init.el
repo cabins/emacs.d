@@ -12,13 +12,12 @@
 (setq frame-inhibit-implied-resize t)
 
 ;; Load theme early to avoid the blinking
-(load-theme 'wombat t)
+(load-theme 'wheatgrass)
 
 ;; Cleaner GUI
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
-(tooltip-mode -1)
 (fringe-mode 0)
 
 ;;; early-init.el ends here

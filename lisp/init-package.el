@@ -132,9 +132,9 @@
   (add-hook 'org-mode-hook 'olivetti-mode))
 
 ;; org-bullets
-(use-package org-bullets
+(use-package org-superstar
   :init
-  (add-hook 'org-mode-hook 'org-bullets-mode))
+  (add-hook 'org-mode-hook 'org-superstar-mode))
 
 ;; pdf-tools
 (use-package pdf-tools

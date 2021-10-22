@@ -34,8 +34,6 @@
   (if (and (display-graphic-p) (eq system-type 'darwin))
       (menu-bar-mode 1)
     (menu-bar-mode -1))
-  ;; tooltips in echo-aera
-  (when (not (eq tooltip-mode -1)) (tooltip-mode -1))
   (fringe-mode 0))
 
 (add-hook 'window-setup-hook 'tenon/cleaner-gui)
