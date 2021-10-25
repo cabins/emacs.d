@@ -1,4 +1,4 @@
-;;; init.el --- the entry of emacs config -*- lexical-binding: nil -*-
+;;; init.el --- the entry of emacs config -*- lexical-binding: t -*-
 
 ;; Author: Cabins
 ;; Maintainer: Cabins
@@ -34,8 +34,8 @@
 ;; (load custom-file))
 
 (provide 'init)
-;;; init.el ends here
 
+;;; init.el ends here
 ;; Local Variables:
-;; byte-compile-warnings: (not free-vars unresolved)
+;; byte-compile-warnings: (not unresolved obsolete)
 ;; End:
