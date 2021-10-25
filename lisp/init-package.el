@@ -5,10 +5,6 @@
 
 ;;; Code:
 
-(use-package benchmark-init
-  :config
-  (add-hook 'after-init-hook 'benchmark-init/deactivate))
-
 ;; All the icons
 ;; You may want to install the non-free font Symbola, when using Windows.
 ;; [Refs] https://github.com/seagle0128/doom-modeline

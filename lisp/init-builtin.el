@@ -1,4 +1,4 @@
-;;; init-builtin.el --- initialize the builtin plugins -*- lexical-binding: t -*-
+;;; init-builtin.el --- initialize the builtin plugins -*- lexical-binding: nil -*-
 ;;; Commentary:
 ;; (c) Cabins Kong, 2020-2021
 
@@ -7,10 +7,23 @@
 ;; Abbrev
 (setq-default abbrev-mode t)
 
-;; auto save when lose focus
-;; (add-hook 'focus-out-hook 'save-buffer)	; save current buffer
-(add-hook 'focus-out-hook
-	  (lambda () (save-some-buffers t))) ; save all opened buffers
+;; auto save
+;; auto save when frame lose focus, such as Alt-TAB
+(add-function :after after-focus-change-function
+	      (lambda () (save-some-buffers t)))
+;; auto save when buffer changed
+(mapc (lambda (command)
+	(advice-add
+	 command :after
+	 (lambda (&rest arg)
+	   (save-some-buffers t))))
+      '(switch-to-buffer		;builtin
+	other-window			;builtin
+	windmove-do-window-select	;windmove-mode, builtin
+	next-buffer			;builtin
+	previous-buffer			;builtin
+	ivy-switch-buffer		;ivy action
+	aw-select))			;ace-window action
 
 ;; auto revert
 (add-hook 'after-init-hook 'global-auto-revert-mode)
@@ -40,6 +53,7 @@
 
 ;; Parentheses
 (use-package paren
+  :ensure nil
   :config
   (setq-default show-paren-style 'mixed
 		show-paren-when-point-inside-paren t
@@ -48,6 +62,8 @@
 
 ;; Recentf
 (use-package recentf
+  :defer 1
+  :ensure nil
   :config
   (setq-default recentf-max-menu-items 20
 		recentf-max-saved-items 20
@@ -61,7 +77,7 @@
 
 (provide 'init-builtin)
 
+;;; init-builtin.el ends here
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
 ;; End:
-;;; init-builtin.el ends here

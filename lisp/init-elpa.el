@@ -8,16 +8,11 @@
 ;; (setq package-archives '(("gnu"   . "http://elpa.gnu.org/packages/")
 ;; ("melpa" . "http://melpa.org/packages/")))
 
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-
-(setq package-check-signature nil
-      load-prefer-newer t)
 (require 'package)
 
-;; initialize the packages, avoiding a re-initialization
-(message package--initialized)
-(unless (bound-and-true-p package--initialized)
-  (package-initialize))
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(setq package-check-signature nil
+      load-prefer-newer t)
 
 ;; settings for use-package package
 (unless (package-installed-p 'use-package)
@@ -28,7 +23,9 @@
       use-package-always-defer t
       use-package-enable-imenu-support t
       use-package-expand-minimally t)
-(require 'use-package)
+
+(eval-when-compile
+  (require 'use-package))
 
 (provide 'init-elpa)
 
