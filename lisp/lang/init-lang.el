@@ -6,11 +6,12 @@
 
 ;;; Commentary:
 ;;; Code:
+(require 'use-package)
 
-;; ========== ide features
+;;; ========== ide features
 (require 'init-eglot)
 
-;; ========== language features
+;;; ========== language features
 (require 'init-elisp)
 (require 'init-go)
 (require 'init-python)
@@ -25,11 +26,12 @@
   (add-to-list 'auto-mode-alist '("\\.http\\'" . restclient-mode)))
 (use-package yaml-mode)
 
-;; ========== code action features
+;;; ========== code action features
 (use-package quickrun)
 
 (provide 'init-lang)
-;; Local Variables:
-;; byte-compile-warnings: (not free-vars unresolved)
-;; End:
+
 ;;; init-lang.el ends here
+;; Local Variables:
+;; byte-compile-warnings: (not free-vars unresolved obsolete)
+;; End:

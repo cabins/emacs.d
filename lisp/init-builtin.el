@@ -13,10 +13,8 @@
 	      (lambda () (save-some-buffers t)))
 ;; auto save when buffer changed
 (mapc (lambda (command)
-	(advice-add
-	 command :after
-	 (lambda (&rest arg)
-	   (save-some-buffers t))))
+	(advice-add command :after
+		    (lambda (&rest arg) (save-some-buffers t))))
       '(switch-to-buffer		;builtin
 	other-window			;builtin
 	windmove-do-window-select	;windmove-mode, builtin

@@ -9,21 +9,6 @@
 ;;; Code:
 
 ;;;###autoload
-(defmacro tenon/timer (&rest body)
-  "Measure the time of code BODY running."
-  `(let ((time (current-time)))
-     ,@body
-     (float-time (time-since time))))
-
-;;;###autoload
-(defun tenon/tmp-reset-elpa-repo ()
-  "Reset Elpa temporary.  Useful when emacs-china sync fails."
-
-  (interactive)
-  (setq package-archives '(("gnu"   . "http://elpa.gnu.org/packages/")
-                           ("melpa" . "http://melpa.org/packages/"))))
-
-;;;###autoload
 (defun tenon/cleaner-gui ()
   "Make GUI cleaner, with less UI elements."
 
@@ -39,21 +24,6 @@
 (add-hook 'window-setup-hook 'tenon/cleaner-gui)
 
 ;;;###autoload
-(defun tenon/reload-init-file ()
-  "Reload Emacs init file."
-
-  (interactive)
-  (load-file user-init-file))
-
-;;;###autoload
-(defun tenon/update-config ()
-  "Update tenon config."
-
-  (interactive)
-  (cd user-emacs-directory)
-  (shell-command "git pull"))
-
-;;;###autoload
 (defun tenon/change-theme ()
   "Change theme."
 
@@ -64,6 +34,43 @@
 	(dolist (current-theme theme-list)
 	  (disable-theme current-theme)))
     (call-interactively 'load-theme)))
+
+;;;###autoload
+(defun tenon/preferences ()
+  "Open the init file."
+
+  (interactive)
+  (find-file-other-window user-init-file))
+
+;;;###autoload
+(defun tenon/reload-init-file ()
+  "Reload Emacs init file."
+
+  (interactive)
+  (load-file user-init-file))
+
+;;;###autoload
+(defmacro tenon/timer (&rest body)
+  "Measure the time of code BODY running."
+  `(let ((time (current-time)))
+     ,@body
+     (float-time (time-since time))))
+
+;;;###autoload
+(defun tenon/tmp-reset-elpa-repo ()
+  "Reset Elpa temporary.  Useful when emacs-china sync fails."
+
+  (interactive)
+  (setq package-archives '(("gnu"   . "http://elpa.gnu.org/packages/")
+                           ("melpa" . "http://melpa.org/packages/"))))
+
+;;;###autoload
+(defun tenon/update-config ()
+  "Update tenon config."
+
+  (interactive)
+  (cd user-emacs-directory)
+  (shell-command "git pull"))
 
 
 (defun font-available (font-list)

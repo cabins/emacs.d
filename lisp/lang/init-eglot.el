@@ -6,6 +6,7 @@
 (use-package eglot
   :config
   ;; (setq eglot-ignored-server-capabilities '(:documentHighlightProvider))
+  (add-to-list 'eglot-server-programs '(web-mode "vls"))
   :init
   (dolist (hook '(c-mode-hook
 		  c++-mode-hook
@@ -13,11 +14,12 @@
 		  java-mode-hook
 		  js-mode-hook
 		  python-mode-hook
-		  rust-mode-hook))
+		  rust-mode-hook
+		  web-mode-hook))
     (add-hook hook 'eglot-ensure)
-    (add-hook hook (lambda ()
-		     (add-hook 'before-save-hook (lambda ()
-						   (call-interactively 'eglot-code-action-organize-imports)))))))
+    (add-hook hook (lambda () (add-hook 'before-save-hook
+					(lambda ()
+					  (call-interactively 'eglot-code-action-organize-imports)))))))
 
 (add-hook 'java-mode-hook
 	  (lambda ()
