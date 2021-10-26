@@ -29,7 +29,7 @@
 
 ;; Settings for company
 (use-package company
-  :diminish "Comp"
+  :diminish "Cmp"
   :init
   (add-hook 'after-init-hook 'global-company-mode)
   :config
@@ -144,13 +144,13 @@
   (add-hook 'after-init-hook 'popwin-mode))
 
 ;; powerline
-(use-package powerline
-  :commands (powerline-reset)
-  :init
-  ;; call powerline-reset after load new theme
-  (advice-add 'load-theme :after (lambda (theme &rest args) (powerline-reset)))
-  (advice-add 'disable-theme :after (lambda (theme) (powerline-reset)))
-  (add-hook 'after-init-hook 'powerline-default-theme))
+;; (use-package powerline
+;;   :commands (powerline-reset)
+;;   :init
+;;   ;; call powerline-reset after load new theme
+;;   (advice-add 'load-theme :after (lambda (theme &rest args) (powerline-reset)))
+;;   (advice-add 'disable-theme :after (lambda (theme) (powerline-reset)))
+;;   (add-hook 'after-init-hook 'powerline-default-theme))
 
 ;; Show the delimiters as rainbow color
 (use-package rainbow-delimiters
@@ -172,11 +172,11 @@
 
 ;; Settings for yasnippet
 (use-package yasnippet
-  :diminish
+  :diminish "Yas"
   :init
   (add-hook 'prog-mode-hook #'yas-minor-mode)
   (bind-key "C-o" #'yas-expand))
-(use-package yasnippet-snippets)
+(use-package yasnippet-snippets :diminish)
 
 (provide 'init-package)
 

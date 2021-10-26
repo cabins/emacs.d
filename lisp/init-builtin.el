@@ -15,13 +15,14 @@
 (mapc (lambda (command)
 	(advice-add command :after
 		    (lambda (&rest arg) (save-some-buffers t))))
-      '(switch-to-buffer		;builtin
-	other-window			;builtin
-	windmove-do-window-select	;windmove-mode, builtin
+      '(ivy-switch-buffer		;ivy action
 	next-buffer			;builtin
+	other-window			;builtin
 	previous-buffer			;builtin
-	ivy-switch-buffer		;ivy action
-	aw-select))			;ace-window action
+	switch-to-buffer		;builtin
+	windmove-do-window-select	;windmove-mode, builtin
+	aw-select			;ace-window action
+	))
 
 ;; auto revert
 (add-hook 'after-init-hook 'global-auto-revert-mode)
@@ -37,7 +38,7 @@
 
 ;; Flymake
 (add-hook 'prog-mode-hook 'flymake-mode)
-(remove-hook 'flymake-diagnostic-functions #'flymake-proc-legacy-flymake)
+;; (remove-hook 'flymake-diagnostic-functions #'flymake-proc-legacy-flymake)
 
 ;; HideShow Minor Mode
 (add-hook 'prog-mode-hook 'hs-minor-mode)
@@ -67,11 +68,6 @@
 		recentf-max-saved-items 20
 		recentf-auto-cleanup 'never)
   (add-to-list 'recentf-exclude '("~\/.emacs.d\/elpa\/")))
-
-;; Diminish Builtins
-(dolist (elem '(abbrev-mode eldoc-mode))
-  (diminish elem))
-(add-hook 'hs-minor-mode-hook (lambda () (diminish 'hs-minor-mode)))
 
 (provide 'init-builtin)
 
