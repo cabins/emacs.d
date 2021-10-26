@@ -6,6 +6,7 @@
 
 ;; Abbrev
 (setq-default abbrev-mode t)
+(diminish 'abbrev-mode)
 
 ;; auto save
 ;; auto save when frame lose focus, such as Alt-TAB
@@ -37,10 +38,12 @@
 (add-hook 'prog-mode-hook 'electric-layout-mode)
 
 ;; Flymake
+(diminish 'flymake-mode "Fly")
 (add-hook 'prog-mode-hook 'flymake-mode)
 ;; (remove-hook 'flymake-diagnostic-functions #'flymake-proc-legacy-flymake)
 
 ;; HideShow Minor Mode
+(diminish 'hs-minor-mode)
 (add-hook 'prog-mode-hook 'hs-minor-mode)
 
 ;; Line Number
