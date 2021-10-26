@@ -6,7 +6,6 @@
 
 ;;; Commentary:
 ;;; Code:
-(require 'use-package)
 
 ;;; ========== ide features
 (require 'init-eglot)

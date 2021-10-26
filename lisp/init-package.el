@@ -22,6 +22,7 @@
 
 ;; Never lose the cursor
 (use-package beacon
+  :diminish
   :config
   (setq beacon-size 10
 	beacon-blink-when-window-scrolls nil)
@@ -41,7 +42,8 @@
 
 ;; Ivy & Counsel & Swiper
 (use-package counsel
-  :diminish
+  :config
+  (diminish 'ivy-mode)
   :init
   (add-hook 'after-init-hook 'ivy-mode)
   (bind-key "C-s" #'swiper)
@@ -74,7 +76,7 @@
 
 ;; format all
 (use-package format-all
-  :diminish " Fmt"
+  :diminish
   :init
   (add-hook 'prog-mode-hook 'format-all-mode)
   (add-hook 'format-all-mode-hook 'format-all-ensure-formatter)
