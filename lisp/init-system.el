@@ -19,22 +19,20 @@
       (append elisp-flymake-byte-compile-load-path load-path))
 
 ;;; system coding
-(set-language-environment "utf-8")
 (prefer-coding-system 'utf-8)
-(unless (memq system-type '(cygwin windows-nt ms-dos))
-  (setq selection-coding-system 'utf-8))
 
 ;;; emacs settings
 (setq auto-save-default nil	   ; disable auto save
       auto-window-vscroll nil
       delete-by-moving-to-trash t  ; disable delete directly
-      fast-but-imprecise-scrolling nil
+      fast-but-imprecise-scrolling t
+      frame-title-format "%b"
       help-window-select t
       inhibit-startup-screen t	   ; disable the startup screen splash
       inhibit-default-init t
       ;; initial-scratch-message nil
       inhibit-compacting-font-caches t
-      initial-major-mode 'text-mode
+      initial-major-mode 'fundamental-mode
       make-backup-files nil             ; disable backup file
       ;; Mouse wheel scroll behavior
       mouse-wheel-scroll-amount '(1 ((shift) . 1))
@@ -54,6 +52,13 @@
 (when (eq system-type 'darwin)
   (setq mac-command-modifier 'meta
 	mac-option-modifier 'super))
+
+;;; Windows special settings
+(when (boundp 'w32-get-true-file-attributes)
+  (setq w32-get-true-file-attributes nil
+	w32-pipe-read-delay 0
+	w32-pipe-buffer-size (* 64 1024)
+	selection-coding-system 'utf-8))
 
 ;;; daemon mode
 (if (daemonp)
