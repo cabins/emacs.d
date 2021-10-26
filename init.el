@@ -9,10 +9,6 @@
 ;; (c) Cabins Kong, 2020-2021
 
 ;;; Code:
-
-;;; trick for less start time
-(setq gc-cons-threshold most-positive-fixnum)
-(add-hook 'after-init-hook #'(lambda () (setq gc-cons-threshold 800000)))
 (setq default-directory "~/")
 
 ;; update load-path
@@ -28,10 +24,10 @@
 (require 'init-kbd)
 (require 'init-lang)
 
-;;; load custom file at last
+;; load custom file at last
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-;; (when (file-exists-p custom-file)
-;; (load custom-file))
+(when (file-exists-p custom-file)
+  (load custom-file))
 
 (provide 'init)
 

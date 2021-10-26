@@ -35,11 +35,9 @@
   :config
   (setq company-idle-delay 0
 	company-minimum-prefix-length 1))
-(use-package company-posframe
-  :diminish
-  :defines (company-dabbrev-ignore-case company-dabbrev-downcase)
+(use-package company-prescient
   :init
-  (add-hook 'company-mode-hook 'company-posframe-mode))
+  (add-hook 'company-mode-hook 'company-prescient-mode))
 
 ;; Ivy & Counsel & Swiper
 (use-package counsel
@@ -53,6 +51,9 @@
   (bind-key "C-c r" #'counsel-recentf)
   (setq ivy-use-virtual-buffers t
 	enable-recursive-minibuffers t))
+(use-package ivy-prescient
+  :init
+  (add-hook 'ivy-mode-hook 'ivy-prescient-mode))
 
 ;; crux
 (use-package crux

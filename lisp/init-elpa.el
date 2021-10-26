@@ -10,9 +10,13 @@
 
 (require 'package)
 
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(setq package-archives '(("melpa" . "http://melpa.org/packages/")
+			 ("gnu" . "https://elpa.gnu.org/packages/")))
 (setq package-check-signature nil
       load-prefer-newer t)
+
+(unless (bound-and-true-p package--initialized)
+  (package-initialize))
 
 ;; settings for use-package package
 (unless (package-installed-p 'use-package)
