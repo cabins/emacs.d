@@ -12,8 +12,7 @@
 (setq default-directory "~/")
 
 ;; update load-path
-(dolist (dir '("lisp" "lisp/lang"))
-  (push (expand-file-name dir user-emacs-directory) load-path))
+(push (expand-file-name "lisp" user-emacs-directory) load-path)
 
 ;; settings for independent packages and etc.
 (require 'init-fn)

@@ -81,23 +81,22 @@
 	  (throw 'font font)))))
 
 ;;;###autoload
-(defun tenon/setup-font ()
+(defun tenon/reset-font-setup ()
   "Font setup."
 
   (interactive)
-  (let* ((enfonts '("Cascadia Code" "Source Code Pro" "Courier New" "Monaco"))
-	 (cnfonts '("STKaiti" "华文楷体" "STHeiti" "华文黑体" "微软雅黑"))
-	 (cnfont (font-available cnfonts))
-	 (enfont (font-available enfonts)))
-    (when enfont
-      (set-face-attribute 'default nil :family enfont)
-      (set-face-attribute 'fixed-pitch nil :family enfont)
-      (set-face-attribute 'variable-pitch nil :family enfont))
-    (when cnfont
+  (let* ((efl '("Cascadia Code" "Source Code Pro" "Courier New" "Monaco"))
+	 (cfl '("STKaiti" "华文楷体" "STHeiti" "华文黑体" "微软雅黑"))
+	 (cfont (font-available cfl))
+	 (efont (font-available efl)))
+    (when efont
+      (dolist (face '(default fixed-pitch fixed-pitch-serif variable-pitch))
+	(set-face-attribute face nil :family efont)))
+    (when cfont
       (dolist (charset '(kana han cjk-misc bopomofo))
-	(set-fontset-font t charset cnfont))
+	(set-fontset-font t charset cfont))
       (setq face-font-rescale-alist
-	    (mapcar (lambda (item) (cons item 1.2)) cnfonts)))))
+	    (mapcar (lambda (item) (cons item 1.2)) cfl)))))
 
 (provide 'init-fn)
 
