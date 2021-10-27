@@ -28,19 +28,17 @@
   "Change theme."
 
   (interactive)
-  (if custom-enabled-themes
-      (let ((theme-list custom-enabled-themes))
-	(call-interactively 'load-theme)
-	(dolist (current-theme theme-list)
-	  (disable-theme current-theme)))
-    (call-interactively 'load-theme)))
+  (let ((theme-list custom-enabled-themes))
+    (call-interactively 'load-theme)
+    (unless (equal custom-enabled-themes theme-list)
+      (mapcar #'disable-theme theme-list))))
 
 ;;;###autoload
 (defun tenon/preferences ()
   "Open the init file."
 
   (interactive)
-  (find-file-other-window user-init-file))
+  (find-file user-init-file))
 
 ;;;###autoload
 (defun tenon/reload-init-file ()
