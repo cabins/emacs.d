@@ -9,11 +9,10 @@
 ;; ("melpa" . "http://melpa.org/packages/")))
 
 (require 'package)
-
-(setq package-archives '(("melpa" . "http://melpa.org/packages/")
-			 ("gnu" . "https://elpa.gnu.org/packages/")))
 (setq package-check-signature nil
-      load-prefer-newer t)
+      load-prefer-newer t
+      package-archives '(("melpa" . "http://melpa.org/packages/")
+			 ("gnu" . "https://elpa.gnu.org/packages/")))
 
 (unless (bound-and-true-p package--initialized)
   (package-initialize))
@@ -27,9 +26,7 @@
       use-package-always-defer t
       use-package-enable-imenu-support t
       use-package-expand-minimally t)
-
-(eval-when-compile
-  (require 'use-package))
+(require 'use-package)
 
 (provide 'init-elpa)
 
