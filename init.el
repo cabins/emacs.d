@@ -18,8 +18,8 @@
 (require 'init-fn)
 (require 'init-system)
 (require 'init-elpa)
-(require 'init-package)
 (require 'init-builtin)
+(require 'init-package)
 (require 'init-kbd)
 (require 'init-lang)
 

@@ -39,14 +39,22 @@
 
 ;; Flymake
 (add-hook 'prog-mode-hook 'flymake-mode)
-;; (remove-hook 'flymake-diagnostic-functions #'flymake-proc-legacy-flymake)
+
+;; Flyspell
+;; to use this package, you may install 'aspell' and dict by manual
+(use-package flyspell
+  :hook ((text-mode . flyspell-mode)
+	 (prog-mode . flyspell-prog-mode)))
 
 ;; HideShow Minor Mode
-(add-hook 'hs-minor-mode-hook (lambda () (diminish 'hs-minor-mode)))
-(add-hook 'prog-mode-hook 'hs-minor-mode)
+(use-package hideshow
+  :init (add-hook 'hs-minor-mode-hook (lambda () (diminish 'hs-minor-mode)))
+  :hook (prog-mode . hs-minor-mode))
 
 ;; Line Number
-(add-hook 'prog-mode-hook 'display-line-numbers-mode)
+(use-package display-line-numbers
+  :if (> emacs-major-version 26)
+  :hook (prog-mode . display-line-numbers-mode))
 
 ;; modeline settings
 (add-hook 'after-init-hook 'column-number-mode)
