@@ -51,6 +51,9 @@
   :init (add-hook 'hs-minor-mode-hook (lambda () (diminish 'hs-minor-mode)))
   :hook (prog-mode . hs-minor-mode))
 
+;; ibuffer
+(defalias 'list-buffers 'ibuffer)
+
 ;; Line Number
 (use-package display-line-numbers
   :if (> emacs-major-version 26)
