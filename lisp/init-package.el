@@ -22,43 +22,37 @@
 ;; Never lose the cursor
 (use-package beacon
   :diminish
-  :config
-  (setq beacon-size 10
-	beacon-blink-when-window-scrolls nil)
+  :config (setq beacon-size 10
+		beacon-blink-when-window-scrolls nil)
   :hook (after-init . beacon-mode))
 
 ;; Settings for company
 (use-package company
   :diminish "Cmp"
   :hook (after-init . global-company-mode)
-  :config
-  (setq company-idle-delay 0
-	company-minimum-prefix-length 1))
+  :config (setq company-idle-delay 0
+		company-minimum-prefix-length 1))
 (use-package company-prescient
   :hook (company-mode . company-prescient-mode))
 
 ;; Ivy & Counsel & Swiper
 (use-package counsel
   :hook (after-init . ivy-mode)
+  :bind (( "C-s" . swiper)
+	 ( "C-r" . swiper-isearch-backward)
+	 ( "M-x" . counsel-M-x)
+	 ( "C-x C-f" . counsel-find-file)
+	 ( "C-c r" . counsel-recentf))
   :init
-  (bind-key "C-s" #'swiper)
-  (bind-key "C-r" #'swiper-isearch-backward)
-  (bind-key "M-x" #'counsel-M-x)
-  (bind-key "C-x C-f" #'counsel-find-file)
-  (bind-key "C-c r" #'counsel-recentf)
+  (add-hook 'ivy-mode-hook (lambda () (diminish 'ivy-mode)))
   (setq enable-recursive-minibuffers t))
 (use-package ivy-prescient
   :hook (ivy-mode . ivy-prescient-mode))
 
 ;; crux
 (use-package crux
-  :bind (("C-," . #'crux-find-user-init-file)
-	 ("C-c C-d" . #'crux-duplicate-current-line-or-region)
+  :bind (("C-c C-d" . #'crux-duplicate-current-line-or-region)
 	 ("C-a" . #'crux-move-beginning-of-line)))
-
-;; diminish & delight
-(use-package diminish)
-(use-package delight)
 
 ;; Settings for exec-path-from-shell
 (use-package exec-path-from-shell
@@ -83,7 +77,7 @@
 
 ;; iedit
 (use-package iedit
-  :bind ("C-;" . iedit-mode))
+  :bind ("C-M-;" . iedit-mode))
 
 ;; info-colors
 (use-package info-colors
@@ -102,11 +96,10 @@
 
 ;; neotree
 (use-package neotree
-  :config
-  (setq neo-autorefresh t
-	neo-theme 'nerd
-	neo-click-changes-root t
-	neo-smart-open t)
+  :config (setq neo-autorefresh t
+		neo-theme 'nerd
+		neo-click-changes-root t
+		neo-smart-open t)
   :bind ("<f8>" . neotree-toggle))
 
 ;; olivetti
@@ -125,15 +118,6 @@
 ;; popwin
 (use-package popwin
   :hook (after-init . popwin-mode))
-
-;; powerline
-;; (use-package powerline
-;;   :commands (powerline-reset)
-;;   :init
-;;   ;; call powerline-reset after load new theme
-;;   (advice-add 'load-theme :after (lambda (theme &rest args) (powerline-reset)))
-;;   (advice-add 'disable-theme :after (lambda (theme) (powerline-reset)))
-;;   (add-hook 'after-init-hook 'powerline-default-theme))
 
 ;; Show the delimiters as rainbow color
 (use-package rainbow-delimiters

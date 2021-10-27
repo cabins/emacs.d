@@ -73,8 +73,9 @@
   (shell-command "git pull"))
 
 
-(defun font-available (font-list)
+(defun available-font (font-list)
   "Get the first available font from FONT-LIST."
+
   (catch 'font
     (dolist (font font-list)
       (if (member font (font-family-list))
@@ -87,14 +88,14 @@
   (interactive)
   (let* ((efl '("Cascadia Code" "Source Code Pro" "Courier New" "Monaco"))
 	 (cfl '("STKaiti" "华文楷体" "STHeiti" "华文黑体" "微软雅黑"))
-	 (cfont (font-available cfl))
-	 (efont (font-available efl)))
-    (when efont
+	 (cf (available-font cfl))
+	 (ef (available-font efl)))
+    (when ef
       (dolist (face '(default fixed-pitch fixed-pitch-serif variable-pitch))
-	(set-face-attribute face nil :family efont)))
-    (when cfont
+	(set-face-attribute face nil :family ef)))
+    (when cf
       (dolist (charset '(kana han cjk-misc bopomofo))
-	(set-fontset-font t charset cfont))
+	(set-fontset-font t charset cf))
       (setq face-font-rescale-alist
 	    (mapcar (lambda (item) (cons item 1.2)) cfl)))))
 
