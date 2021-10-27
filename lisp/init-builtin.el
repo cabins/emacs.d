@@ -38,16 +38,18 @@
 (add-hook 'prog-mode-hook 'electric-layout-mode)
 
 ;; Flymake
-(diminish 'flymake-mode "Fly")
 (add-hook 'prog-mode-hook 'flymake-mode)
 ;; (remove-hook 'flymake-diagnostic-functions #'flymake-proc-legacy-flymake)
 
 ;; HideShow Minor Mode
-(diminish 'hs-minor-mode)
+(add-hook 'hs-minor-mode-hook (lambda () (diminish 'hs-minor-mode)))
 (add-hook 'prog-mode-hook 'hs-minor-mode)
 
 ;; Line Number
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
+
+;; modeline settings
+(add-hook 'after-init-hook 'column-number-mode)
 
 ;; Org Mode
 (setq org-hide-leading-stars t
@@ -60,7 +62,7 @@
   (setq-default show-paren-style 'mixed
 		show-paren-when-point-inside-paren t
 		show-paren-when-point-in-periphery t)
-  :init (add-hook 'prog-mode-hook 'show-paren-mode))
+  :hook (prog-mode . show-paren-mode))
 
 ;; Recentf
 (use-package recentf
