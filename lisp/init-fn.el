@@ -3,7 +3,7 @@
 ;; Maintainer: Cabins
 
 ;;; Commentary:
-;; the functions are all for debuging.
+;; custom commands or debugging functions.
 ;; (c) Cabins Kong, 2020-2021
 
 ;;; Code:
@@ -15,7 +15,7 @@
   (interactive)
   (when (not (eq scroll-bar-mode -1)) (scroll-bar-mode -1))
   (when (not (eq tool-bar-mode -1)) (tool-bar-mode -1))
-  ;; menu-bar, keep on macos
+  ;; menu-bar, keep on macOS
   (if (and (display-graphic-p) (eq system-type 'darwin))
       (menu-bar-mode 1)
     (menu-bar-mode -1))
@@ -55,21 +55,12 @@
      (float-time (time-since time))))
 
 ;;;###autoload
-(defun tenon/tmp-reset-elpa-repo ()
-  "Reset Elpa temporary.  Useful when emacs-china sync fails."
-
-  (interactive)
-  (setq package-archives '(("gnu"   . "http://elpa.gnu.org/packages/")
-                           ("melpa" . "http://melpa.org/packages/"))))
-
-;;;###autoload
 (defun tenon/update-config ()
   "Update tenon config."
 
   (interactive)
   (cd user-emacs-directory)
   (shell-command "git pull"))
-
 
 (defun available-font (font-list)
   "Get the first available font from FONT-LIST."
@@ -98,8 +89,7 @@
 	    (mapcar (lambda (item) (cons item 1.2)) cfl)))))
 
 (provide 'init-fn)
-
+;;; init-fn.el ends here
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
 ;; End:
-;;; init-fn.el ends here

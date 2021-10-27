@@ -36,7 +36,7 @@
 (set-language-environment "UTF-8")
 
 ;; Load theme early to avoid the blinking
-(load-theme 'dichromacy)
+(load-theme 'leuven)
 
 ;; Cleaner GUI
 (scroll-bar-mode -1)
