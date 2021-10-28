@@ -4,7 +4,7 @@
 
 ;;; Code:
 
-;; Abbrev
+;; abbrev mode, as it is written in C, we can't configure it with use-package format
 (setq-default abbrev-mode t)
 (diminish 'abbrev-mode)
 
@@ -42,6 +42,8 @@
 
 ;; Flyspell
 ;; to use this package, you may install 'aspell' and dict by manual
+;; for example, "pacman -S aspell" on archlinux
+;; and "pacman -S pacman -S mingw64/mingw-w64-x86_64-aspell{,-en}" on msys2 (Windows)
 (use-package flyspell
   :hook ((text-mode . flyspell-mode)
 	 (prog-mode . flyspell-prog-mode)))
@@ -55,11 +57,13 @@
 (defalias 'list-buffers 'ibuffer)
 
 ;; Line Number
+;; this package introduced in Emacs 26, so only enabled when 26+
 (use-package display-line-numbers
   :if (> emacs-major-version 26)
   :hook (prog-mode . display-line-numbers-mode))
 
 ;; modeline settings
+;; column number is useless in most time, but useful when debug code.
 (add-hook 'after-init-hook 'column-number-mode)
 
 ;; Org Mode
@@ -69,10 +73,9 @@
 ;; Parentheses
 (use-package paren
   :ensure nil
-  :config
-  (setq-default show-paren-style 'mixed
-		show-paren-when-point-inside-paren t
-		show-paren-when-point-in-periphery t)
+  :config (setq-default show-paren-style 'mixed
+			show-paren-when-point-inside-paren t
+			show-paren-when-point-in-periphery t)
   :hook (prog-mode . show-paren-mode))
 
 ;; Recentf
@@ -86,7 +89,6 @@
   (add-to-list 'recentf-exclude '("~\/.emacs.d\/elpa\/")))
 
 (provide 'init-builtin)
-
 ;;; init-builtin.el ends here
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)

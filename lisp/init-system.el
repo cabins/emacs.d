@@ -19,6 +19,8 @@
       (append elisp-flymake-byte-compile-load-path load-path))
 
 ;;; system coding
+;; although others may add many other settings here,
+;; but I think the next line is enough
 (prefer-coding-system 'utf-8)
 
 ;;; emacs settings
@@ -60,7 +62,8 @@
 	w32-pipe-buffer-size (* 64 1024)
 	selection-coding-system 'utf-8))
 
-;;; daemon mode
+;; daemon mode
+;; after make frame with daemon mode, the font reset is needed.
 (if (daemonp)
     (add-hook 'after-make-frame-functions
               (lambda (frame)
@@ -70,7 +73,6 @@
 
 (provide 'init-system)
 ;;; init-system.el ends here
-
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
 ;; End:

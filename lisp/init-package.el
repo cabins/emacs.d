@@ -10,23 +10,29 @@
 ;; [Refs] https://github.com/seagle0128/doom-modeline
 (use-package all-the-icons)
 
-;; ace-window (install avy as dependency)
+;; ace-window, very useful when switch buffers
+;; (install avy as dependency, so you can also use avy when this package is installed)
 (use-package ace-window
   :bind ("C-x o" . ace-window))
 
+;; async
+(use-package async)
+
 ;; Auto update packages
+;; this maybe useful, if you want to update all the packages with command, just like me
 (use-package auto-package-update
   :init (setq auto-package-update-delete-old-versions t
 	      auto-package-update-hide-results t))
 
-;; Never lose the cursor
+;; beacon, never lose the cursor
+;; when buffer switched, it shows a beautiful shadow where the cursor is
 (use-package beacon
   :diminish
   :config (setq beacon-size 10
 		beacon-blink-when-window-scrolls nil)
   :hook (after-init . beacon-mode))
 
-;; Settings for company
+;; Settings for company, auto-complete for texting, coding, etc.
 (use-package company
   :diminish "Cmp"
   :hook (after-init . global-company-mode)
@@ -60,7 +66,8 @@
   :if (memq window-system '(mac ns x))
   :init (exec-path-from-shell-initialize))
 
-;; format all
+;; format all, formatter for almost languages
+;; great for programmers
 (use-package format-all
   :diminish
   :hook ((prog-mode . format-all-mode)
@@ -107,11 +114,14 @@
   :init (setq olivetti-body-width .7)
   :hook (org-mode . olivetti-mode))
 
-;; org-bullets
+;; org-superstar
+;; make the org mode more beautiful with optimized leading chars
 (use-package org-superstar
   :hook (org-mode . org-superstar-mode))
 
-;; pdf-tools
+;; pdf-tools, open pdf files in Emacs
+;; it'll build the essential dependencies automatically
+;; if you use Windows, prefer to msys2 installed
 (use-package pdf-tools
   :hook (after-init . pdf-loader-install))
 

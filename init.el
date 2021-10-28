@@ -14,22 +14,20 @@
 ;; update load-path
 (push (expand-file-name "lisp" user-emacs-directory) load-path)
 
-;; settings for independent packages and etc.
-(require 'init-fn)
-(require 'init-system)
-(require 'init-elpa)
-(require 'init-builtin)
-(require 'init-package)
-(require 'init-kbd)
-(require 'init-lang)
+(require 'init-fn)			;define the functions
+(require 'init-system)			;better emacs configs
+(require 'init-elpa)			;package initialize
+(require 'init-builtin)			;better builtin packages
+(require 'init-package)			;third-part packages
+(require 'init-kbd)			;key bindings
+(require 'init-lang)			;for programming
 
-;; load custom file at last
+;; don't forget to load custom file at last
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (when (file-exists-p custom-file)
   (load custom-file))
 
 (provide 'init)
-
 ;;; init.el ends here
 ;; Local Variables:
 ;; byte-compile-warnings: (not unresolved obsolete)
