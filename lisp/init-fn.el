@@ -88,6 +88,24 @@
       (setq face-font-rescale-alist
 	    (mapcar (lambda (item) (cons item 1.2)) cfl)))))
 
+;;;###autoload
+(defun tenon/tenon-theme-alpha ()
+  "Tenon theme under alpha test."
+
+  (interactive)
+  (mapc #'disable-theme custom-enabled-themes)
+  ;; default face
+  (set-face-attribute 'default nil :foreground "#a46398")
+  ;; modeline face
+  (set-face-attribute 'mode-line nil
+                      :foreground "#ffffff"
+                      :background "#a46398"
+                      :box nil)
+  (set-face-attribute 'mode-line-inactive nil
+                      :foreground "#ffffff"
+                      :background "#c8a1b7"
+                      :box nil))
+
 (provide 'init-fn)
 ;;; init-fn.el ends here
 ;; Local Variables:
