@@ -7,9 +7,8 @@
 ;; add melpa to package-archives
 (require 'package)
 (setq package-check-signature nil
-      load-prefer-newer t
-      package-archives '(("melpa" . "http://melpa.org/packages/")
-			 ("gnu" . "https://elpa.gnu.org/packages/")))
+      load-prefer-newer t)
+(add-to-list 'package-archives '( "melpa" . "https://melpa.org/packages/"))
 
 ;; don't bother with the initialize, although it may cause much startup time,
 ;; there's no way to avoid this, if you use package.el instead of other package
