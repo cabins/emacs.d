@@ -75,8 +75,8 @@
   "Font setup."
 
   (interactive)
-  (let* ((efl '("Cascadia Code" "Source Code Pro" "Courier New" "Monaco"))
-	 (cfl '("STKaiti" "华文楷体" "STHeiti" "华文黑体" "微软雅黑"))
+  (let* ((efl '("Cascadia Code" "Source Code Pro" "Courier New" "Monaco" "Ubuntu Mono"))
+	 (cfl '("黑体" "STKaiti" "华文楷体" "STHeiti" "华文黑体" "微软雅黑"))
 	 (cf (available-font cfl))
 	 (ef (available-font efl)))
     (when ef
