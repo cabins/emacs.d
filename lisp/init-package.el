@@ -55,16 +55,20 @@
 (use-package ivy-prescient
   :hook (ivy-mode . ivy-prescient-mode))
 
-;; crux
+;; crux, a collection of many useful extensions/commands
 (use-package crux
   :bind (("C-c C-d" . #'crux-duplicate-current-line-or-region)
 	 ("C-a" . #'crux-move-beginning-of-line)))
 
 ;; Settings for exec-path-from-shell
+;; fix the PATH environment variable issue
 (use-package exec-path-from-shell
   :defer nil
   :if (memq window-system '(mac ns x))
   :init (exec-path-from-shell-initialize))
+
+;; focus mode
+(use-package focus)
 
 ;; format all, formatter for almost languages
 ;; great for programmers
@@ -77,7 +81,7 @@
 ;; gnu-elpa-keyring-update
 (use-package gnu-elpa-keyring-update)
 
-;; hungry delete
+;; hungry delete, delete many spaces as one
 (use-package hungry-delete
   :diminish
   :hook (after-init . global-hungry-delete-mode))
@@ -86,14 +90,14 @@
 (use-package iedit
   :bind ("C-M-;" . iedit-mode))
 
-;; info-colors
+;; info-colors, make the info manual as colorful
 (use-package info-colors
   :hook (Info-selection . info-colors-fontify-node))
 
 ;; magit
 (use-package magit)
 
-;; marginalia: show description in minibuffer
+;; marginalia: show description in mini buffer
 (use-package marginalia
   :hook (after-init . marginalia-mode))
 
@@ -101,7 +105,7 @@
 (use-package move-text
   :hook (after-init . move-text-default-bindings))
 
-;; neotree
+;; neotree, file tree manager
 (use-package neotree
   :config (setq neo-autorefresh t
 		neo-theme 'nerd

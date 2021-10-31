@@ -33,10 +33,10 @@
 	    (redisplay)))
 
 ;; System default coding
-(set-language-environment "UTF-8")
+(set-language-environment 'utf-8)
 
 ;; Load theme early to avoid the blinking
-(load-theme 'leuven)
+(load-theme 'wombat)
 
 ;; Cleaner GUI
 (scroll-bar-mode -1)
