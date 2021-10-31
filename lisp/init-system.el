@@ -53,7 +53,8 @@
 ;; <macOS> Command -> Meta, Option -> Super
 (when (eq system-type 'darwin)
   (setq mac-command-modifier 'meta
-	mac-option-modifier 'super))
+	mac-option-modifier 'super
+	ns-use-native-fullscreen t))
 
 ;;; Windows special settings
 (when (boundp 'w32-get-true-file-attributes)
