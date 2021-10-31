@@ -8,22 +8,22 @@
 ;;; Code:
 
 ;;; ========== ide features
+;; implements the ide features with eglot (another lsp client instead of lsp-mode)
 (require 'init-eglot)
 
 ;;; ========== language features
-(require 'init-elisp)
-(require 'init-go)
-(require 'init-python)
-(require 'init-rust)
-(require 'init-web)
+(require 'init-elisp)			; elisp
+(require 'init-go)			; golang
+(require 'init-python)			; python
+(require 'init-rust)			; rust
+(require 'init-web)			; web development
 
-(use-package json-mode)
-(use-package markdown-mode)
-(use-package protobuf-mode)
-(use-package restclient
-  :init
-  (add-to-list 'auto-mode-alist '("\\.http\\'" . restclient-mode)))
-(use-package yaml-mode)
+(use-package json-mode)			; json support
+(use-package markdown-mode)		; markdown support
+(use-package protobuf-mode)		; protobuf support
+(use-package restclient			; restclient support
+  :mode (("\\.http\\'" . restclient-mode)))
+(use-package yaml-mode)			; yaml support
 
 ;;; ========== code action features
 (use-package quickrun)
@@ -32,5 +32,5 @@
 
 ;;; init-lang.el ends here
 ;; Local Variables:
-;; byte-compile-warnings: (not free-vars unresolved obsolete)
+;; byte-compile-warnings: (not free-vars unresolved)
 ;; End:

@@ -95,15 +95,14 @@
   (interactive)
   (mapc #'disable-theme custom-enabled-themes)
   ;; default face
-  (set-face-attribute 'default nil :foreground "#a46398")
+  ;; (set-face-attribute 'default nil :foreground "#a46398")
   ;; modeline face
   (set-face-attribute 'mode-line nil
                       :foreground "#ffffff"
-                      :background "#a46398"
+                      :background "#007acc"
                       :box nil)
   (set-face-attribute 'mode-line-inactive nil
                       :foreground "#ffffff"
-                      :background "#c8a1b7"
                       :box nil))
 
 (provide 'init-fn)

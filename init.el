@@ -9,9 +9,11 @@
 ;; (c) Cabins Kong, 2020-2021
 
 ;;; Code:
+
+;; set the startup default directory, not essential but recommended.
 (setq default-directory "~/")
 
-;; update load-path
+;; update load-path to make customized lisp codes work
 (push (expand-file-name "lisp" user-emacs-directory) load-path)
 
 (require 'init-fn)			;define the functions
