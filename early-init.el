@@ -36,7 +36,9 @@
 (set-language-environment 'utf-8)
 
 ;; Load theme early to avoid the blinking
-(load-theme 'wombat)
+;; customize the theme directory
+(setq custom-theme-directory (expand-file-name "themes" user-emacs-directory))
+(load-theme 'tenon-dark t)
 
 ;; Cleaner GUI
 (scroll-bar-mode -1)
