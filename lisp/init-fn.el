@@ -76,7 +76,7 @@
 
   (interactive)
   (let* ((efl '("Cascadia Code" "Source Code Pro" "Courier New" "Monaco" "Ubuntu Mono"))
-	 (cfl '("黑体" "华文楷体" "华文黑体" "STHeiti" "STKaiti"))
+	 (cfl '("楷体" "黑体" "STHeiti" "STKaiti"))
 	 (cf (available-font cfl))
 	 (ef (available-font efl)))
     (when ef

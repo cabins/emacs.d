@@ -47,10 +47,10 @@
       (const   "#339cdb")
       (comment "#a0a0a0")
       (doc     "#777778")
-      (func    "#d4d4d4")
+      (func    "#d7d7a7")
       (str     "#db8e73")
       (type    "#d4d4d4")
-      (var     "#d4d4d4")
+      (var     "#8ec8e8")
       (warning "#ef2929"))
 
   (custom-theme-set-faces
@@ -69,7 +69,7 @@
    `(font-lock-negation-char-face             ((,class (:foreground ,const))))
    `(font-lock-reference-face                 ((,class (:foreground ,const))))
    `(font-lock-constant-face                  ((,class (:foreground ,const))))
-   `(font-lock-doc-face                       ((,class (:foreground ,doc))))
+   `(font-lock-doc-face                       ((,class (:foreground ,doc :slant italic))))
    `(font-lock-function-name-face             ((,class (:foreground ,func :bold nil))))
    `(font-lock-keyword-face                   ((,class (:bold nil :foreground ,keyword))))
    `(font-lock-string-face                    ((,class (:foreground ,str))))
@@ -345,6 +345,7 @@
 
    `(evil-ex-substitute-matches               ((t :foreground "#ff0000" :weight normal :strike-through t)))
    `(evil-ex-substitute-replacement           ((t :foreground "#0ff000" :weight normal)))
+   `(eglot-highlight-symbol-face              ((t :background "#282b2e" :underline t :weight bold)))
    ))
 
 (provide-theme 'tenon-dark)
