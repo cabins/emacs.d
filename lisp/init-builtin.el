@@ -46,7 +46,8 @@
 ;; and "pacman -S pacman -S mingw64/mingw-w64-x86_64-aspell{,-en}" on msys2 (Windows)
 (use-package flyspell
   :hook ((text-mode . flyspell-mode)
-	 (prog-mode . flyspell-prog-mode)))
+	 ;;(prog-mode . flyspell-prog-mode)
+	 ))
 
 ;; HideShow Minor Mode
 (use-package hideshow
