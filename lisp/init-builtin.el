@@ -1,4 +1,4 @@
-;;; init-builtin.el --- initialize the builtin plugins -*- lexical-binding: nil -*-
+;;; init-builtin.el --- initialize the builtin plugins -*- lexical-binding: t -*-
 ;;; Commentary:
 ;; (c) Cabins Kong, 2020-2021
 
@@ -11,19 +11,19 @@
 ;; auto save
 ;; auto save when frame lose focus, such as Alt-TAB
 (add-function :after after-focus-change-function
-	      (lambda () (save-some-buffers t)))
+              (lambda () (save-some-buffers t)))
 ;; auto save when buffer changed
 (mapc (lambda (command)
-	(advice-add command :after
-		    (lambda (&rest arg) (save-some-buffers t))))
-      '(ivy-switch-buffer		;ivy action
-	next-buffer			;builtin
-	other-window			;builtin
-	previous-buffer			;builtin
-	switch-to-buffer		;builtin
-	windmove-do-window-select	;windmove-mode, builtin
-	aw-select			;ace-window action
-	))
+        (advice-add command :after
+                    (lambda (&rest arg) (save-some-buffers t))))
+      '(ivy-switch-buffer               ;ivy action
+        next-buffer                     ;builtin
+        other-window                    ;builtin
+        previous-buffer                 ;builtin
+        switch-to-buffer                ;builtin
+        windmove-do-window-select       ;windmove-mode, builtin
+        aw-select))                       ;ace-window action
+
 
 ;; auto revert
 (add-hook 'after-init-hook 'global-auto-revert-mode)
@@ -45,9 +45,9 @@
 ;; for example, "pacman -S aspell" on archlinux
 ;; and "pacman -S pacman -S mingw64/mingw-w64-x86_64-aspell{,-en}" on msys2 (Windows)
 (use-package flyspell
-  :hook ((text-mode . flyspell-mode)
-	 ;;(prog-mode . flyspell-prog-mode)
-	 ))
+  :hook ((text-mode . flyspell-mode)))
+;;(prog-mode . flyspell-prog-mode)
+
 
 ;; HideShow Minor Mode
 (use-package hideshow
@@ -75,8 +75,8 @@
 (use-package paren
   :ensure nil
   :config (setq-default show-paren-style 'mixed
-			show-paren-when-point-inside-paren t
-			show-paren-when-point-in-periphery t)
+                        show-paren-when-point-inside-paren t
+                        show-paren-when-point-in-periphery t)
   :hook (prog-mode . show-paren-mode))
 
 ;; Recentf
@@ -85,9 +85,12 @@
   :ensure nil
   :config
   (setq-default recentf-max-menu-items 20
-		recentf-max-saved-items 20
-		recentf-auto-cleanup 'never)
+                recentf-max-saved-items 20
+                recentf-auto-cleanup 'never)
   (add-to-list 'recentf-exclude '("~\/.emacs.d\/elpa\/")))
+
+;; only use spaces instead of TAB, use C-q TAB to input the TAB char
+(setq-default indent-tabs-mode nil)
 
 (provide 'init-builtin)
 ;;; init-builtin.el ends here
