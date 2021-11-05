@@ -81,9 +81,9 @@
 (use-package gnu-elpa-keyring-update)
 
 ;; hungry delete, delete many spaces as one
-;; (use-package hungry-delete
-;;   :diminish
-;;   :hook (after-init . global-hungry-delete-mode))
+(use-package hungry-delete
+  :diminish
+  :hook (after-init . global-hungry-delete-mode))
 
 ;; iedit
 (use-package iedit

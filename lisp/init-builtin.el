@@ -82,11 +82,9 @@
 ;; Recentf
 (use-package recentf
   :defer 1
-  :ensure nil
   :config
-  (setq-default recentf-max-menu-items 20
-                recentf-max-saved-items 20
-                recentf-auto-cleanup 'never)
+  (setq-default recentf-max-menu-items 50
+                recentf-max-saved-items 100)
   (add-to-list 'recentf-exclude '("~\/.emacs.d\/elpa\/")))
 
 ;; only use spaces instead of TAB, use C-q TAB to input the TAB char
