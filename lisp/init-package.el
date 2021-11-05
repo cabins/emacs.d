@@ -52,10 +52,6 @@
   :init
   (add-hook 'ivy-mode-hook (lambda () (diminish 'ivy-mode)))
   (setq enable-recursive-minibuffers t))
-(use-package ivy-posframe
-  :diminish
-  :config (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-top-center)))
-  :hook (ivy-mode . ivy-posframe-mode))
 (use-package ivy-prescient
   :hook (ivy-mode . ivy-prescient-mode))
 
