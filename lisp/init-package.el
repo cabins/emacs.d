@@ -75,16 +75,16 @@
 (use-package format-all
   :diminish
   :hook ((prog-mode . format-all-mode)
-	 (format-all-mode . format-all-ensure-formatter))
+         (format-all-mode . format-all-ensure-formatter))
   :bind ("C-c f" . #'format-all-buffer))
 
 ;; gnu-elpa-keyring-update
 (use-package gnu-elpa-keyring-update)
 
 ;; hungry delete, delete many spaces as one
-(use-package hungry-delete
-  :diminish
-  :hook (after-init . global-hungry-delete-mode))
+;; (use-package hungry-delete
+;;   :diminish
+;;   :hook (after-init . global-hungry-delete-mode))
 
 ;; iedit
 (use-package iedit

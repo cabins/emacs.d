@@ -4,14 +4,15 @@
 ;;; Code:
 
 ;; Lisp
-(use-package paredit
-  :init
-  (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode))
-
-;; lispy (iedit, hydra as dependency), if you like vim style
-;; (use-package lispy
+;; (use-package paredit
 ;;   :init
-;;   (add-hook 'emacs-lisp-mode-hook 'lispy-mode))
+;;   (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode))
+
+;; parinfer rust mode, keeps indent & parentheses balanced
+;; paredit-like without hotkeys
+;; (use-package parinfer-rust-mode
+;;   :hook emacs-lisp-mode
+;;   :init (setq parinfer-rust-auto-download t))
 
 ;; maybe smartparens is enough, and NO C-, binding
 ;; (use-package smartparens
