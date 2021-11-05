@@ -36,9 +36,12 @@
 (set-language-environment 'utf-8)
 
 ;; Load theme early to avoid the blinking
+;; use new modus theme when greater than 28, else use the customize vscode-like theme
 ;; customize the theme directory
-(setq custom-theme-directory (expand-file-name "themes" user-emacs-directory))
-(load-theme 'tenon-dark t)
+(if (>= emacs-major-version 28)
+    (load-theme 'modus-vivendi t)
+  (setq custom-theme-directory (expand-file-name "themes" user-emacs-directory))
+  (load-theme 'tenon-dark t))
 
 ;; Cleaner GUI
 (scroll-bar-mode -1)
