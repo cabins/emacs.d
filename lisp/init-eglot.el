@@ -4,22 +4,18 @@
 ;;; Code:
 
 (use-package eglot
+  :hook ((c-mode c++-mode go-mode java-mode js-mode python-mode rust-mode web-mode) . eglot-ensure)
+  :bind (("C-c e f" . #'eglot-format)
+         ("C-c e i" . #'eglot-code-action-organize-imports)
+         ("C-c e q" . #'eglot-code-action-quickfix))
   :config
   ;; (setq eglot-ignored-server-capabilities '(:documentHighlightProvider))
+  (defun eglot-actions-before-save()
+    (add-hook 'before-save-hook (lambda ()
+                                  (call-interactively #'eglot-format)
+                                  (call-interactively #'eglot-code-action-organize-imports))))
   (add-to-list 'eglot-server-programs '(web-mode "vls"))
-  :init
-  (dolist (hook '(c-mode-hook
-                  c++-mode-hook
-                  go-mode-hook
-                  java-mode-hook
-                  js-mode-hook
-                  python-mode-hook
-                  rust-mode-hook
-                  web-mode-hook))
-    (add-hook hook 'eglot-ensure)
-    (add-hook hook (lambda () (add-hook 'before-save-hook
-                                        (lambda ()
-                                          (call-interactively 'eglot-code-action-organize-imports)))))))
+  (add-hook 'eglot--managed-mode-hook #'eglot-actions-before-save))
 
 (add-hook 'java-mode-hook
           (lambda ()

@@ -74,8 +74,7 @@
 ;; great for programmers
 (use-package format-all
   :diminish
-  :hook ((prog-mode . format-all-mode)
-         (format-all-mode . format-all-ensure-formatter))
+  :hook (prog-mode . format-all-ensure-formatter)
   :bind ("C-c f" . #'format-all-buffer))
 
 ;; gnu-elpa-keyring-update
