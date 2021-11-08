@@ -22,8 +22,8 @@
         previous-buffer                 ;builtin
         switch-to-buffer                ;builtin
         windmove-do-window-select       ;windmove-mode, builtin
-        aw-select))                       ;ace-window action
-
+        aw-select)                      ;ace-window action
+      )
 
 ;; auto revert
 (add-hook 'after-init-hook 'global-auto-revert-mode)
@@ -45,9 +45,8 @@
 ;; for example, "pacman -S aspell" on archlinux
 ;; and "pacman -S pacman -S mingw64/mingw-w64-x86_64-aspell{,-en}" on msys2 (Windows)
 (use-package flyspell
-  :hook ((text-mode . flyspell-mode)))
+  :hook (text-mode . flyspell-mode))
 ;;(prog-mode . flyspell-prog-mode)
-
 
 ;; HideShow Minor Mode
 (use-package hideshow
@@ -78,6 +77,15 @@
                         show-paren-when-point-inside-paren t
                         show-paren-when-point-in-periphery t)
   :hook (prog-mode . show-paren-mode))
+
+;; pulse.el - similar with beacon, but builtin with Emacs
+;; pulse highlight cursor line when switch buffers
+(use-package pulse
+  :init
+  (defun pulse-cursor-line(&rest args)
+    (pulse-momentary-highlight-one-line (point)))
+  (dolist (command '(other-window ace-window switch-to-buffer))
+    (advice-add command :after #'pulse-cursor-line)))
 
 ;; Recentf
 (use-package recentf

@@ -1,4 +1,4 @@
-;;; init-eglot.el --- config for eglot -*- lexical-binding: nil -*-
+;;; init-eglot.el --- config for eglot -*- lexical-binding: t -*-
 ;;; Commentary:
 
 ;;; Code:
@@ -26,7 +26,8 @@
                   (setenv "CLASSPATH" (concat (getenv "CLASSPATH") ";" eglot-server-java))))))
 
 (provide 'init-eglot)
+;;; init-eglot.el ends here
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
 ;; End:
-;;; init-eglot.el ends here
