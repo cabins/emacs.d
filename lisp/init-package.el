@@ -10,11 +10,6 @@
 ;; [Refs] https://github.com/seagle0128/doom-modeline
 (use-package all-the-icons)
 
-;; ace-window, very useful when switch buffers
-;; (install avy as dependency, so you can also use avy when this package is installed)
-(use-package ace-window
-  :bind ("C-x o" . ace-window))
-
 ;; async
 (use-package async)
 
@@ -28,8 +23,7 @@
 (use-package company
   :diminish "Cmp"
   :hook (after-init . global-company-mode)
-  :config (setq company-idle-delay 0
-		company-minimum-prefix-length 1))
+  :config (setq company-minimum-prefix-length 1))
 (use-package company-prescient
   :hook (company-mode . company-prescient-mode))
 

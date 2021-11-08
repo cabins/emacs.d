@@ -8,22 +8,12 @@
 (setq-default abbrev-mode t)
 (diminish 'abbrev-mode)
 
-;; auto save
 ;; auto save when frame lose focus, such as Alt-TAB
 (add-function :after after-focus-change-function
               (lambda () (save-some-buffers t)))
 ;; auto save when buffer changed
-(mapc (lambda (command)
-        (advice-add command :after
-                    (lambda (&rest arg) (save-some-buffers t))))
-      '(ivy-switch-buffer               ;ivy action
-        next-buffer                     ;builtin
-        other-window                    ;builtin
-        previous-buffer                 ;builtin
-        switch-to-buffer                ;builtin
-        windmove-do-window-select       ;windmove-mode, builtin
-        aw-select)                      ;ace-window action
-      )
+(dolist (command '(select-window next-buffer previous-buffer))
+  (advice-add command :after (lambda (&rest args) (save-some-buffers t))))
 
 ;; auto revert
 (add-hook 'after-init-hook 'global-auto-revert-mode)
@@ -46,7 +36,6 @@
 ;; and "pacman -S pacman -S mingw64/mingw-w64-x86_64-aspell{,-en}" on msys2 (Windows)
 (use-package flyspell
   :hook (text-mode . flyspell-mode))
-;;(prog-mode . flyspell-prog-mode)
 
 ;; HideShow Minor Mode
 (use-package hideshow
@@ -54,7 +43,8 @@
   :hook (prog-mode . hs-minor-mode))
 
 ;; ibuffer
-(defalias 'list-buffers 'ibuffer)
+(use-package ibuffer
+  :init (defalias 'list-buffers 'ibuffer))
 
 ;; Line Number
 ;; this package introduced in Emacs 26, so only enabled when 26+
@@ -67,8 +57,11 @@
 (add-hook 'after-init-hook 'column-number-mode)
 
 ;; Org Mode
-(setq org-hide-leading-stars t
-      org-startup-indented t)
+(use-package org
+  :ensure nil
+  :config
+  (setq org-hide-leading-stars t
+        org-startup-indented t))
 
 ;; Parentheses
 (use-package paren
@@ -82,10 +75,8 @@
 ;; pulse highlight cursor line when switch buffers
 (use-package pulse
   :init
-  (defun pulse-cursor-line(&rest args)
-    (pulse-momentary-highlight-one-line (point)))
-  (dolist (command '(other-window ace-window switch-to-buffer))
-    (advice-add command :after #'pulse-cursor-line)))
+  (defun pulse-cursor-line(&rest args) (pulse-momentary-highlight-one-line (point)))
+  (advice-add 'select-window :after #'pulse-cursor-line))
 
 ;; Recentf
 (use-package recentf
@@ -99,6 +90,7 @@
 (setq-default indent-tabs-mode nil)
 
 (provide 'init-builtin)
+
 ;;; init-builtin.el ends here
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
