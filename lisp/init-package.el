@@ -24,14 +24,6 @@
   :init (setq auto-package-update-delete-old-versions t
 	      auto-package-update-hide-results t))
 
-;; beacon, never lose the cursor
-;; when buffer switched, it shows a beautiful shadow where the cursor is
-(use-package beacon
-  :diminish
-  :config (setq beacon-size 10
-		beacon-blink-when-window-scrolls nil)
-  :hook (after-init . beacon-mode))
-
 ;; Settings for company, auto-complete for texting, coding, etc.
 (use-package company
   :diminish "Cmp"
@@ -41,19 +33,10 @@
 (use-package company-prescient
   :hook (company-mode . company-prescient-mode))
 
-;; Ivy & Counsel & Swiper
-(use-package counsel
-  :hook (after-init . ivy-mode)
-  :bind (( "C-s" . swiper)
-	 ( "C-r" . swiper-isearch-backward)
-	 ( "M-x" . counsel-M-x)
-	 ( "C-x C-f" . counsel-find-file)
-	 ( "C-c r" . counsel-recentf))
-  :init
-  (add-hook 'ivy-mode-hook (lambda () (diminish 'ivy-mode)))
-  (setq enable-recursive-minibuffers t))
-(use-package ivy-prescient
-  :hook (ivy-mode . ivy-prescient-mode))
+;; make fido vertical style
+(use-package ido-vertical-mode
+  :hook ((after-init . fido-mode)
+         (fido-mode . fido-vertical-mode)))
 
 ;; crux, a collection of many useful extensions/commands
 (use-package crux
