@@ -28,6 +28,7 @@
 (when (file-exists-p custom-file) (load custom-file))
 
 (provide 'init)
+
 ;;; init.el ends here
 ;; Local Variables:
 ;; byte-compile-warnings: (not unresolved obsolete)

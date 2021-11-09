@@ -24,13 +24,6 @@
 
 ;; Do not resize the frame at this early stage.
 (setq frame-inhibit-implied-resize t)
-(setq-default inhibit-redisplay t
-	      inhibit-message t)
-(add-hook 'window-setup-hook
-	  (lambda ()
-	    (setq-default inhibit-redisplay nil
-			  inhibit-message nil)
-	    (redisplay)))
 
 ;; System default coding
 (set-language-environment 'utf-8)
@@ -44,10 +37,12 @@
   (load-theme 'tenon-dark t))
 
 ;; Cleaner GUI
-(scroll-bar-mode -1)
-(tool-bar-mode -1)
-(menu-bar-mode -1)
-(fringe-mode 0)
+(unless (eq system-type 'darwin)
+  (menu-bar-mode -1))
+(when (fboundp 'tool-bar-mode)
+  (tool-bar-mode -1))
+(when (fboundp 'scroll-bar-mode)
+  (scroll-bar-mode -1))
 
 ;;; early-init.el ends here
 ;; Local Variables:

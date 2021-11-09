@@ -9,21 +9,6 @@
 ;;; Code:
 
 ;;;###autoload
-(defun tenon/cleaner-gui ()
-  "Make GUI cleaner, with less UI elements."
-
-  (interactive)
-  (when (not (eq scroll-bar-mode -1)) (scroll-bar-mode -1))
-  (when (not (eq tool-bar-mode -1)) (tool-bar-mode -1))
-  ;; menu-bar, keep on macOS
-  (if (and (display-graphic-p) (eq system-type 'darwin))
-      (menu-bar-mode 1)
-    (menu-bar-mode -1))
-  (fringe-mode 0))
-
-(add-hook 'window-setup-hook 'tenon/cleaner-gui)
-
-;;;###autoload
 (defun tenon/change-theme ()
   "Change theme."
 
