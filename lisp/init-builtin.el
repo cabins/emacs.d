@@ -8,34 +8,43 @@
 (setq-default abbrev-mode t)
 (diminish 'abbrev-mode)
 
-;; auto save when frame lose focus, such as Alt-TAB
-(add-function :after after-focus-change-function
-              (lambda () (save-some-buffers t)))
-;; auto save when buffer changed
-(dolist (command '(select-window next-buffer previous-buffer))
-  (advice-add command :after (lambda (&rest args) (save-some-buffers t))))
+;; auto save
+;; `save-some-buffers' is provided by files.el (builtin)
+(use-package files
+  :ensure nil
+  :init
+  (defun auto-save-buffers (&rest args) (save-some-buffers t))
+  ;; auto save when frame lose focus, Alt-Tab
+  (add-function :after after-focus-change-function #'auto-save-buffers)
+  ;; auto save when buffer changed
+  (dolist (command '(select-window next-buffer previous-buffer))
+    (advice-add command :after #'auto-save-buffers)))
 
 ;; auto revert
-(add-hook 'after-init-hook 'global-auto-revert-mode)
+;; `global-auto-revert-mode' is provided by autorevert.el (builtin)
+(use-package autorevert
+  :hook (after-init . global-auto-revert-mode))
 
 ;; Delete Behavior
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
 (add-hook 'after-init-hook 'delete-selection-mode)
 
 ;; Electric-Pair
-(add-hook 'prog-mode-hook 'electric-indent-mode)
-(add-hook 'prog-mode-hook 'electric-pair-mode)
-(add-hook 'prog-mode-hook 'electric-layout-mode)
+(use-package electric
+  :hook ((prog-mode . electric-indent-mode)
+         (prog-mode . electric-layout-mode)
+         (prog-mode . electric-pair-mode)))
 
 ;; Flymake
-(add-hook 'prog-mode-hook 'flymake-mode)
+(use-package flymake
+  :hook (prog-mode . flymake-mode))
 
 ;; Flyspell
 ;; to use this package, you may install 'aspell' and dict by manual
 ;; for example, "pacman -S aspell" on archlinux
 ;; and "pacman -S pacman -S mingw64/mingw-w64-x86_64-aspell{,-en}" on msys2 (Windows)
 (use-package flyspell
-  :hook (text-mode . flyspell-mode))
+  :hook ((text-mode org-mode) . flyspell-mode))
 
 ;; HideShow Minor Mode
 (use-package hideshow
