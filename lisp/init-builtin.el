@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;; (c) Cabins Kong, 2020-2021
 
-;;; Code:
+;; Code:
 
 ;; abbrev mode, as it is written in C, we can't configure it with use-package format
 (setq-default abbrev-mode t)
@@ -10,15 +10,21 @@
 
 ;; auto save
 ;; `save-some-buffers' is provided by files.el (builtin)
-(use-package files
+;; `pulse-momentary-highlight-one-line' is provided by pulse.el (builtin)
+(use-package pulse-and-save
   :ensure nil
   :init
-  (defun auto-save-buffers (&rest args) (save-some-buffers t))
+  (defun pulse-save-buffers (&rest args)
+    (save-some-buffers t)
+    (pulse-momentary-highlight-one-line (point)))
   ;; auto save when frame lose focus, Alt-Tab
-  (add-function :after after-focus-change-function #'auto-save-buffers)
+  (add-function :after after-focus-change-function #'pulse-save-buffers)
   ;; auto save when buffer changed
-  (dolist (command '(select-window next-buffer previous-buffer))
-    (advice-add command :after #'auto-save-buffers)))
+  (dolist (command '(other-window
+                     switch-to-buffer
+                     next-buffer
+                     previous-buffer))
+    (advice-add command :after #'pulse-save-buffers)))
 
 ;; auto revert
 ;; `global-auto-revert-mode' is provided by autorevert.el (builtin)
@@ -26,8 +32,11 @@
   :hook (after-init . global-auto-revert-mode))
 
 ;; Delete Behavior
-(add-hook 'before-save-hook #'delete-trailing-whitespace)
-(add-hook 'after-init-hook 'delete-selection-mode)
+;; `delete-selection-mode' is provided by delsel.el (builtin)
+;; `delete-trailing-whitespace' is provided by simple.el (builtin)
+(use-package delsel
+  :hook ((before-save . #'delete-trailing-whitespace)
+         (after-init . delete-selection-mode)))
 
 ;; Electric-Pair
 (use-package electric
@@ -79,13 +88,6 @@
                         show-paren-when-point-inside-paren t
                         show-paren-when-point-in-periphery t)
   :hook (prog-mode . show-paren-mode))
-
-;; pulse.el - similar with beacon, but builtin with Emacs
-;; pulse highlight cursor line when switch buffers
-(use-package pulse
-  :init
-  (defun pulse-cursor-line(&rest args) (pulse-momentary-highlight-one-line (point)))
-  (advice-add 'select-window :after #'pulse-cursor-line))
 
 ;; Recentf
 (use-package recentf
