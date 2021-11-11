@@ -2,11 +2,13 @@
 ;;; Commentary:
 ;; (c) Cabins Kong, 2020-2021
 
-;; Code:
+;;; Code:
 
 ;; abbrev mode, as it is written in C, we can't configure it with use-package format
-(setq-default abbrev-mode t)
-(diminish 'abbrev-mode)
+(use-package abbrev
+  :ensure nil
+  :diminish abbrev-mode
+  :init (setq-default abbrev-mode t))
 
 ;; auto save
 ;; `save-some-buffers' is provided by files.el (builtin)

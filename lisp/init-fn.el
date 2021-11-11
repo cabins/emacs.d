@@ -19,13 +19,6 @@
       (mapcar #'disable-theme theme-list))))
 
 ;;;###autoload
-(defun tenon/preferences ()
-  "Open the init file."
-
-  (interactive)
-  (find-file user-init-file))
-
-;;;###autoload
 (defun tenon/reload-init-file ()
   "Reload Emacs init file."
 
@@ -60,7 +53,7 @@
   "Font setup."
 
   (interactive)
-  (let* ((efl '("Cascadia Code" "Source Code Pro" "Courier New" "Monaco" "Ubuntu Mono"))
+  (let* ((efl '("Cascadia Code" "Source Code Pro" "JetBrains Mono" "Courier New" "Monaco" "Ubuntu Mono"))
 	 (cfl '("楷体" "黑体" "STHeiti" "STKaiti"))
 	 (cf (available-font cfl))
 	 (ef (available-font efl)))
@@ -73,24 +66,8 @@
       (setq face-font-rescale-alist
 	    (mapcar (lambda (item) (cons item 1.2)) cfl)))))
 
-;;;###autoload
-(defun tenon/tenon-theme-alpha ()
-  "Tenon theme under alpha test."
-
-  (interactive)
-  (mapc #'disable-theme custom-enabled-themes)
-  ;; default face
-  ;; (set-face-attribute 'default nil :foreground "#a46398")
-  ;; modeline face
-  (set-face-attribute 'mode-line nil
-                      :foreground "#ffffff"
-                      :background "#007acc"
-                      :box nil)
-  (set-face-attribute 'mode-line-inactive nil
-                      :foreground "#ffffff"
-                      :box nil))
-
 (provide 'init-fn)
+
 ;;; init-fn.el ends here
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
