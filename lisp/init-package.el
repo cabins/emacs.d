@@ -27,6 +27,10 @@
 (use-package company-prescient
   :hook (company-mode . company-prescient-mode))
 
+;; ctrlf, good isearch alternative
+(use-package ctrlf
+  :hook (after-init . ctrlf-mode))
+
 ;; make fido vertical style
 (use-package ido-vertical-mode
   :hook ((after-init . fido-mode)

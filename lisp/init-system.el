@@ -5,7 +5,7 @@
 ;;; Code:
 
 ;;; Emacs 28 native compile
-(when (and (> emacs-major-version 27)
+(when (and (>= emacs-major-version 28)
 	   (fboundp 'native-comp-available-p)
 	   (native-comp-available-p))
   (setq native-comp-async-report-warnings-errors nil)
@@ -34,10 +34,9 @@
       inhibit-default-init t
       ;; initial-scratch-message nil
       inhibit-compacting-font-caches t
-      initial-major-mode 'fundamental-mode
       make-backup-files nil             ; disable backup file
       ;; Mouse wheel scroll behavior
-      mouse-wheel-scroll-amount '(1 ((shift) . 1))
+      ;; mouse-wheel-scroll-amount '(1 ((shift) . 1))
       mouse-wheel-progressive-speed nil
       mouse-wheel-follow-mouse t
       next-line-add-newlines nil

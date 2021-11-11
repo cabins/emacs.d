@@ -32,9 +32,9 @@
 ;; use new modus theme when greater than 28, else use the customize vscode-like theme
 ;; customize the theme directory
 (if (>= emacs-major-version 28)
-    (load-theme 'modus-vivendi t)
+    (load-theme 'modus-operandi t)
   (setq custom-theme-directory (expand-file-name "themes" user-emacs-directory))
-  (load-theme 'tenon-dark t))
+  (load-theme 'tenon-light t))
 
 ;; Cleaner GUI
 (unless (eq system-type 'darwin)
