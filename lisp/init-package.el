@@ -32,10 +32,9 @@
 (use-package ctrlf
   :hook (after-init . ctrlf-mode))
 
-;; make fido vertical style
-(use-package ido-vertical-mode
-  :hook ((after-init . fido-mode)
-         (fido-mode . fido-vertical-mode)))
+;; ;; make fido vertical style
+;; (use-package ido-vertical-mode
+;;   :hook (fido-mode . fido-vertical-mode))
 
 ;; crux, a collection of many useful extensions/commands
 (use-package crux
@@ -78,9 +77,9 @@
 ;; magit
 (use-package magit)
 
-;; marginalia: show description in mini buffer
-(use-package marginalia
-  :hook (after-init . marginalia-mode))
+;; ;; marginalia: show description in mini buffer
+;; (use-package marginalia
+;;   :hook (after-init . marginalia-mode))
 
 ;; move-text, move line or region with M-<up>/<down>
 (use-package move-text
@@ -94,10 +93,10 @@
 		neo-smart-open t)
   :bind ("<f8>" . neotree-toggle))
 
-;; olivetti
-(use-package olivetti
-  :init (setq olivetti-body-width .7)
-  :hook (org-mode . olivetti-mode))
+;; ;; olivetti
+;; (use-package olivetti
+;;   :init (setq olivetti-body-width .7)
+;;   :hook (org-mode . olivetti-mode))
 
 ;; org-superstar
 ;; make the org mode more beautiful with optimized leading chars
