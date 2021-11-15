@@ -59,9 +59,11 @@
 (when (boundp 'w32-get-true-file-attributes)
   (setq w32-get-true-file-attributes nil
 	w32-pipe-read-delay 0
-	w32-pipe-buffer-size (* 64 1024)
-	selection-coding-system 'utf-16-le) ; solve the chinese paste issue
-  )
+	w32-pipe-buffer-size (* 64 1024)))
+
+;; solve the Chinese paste issue
+(unless (memq system-type '(cygwin windows-nt ms-dos))
+  selection-coding-system 'utf-8)
 
 ;; daemon mode
 ;; after make frame with daemon mode, the font reset is needed.

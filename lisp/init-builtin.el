@@ -4,7 +4,8 @@
 
 ;;; Code:
 
-;; abbrev mode, as it is written in C, we can't configure it with use-package format
+;; abbrev mode, as it is written in C, we can't configure it with
+;; use-package without 'ensure nil' flag
 (use-package abbrev
   :ensure nil
   :diminish abbrev-mode
@@ -90,6 +91,12 @@
                         show-paren-when-point-inside-paren t
                         show-paren-when-point-in-periphery t)
   :hook (prog-mode . show-paren-mode))
+
+;; Prettify Symbols
+;; `global-prettify-symbols-mode' is provided by prog-mode.el
+(use-package prog-mode
+  :ensure nil
+  :config (global-prettify-symbols-mode t))
 
 ;; Recentf
 (use-package recentf

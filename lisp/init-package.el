@@ -11,7 +11,8 @@
 (use-package all-the-icons)
 
 ;; async
-(use-package async)
+(use-package async
+  :init (dired-async-mode t))
 
 ;; Auto update packages
 ;; this maybe useful, if you want to update all the packages with command, just like me
