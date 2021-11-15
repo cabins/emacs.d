@@ -47,6 +47,11 @@
          (prog-mode . electric-layout-mode)
          (prog-mode . electric-pair-mode)))
 
+;; fido-mode
+;; `fido-mode' is provided by icomplete.el
+(use-package icomplete
+  :hook (after-init . fido-mode))
+
 ;; Flymake
 (use-package flymake
   :hook (prog-mode . flymake-mode))
