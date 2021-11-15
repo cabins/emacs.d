@@ -105,7 +105,8 @@
 
 ;; Recentf
 (use-package recentf
-  :defer 1
+  :hook (after-init . recentf-mode)
+  :bind (("C-c r" . #'recentf-open-files))
   :config
   (setq-default recentf-max-menu-items 50
                 recentf-max-saved-items 100)
