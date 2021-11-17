@@ -11,7 +11,7 @@
 (add-to-list 'package-archives '( "melpa" . "https://melpa.org/packages/"))
 
 ;; don't bother with the initialize, although it may cause much startup time,
-;; there's no way to avoid this, if you use package.el instead of other package
+;; there's no way to avoid this if you use package.el instead of other package
 ;; manager, like straight.el
 (unless (bound-and-true-p package--initialized)
   (package-initialize))

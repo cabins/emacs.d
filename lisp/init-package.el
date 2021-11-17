@@ -78,6 +78,7 @@
 (use-package magit)
 
 ;; ;; marginalia: show description in mini buffer
+;; ;; as I use ido instead of counsel or helm, this is not necessary
 ;; (use-package marginalia
 ;;   :hook (after-init . marginalia-mode))
 

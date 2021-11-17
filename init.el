@@ -25,7 +25,7 @@
 
 ;; don't forget to load custom file at last
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-(when (file-exists-p custom-file) (load custom-file))
+(when (file-exists-p custom-file) (load custom-file nil t))
 
 (provide 'init)
 
