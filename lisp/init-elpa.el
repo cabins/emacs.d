@@ -8,7 +8,7 @@
 (require 'package)
 (setq package-check-signature nil
       load-prefer-newer t)
-(add-to-list 'package-archives '( "melpa" . "https://melpa.org/packages/"))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 
 ;; don't bother with the initialize, although it may cause much startup time,
 ;; there's no way to avoid this if you use package.el instead of other package
