@@ -29,6 +29,7 @@
                      previous-buffer))
     (advice-add command :after #'pulse-save-buffers)))
 
+
 ;; auto revert
 ;; `global-auto-revert-mode' is provided by autorevert.el (builtin)
 (use-package autorevert
@@ -37,14 +38,13 @@
 ;; Delete Behavior
 ;; `delete-selection-mode' is provided by delsel.el (builtin)
 ;; `delete-trailing-whitespace' is provided by simple.el (builtin)
-(use-package delsel
-  :hook ((before-save . #'delete-trailing-whitespace)
-         (after-init . delete-selection-mode)))
+(add-hook 'before-save-hook #'delete-trailing-whitespace)
+(add-hook 'after-init-hook 'delete-selection-mode)
 
 ;; Electric-Pair
+;; default value of `electric-indent-mode' is t
 (use-package electric
-  :hook ((prog-mode . electric-indent-mode)
-         (prog-mode . electric-layout-mode)
+  :hook ((prog-mode . electric-layout-mode)
          (prog-mode . electric-pair-mode)))
 
 ;; fido-mode
@@ -88,14 +88,6 @@
   :config
   (setq org-hide-leading-stars t
         org-startup-indented t))
-
-;; Parentheses
-(use-package paren
-  :ensure nil
-  :config (setq-default show-paren-style 'mixed
-                        show-paren-when-point-inside-paren t
-                        show-paren-when-point-in-periphery t)
-  :hook (prog-mode . show-paren-mode))
 
 ;; Prettify Symbols
 ;; `global-prettify-symbols-mode' is provided by prog-mode.el
