@@ -72,7 +72,7 @@
               (lambda (frame)
 		(with-selected-frame frame
 		  (tenon/reset-font-setup))))
-  (add-hook 'after-init-hook #'tenon/reset-font-setup))
+  (tenon/reset-font-setup))
 
 (provide 'init-system)
 ;;; init-system.el ends here
