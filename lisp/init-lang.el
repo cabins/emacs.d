@@ -8,7 +8,8 @@
 ;;; Code:
 
 ;;; ========== ide features
-;; implements the ide features with eglot (another lsp client instead of lsp-mode)
+;; implements the ide features with eglot
+;; (another lsp client instead of lsp-mode)
 (require 'init-eglot)
 
 ;;; ========== language features
@@ -18,6 +19,7 @@
 (require 'init-rust)			; rust
 (require 'init-web)			; web development
 
+;;; ========== tools & serializers
 (use-package json-mode)			; json support
 (use-package markdown-mode)		; markdown support
 (use-package protobuf-mode)		; protobuf support
