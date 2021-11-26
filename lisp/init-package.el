@@ -75,6 +75,8 @@
   :hook (Info-selection . info-colors-fontify-node))
 
 ;; magit
+;; although I keep the package, I highly recommend you use
+;; emacs `vc-git' on Windows (or all other system, if you like)
 (use-package magit)
 
 ;; ;; marginalia: show description in mini buffer
