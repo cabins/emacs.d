@@ -62,6 +62,7 @@
 	w32-pipe-buffer-size (* 64 1024)))
 
 ;; solve the Chinese paste issue
+;; let Emacs auto guess the selection coding according to the Windows settings
 (unless (memq system-type '(cygwin windows-nt ms-dos))
   selection-coding-system 'utf-8)
 

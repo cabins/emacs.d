@@ -10,6 +10,10 @@
 ;;; ========== ide features
 ;; implements the ide features with eglot
 ;; (another lsp client instead of lsp-mode)
+;; Please, DON'T use any lsp client on Windows, for currently.
+;;(unless (memq system-type '(windows-nt dos))
+;;  (require 'init-eglot))
+
 (require 'init-eglot)
 
 ;;; ========== language features
