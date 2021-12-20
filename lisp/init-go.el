@@ -4,12 +4,17 @@
 ;;; Code:
 
 ;; Golang
-(use-package go-mode
-  :config
-  (use-package go-fill-struct)
-  (use-package go-impl)
-  (use-package go-gen-test)
-  (use-package go-tag))
+(use-package company-go)                ;
+(use-package go-mode)
+;; (add-hook 'go-mode-hook (lambda ()
+;;                           (set (make-local-variable 'company-backends) '(company-go))
+;;                           (company-mode)))
+
+(use-package go-fill-struct)
+(use-package go-impl)
+(use-package go-gen-test)
+(use-package go-tag)
+
 
 (provide 'init-go)
 

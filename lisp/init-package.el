@@ -24,7 +24,10 @@
 (use-package company
   :diminish "Cmp"
   :hook (after-init . global-company-mode)
-  :config (setq company-minimum-prefix-length 1))
+  :config (setq company-minimum-prefix-length 1
+                company-idle-delay .3
+                company-echo-delay 0
+                company-begin-commands '(self-insert-command)))
 (use-package company-prescient
   :hook (company-mode . company-prescient-mode))
 
@@ -74,6 +77,11 @@
 (use-package info-colors
   :hook (Info-selection . info-colors-fontify-node))
 
+;; kaolin-themes
+(use-package kaolin-themes
+  :init
+  (load-theme 'kaolin-dark t))
+
 ;; magit
 ;; although I keep the package, I highly recommend you use
 ;; emacs `vc-git' on Windows (or all other system, if you like)
@@ -101,6 +109,10 @@
 ;;   :init (setq olivetti-body-width .7)
 ;;   :hook (org-mode . olivetti-mode))
 
+;; orderless
+(use-package orderless
+  :custom (completion-styles '(orderless)))
+
 ;; org-superstar
 ;; make the org mode more beautiful with optimized leading chars
 (use-package org-superstar
@@ -110,6 +122,7 @@
 ;; it'll build the essential dependencies automatically
 ;; if you use Windows, prefer to msys2 installed
 (use-package pdf-tools
+  :unless (memq system-type '(windows-nt cygwin dos))
   :hook (after-init . pdf-loader-install))
 
 ;; popwin

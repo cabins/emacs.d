@@ -29,7 +29,6 @@
                      previous-buffer))
     (advice-add command :after #'pulse-save-buffers)))
 
-
 ;; auto revert
 ;; `global-auto-revert-mode' is provided by autorevert.el (builtin)
 (use-package autorevert

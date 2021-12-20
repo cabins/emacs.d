@@ -29,11 +29,11 @@
 (set-language-environment 'utf-8)
 
 ;; Load theme early to avoid the blinking
-;; use new modus theme when greater than 28, else use the customize vscode-like theme
-;; customize the theme directory
-(if (>= emacs-major-version 28)
-    (load-theme 'modus-vivendi t)
-  (load-theme 'wombat t))
+;; use new modus theme when greater than 28
+;; Comment out these lines, if you use customized themes.
+;; (if (>= emacs-major-version 28)
+;;     (load-theme 'modus-vivendi t)
+;;   (load-theme 'wombat t))
 
 ;; Cleaner GUI
 (unless (eq system-type 'darwin)
