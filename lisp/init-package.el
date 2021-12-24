@@ -51,6 +51,10 @@
   :if (memq window-system '(mac ns x))
   :init (exec-path-from-shell-initialize))
 
+;; emojify mode
+(use-package emojify
+  :hook (after-init . global-emojify-mode))
+
 ;; focus mode
 (use-package focus)
 
