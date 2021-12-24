@@ -138,6 +138,7 @@
 
 ;; undo tree
 (use-package undo-tree
+  :when (< emacs-major-version 28) ; Emacs 28 introduces `undo-redo' command with C-M-_ keybinding
   :diminish
   :hook (after-init . global-undo-tree-mode))
 

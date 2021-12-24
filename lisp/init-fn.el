@@ -55,16 +55,23 @@
   (interactive)
   (let* ((efl '("Cascadia Code" "Source Code Pro" "JetBrains Mono" "Courier New" "Monaco" "Ubuntu Mono"))
 	 (cfl '("楷体" "黑体" "STHeiti" "STKaiti"))
+         (eml '("Apple Color Emoji" "Segoe UI Emoji" "Noto Color Emoji" "Symbola" "Symbol"))
 	 (cf (available-font cfl))
-	 (ef (available-font efl)))
+	 (ef (available-font efl))
+         (em (available-font eml)))
     (when ef
       (dolist (face '(default fixed-pitch fixed-pitch-serif variable-pitch))
 	(set-face-attribute face nil :family ef)))
+    (when em
+      (set-fontset-font t 'unicode em nil 'prepend)
+      (set-fontset-font t 'unicode-bmp em nil 'prepend)
+      (set-fontset-font t 'symbol em nil 'prepend)
+      (set-fontset-font t 'emoji em nil 'prepend))
     (when cf
       (dolist (charset '(kana han cjk-misc bopomofo))
 	(set-fontset-font t charset cf))
       (setq face-font-rescale-alist
-	    (mapcar (lambda (item) (cons item 1.2)) cfl)))))
+	    (mapcar (lambda (item) (cons item 1.2)) '(cf em))))))
 
 (provide 'init-fn)
 
