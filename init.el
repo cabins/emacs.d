@@ -23,14 +23,14 @@
 (require 'init-kbd)			;key bindings
 (require 'init-lang)			;for programming
 
-;; DON'T forget to load custom file at last
-(let ((custom-file (expand-file-name "custom.el" user-emacs-directory)))
-  (when (file-exists-p custom-file)
-    (load custom-file nil t)))
+;; DON'T forget to define and load custom file at last
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(when (file-exists-p custom-file)
+    (load custom-file nil t))
 
 (provide 'init)
 
 ;;; init.el ends here
-;; Local Variables:
+ ;; Local Variables:
 ;; byte-compile-warnings: (not unresolved obsolete)
 ;; End:
