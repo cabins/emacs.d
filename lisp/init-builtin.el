@@ -59,7 +59,9 @@
 ;; to use this package, you may install 'aspell' and dict by manual
 ;; for example, "pacman -S aspell" on archlinux
 ;; and "pacman -S pacman -S mingw64/mingw-w64-x86_64-aspell{,-en}" on msys2 (Windows)
+;; for performance issue, do NOT use on Windows
 (use-package flyspell
+  :unless (memq system-type '(windows-nt dos cygwin))
   :hook ((text-mode org-mode) . flyspell-mode))
 
 ;; HideShow Minor Mode
