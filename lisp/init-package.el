@@ -53,6 +53,7 @@
 
 ;; emojify mode
 (use-package emojify
+  :when (display-graphic-p)
   :hook (after-init . global-emojify-mode))
 
 ;; focus mode
@@ -83,6 +84,7 @@
 
 ;; kaolin-themes
 (use-package kaolin-themes
+  :when (display-graphic-p)
   :init
   (load-theme 'kaolin-dark t))
 
@@ -127,6 +129,7 @@
 ;; if you use Windows, prefer to msys2 installed
 (use-package pdf-tools
   :unless (memq system-type '(windows-nt cygwin dos))
+  :when (display-graphic-p)
   :hook (after-init . pdf-loader-install))
 
 ;; popwin
