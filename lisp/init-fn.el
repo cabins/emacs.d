@@ -54,7 +54,7 @@
 
   (interactive)
   (let* ((efl '("Cascadia Code" "Source Code Pro" "JetBrains Mono" "Courier New" "Monaco" "Ubuntu Mono"))
-	 (cfl '("楷体" "黑体" "STHeiti" "STKaiti"))
+	 (cfl '("黑体" "楷体" "STHeiti" "STKaiti"))
          (eml '("Apple Color Emoji" "Segoe UI Emoji" "Noto Color Emoji" "Symbola" "Symbol"))
 	 (cf (available-font cfl))
 	 (ef (available-font efl))

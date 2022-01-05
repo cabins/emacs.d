@@ -10,9 +10,7 @@
 	      (lsp-enable-which-key-integration)
 	      (add-hook 'before-save-hook #'lsp-organize-imports t t)
 	      (add-hook 'before-save-hook #'lsp-format-buffer t t)))
-  (add-hook 'prog-mode-hook
-	    (lambda()
-	      (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode)(lsp-deferred))))
+  (add-hook 'prog-mode-hook (lambda() (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode)(lsp-deferred))))
   :config
   (setq lsp-auto-guess-root t
 	lsp-headerline-breadcrumb-enable nil
@@ -45,7 +43,8 @@
 ;;   )
 
 (provide 'init-lsp)
+;;; init-lsp.el ends here
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
 ;; End:
-;;; init-lsp.el ends here

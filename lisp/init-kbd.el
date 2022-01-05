@@ -25,19 +25,9 @@
 ;;; Emacs Basic Keys ------------------------------
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-;; Window Move
-(global-set-key (kbd "C-c <left>") 'windmove-left)
-(global-set-key (kbd "C-c <right>") 'windmove-right)
-(global-set-key (kbd "C-c <up>") 'windmove-up)
-(global-set-key (kbd "C-c <down>") 'windmove-down)
-
 ;;; Code Editing ------------------------------
 ;; Comments（As C-x C-; is for comment-line, keep the postfix）
 (global-set-key (kbd "C-c C-;") #'comment-or-uncomment-region)
-
-;; Syntax
-(global-set-key (kbd "M-n") #'flymake-goto-next-error)
-(global-set-key (kbd "M-p") #'flymake-goto-prev-error)
 
 (provide 'init-kbd)
 

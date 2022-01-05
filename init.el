@@ -20,7 +20,6 @@
 (require 'init-elpa)			;package initialize
 (require 'init-builtin)			;better builtin packages
 (require 'init-package)			;third-part packages
-(require 'init-kbd)			;key bindings
 (require 'init-lang)			;for programming
 
 ;; DON'T forget to define and load custom file at last
