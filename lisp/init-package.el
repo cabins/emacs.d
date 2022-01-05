@@ -25,8 +25,8 @@
   :diminish "Cmp"
   :hook (after-init . global-company-mode)
   :config (setq company-minimum-prefix-length 1
-                company-idle-delay .3
                 company-echo-delay 0
+                company-show-numbers t
                 company-begin-commands '(self-insert-command)))
 (use-package company-prescient
   :hook (company-mode . company-prescient-mode))
@@ -104,6 +104,7 @@
 
 ;; neotree, file tree manager
 (use-package neotree
+  :commands (neo-buffer--lock-width neo-buffer--unlock-width)
   :config (setq neo-autorefresh t
 		neo-theme 'nerd
 		neo-click-changes-root t
@@ -116,8 +117,8 @@
 ;;   :hook (org-mode . olivetti-mode))
 
 ;; orderless
-(use-package orderless
-  :custom (completion-styles '(orderless)))
+;; (use-package orderless
+;; :custom (completion-styles '(orderless)))
 
 ;; org-superstar
 ;; make the org mode more beautiful with optimized leading chars

@@ -7,23 +7,14 @@
 ;;; Commentary:
 ;;; Code:
 
-;;; ========== ide features
-;; implements the ide features with eglot
-;; (another lsp client instead of lsp-mode)
-;; Please, DON'T use any lsp client on Windows, for currently.
-;;(unless (memq system-type '(windows-nt dos))
-;;  (require 'init-eglot))
+;; (require 'init-eglot)
+(require 'init-lsp)
 
-(require 'init-eglot)
-
-;;; ========== language features
 (require 'init-elisp)			; elisp
 (require 'init-go)			; golang
 (require 'init-python)			; python
 (require 'init-rust)			; rust
 (require 'init-web)			; web development
-
-;;; ========== tools & serializers
 (use-package json-mode)			; json support
 (use-package markdown-mode)		; markdown support
 (use-package protobuf-mode)		; protobuf support
@@ -31,7 +22,6 @@
   :mode (("\\.http\\'" . restclient-mode)))
 (use-package yaml-mode)			; yaml support
 
-;;; ========== code action features
 (use-package quickrun)
 
 (provide 'init-lang)

@@ -72,7 +72,8 @@
     (add-hook 'after-make-frame-functions
               (lambda (frame)
 		(with-selected-frame frame
-		  (tenon/reset-font-setup))))
+		  (tenon/reset-font-setup)
+                  (load-theme 'kaolin-dark t))))
   (tenon/reset-font-setup))
 
 (provide 'init-system)

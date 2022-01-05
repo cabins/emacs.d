@@ -4,6 +4,9 @@
 
 ;;; Code:
 
+;; alias for yes-or-no-pair
+(defalias 'yes-or-no-p 'y-or-n-p)
+
 ;; abbrev mode, as it is written in C, we can't configure it with
 ;; use-package without 'ensure nil' flag
 (use-package abbrev
@@ -34,6 +37,12 @@
 (use-package autorevert
   :hook (after-init . global-auto-revert-mode))
 
+;; comment or uncomment, provided by `newcomment.el'
+(use-package newcomment
+  :ensure nil
+  :config
+  (global-set-key (kbd "C-c C-;") #'comment-or-uncomment-region))
+
 ;; Delete Behavior
 ;; `delete-selection-mode' is provided by delsel.el (builtin)
 ;; `delete-trailing-whitespace' is provided by simple.el (builtin)
@@ -53,7 +62,10 @@
 
 ;; Flymake
 (use-package flymake
-  :hook (prog-mode . flymake-mode))
+  :hook (prog-mode . flymake-mode)
+  :config
+  (global-set-key (kbd "M-n") #'flymake-goto-next-error)
+  (global-set-key (kbd "M-p") #'flymake-goto-prev-error))
 
 ;; Flyspell
 ;; to use this package, you may install 'aspell' and dict by manual
@@ -107,6 +119,10 @@
 
 ;; only use spaces instead of TAB, use C-q TAB to input the TAB char
 (setq-default indent-tabs-mode nil)
+
+;; windmove.el, use shift-<arrow key> to switch buffers
+(use-package windmove
+  :init (windmove-default-keybindings))
 
 (provide 'init-builtin)
 
