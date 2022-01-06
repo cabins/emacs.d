@@ -35,14 +35,6 @@
 ;;     (load-theme 'modus-vivendi t)
 ;;   (load-theme 'wombat t))
 
-;; Cleaner GUI
-(unless (eq system-type 'darwin)
-  (menu-bar-mode -1))
-(when (fboundp 'tool-bar-mode)
-  (tool-bar-mode -1))
-(when (fboundp 'scroll-bar-mode)
-  (scroll-bar-mode -1))
-
 ;;; early-init.el ends here
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars)

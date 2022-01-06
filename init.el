@@ -15,11 +15,22 @@
 ;; update load-path to make customized lisp codes work
 (push (expand-file-name "lisp" user-emacs-directory) load-path)
 
+;; provides some useful functions, add more here if you want
 (require 'init-fn)			;define the functions
+
+;; change Emacs default settings here, variables only (NOT include built-in packages)
 (require 'init-system)			;better emacs configs
+
+;; settings for Melpa/Elpa/GNU repos for Emacs
 (require 'init-elpa)			;package initialize
+
+;; change default Emacs settings with built-in packages
 (require 'init-builtin)			;better builtin packages
+
+;; all the third-part packages configed here
 (require 'init-package)			;third-part packages
+
+;; settings for programming languages (include LSP feature)
 (require 'init-lang)			;for programming
 
 ;; DON'T forget to define and load custom file at last

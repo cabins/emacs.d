@@ -8,7 +8,7 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; abbrev mode, as it is written in C, we can't configure it with
-;; use-package without 'ensure nil' flag
+;; use-package with 'ensure nil' flag
 (use-package abbrev
   :ensure nil
   :diminish abbrev-mode
