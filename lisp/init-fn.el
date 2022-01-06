@@ -54,7 +54,7 @@
 
   (interactive)
   (let* ((efl '("Cascadia Code" "Source Code Pro" "JetBrains Mono" "Courier New" "Monaco" "Ubuntu Mono"))
-	 (cfl '("黑体" "楷体" "STHeiti" "STKaiti"))
+	 (cfl '("黑体" "楷体" "STHeiti" "STKaiti" "微软雅黑" "文泉译微米黑"))
          (eml '("Apple Color Emoji" "Segoe UI Emoji" "Noto Color Emoji" "Symbola" "Symbol"))
 	 (cf (available-font cfl))
 	 (ef (available-font efl))
@@ -72,6 +72,23 @@
 	(set-fontset-font t charset cf))
       (setq face-font-rescale-alist
 	    (mapcar (lambda (item) (cons item 1.2)) '(cf em))))))
+
+;;;autoload
+(defun tenon/more-clean-ui ()
+  "Remove all the unnecessary elements."
+
+  (when (and (fboundp 'scroll-bar-mode) (not (eq scroll-bar-mode -1)))
+    (scroll-bar-mode -1))
+  (when (and (fboundp 'tool-bar-mode) (not (eq tool-bar-mode -1)))
+    (tool-bar-mode -1))
+  (unless (memq (window-system) '(mac ns))
+    (when (and (fboundp 'menu-bar-mode) (not (eq menu-bar-mode -1)))
+      (menu-bar-mode -1)))
+  ;; tooltips in echo-aera
+  (when (and (fboundp 'tooltip-mode) (not (eq tooltip-mode -1)))
+    (tooltip-mode -1)))
+(add-hook 'window-setup-hook #'tenon/more-clean-ui)
+(add-hook 'tty-setup-hook #'tenon/more-clean-ui)
 
 (provide 'init-fn)
 
