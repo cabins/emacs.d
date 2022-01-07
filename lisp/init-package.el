@@ -123,7 +123,10 @@
 ;; org-superstar
 ;; make the org mode more beautiful with optimized leading chars
 (use-package org-superstar
-  :hook (org-mode . org-superstar-mode))
+  :hook (org-mode . org-superstar-mode)
+  :config
+  (setq org-superstar-prettify-item-bullets t
+        org-superstar-headline-bullets-list '("🐭" "🐮" "🐯" "🐰" "🐲" "🐸" "🐴" "🐑" "🐵" "🐔" "🐶" "🐷")))
 
 ;; pdf-tools, open pdf files in Emacs
 ;; it'll build the essential dependencies automatically

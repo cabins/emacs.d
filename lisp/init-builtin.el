@@ -100,6 +100,7 @@
   :ensure nil
   :config
   (setq org-hide-leading-stars t
+        org-hide-emphasis-markers t
         org-startup-indented t))
 
 ;; Prettify Symbols
