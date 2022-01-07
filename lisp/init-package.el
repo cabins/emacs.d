@@ -53,7 +53,6 @@
 
 ;; emojify mode
 (use-package emojify
-  :when (display-graphic-p)
   :hook (after-init . global-emojify-mode))
 
 ;; focus mode
