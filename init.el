@@ -3,7 +3,7 @@
 ;; Author: Cabins
 ;; Maintainer: Cabins
 ;; Version: 1.0
-;; Homepage: https://github.com/cabins/tenon-emacs
+;; Homepage: https://github.com/cabins/termux-emacs
 ;;; Commentary:
 ;; (c) Cabins Kong, 2020-2021
 
@@ -16,7 +16,7 @@
 (push (expand-file-name "lisp" user-emacs-directory) load-path)
 
 ;; provides some useful functions, add more here if you want
-(require 'init-fn)			;define the functions
+;; (require 'init-fn)			;define the functions
 
 ;; change Emacs default settings here, variables only (NOT include built-in packages)
 (require 'init-system)			;better emacs configs

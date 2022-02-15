@@ -8,6 +8,7 @@
 ;;; Code:
 
 (require 'init-eglot)                   ; eglot
+;; (require 'init-lsp)                     ; lsp
 (require 'init-elisp)			; elisp
 (require 'init-go)			; golang
 (require 'init-java)                    ; java

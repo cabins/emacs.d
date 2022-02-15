@@ -3,7 +3,7 @@
 
 This is `NOT` a part of [GNU Emacs](https://www.gnu.org/software/emacs/) but a personal configuration maintained by © Cabins from China.
 
-This repo is for Emacs in termux environment on Android tablet or phone, yes, I sometimes use them for programming.
+This repo is for Emacs in [termux](https://termux.com/) environment on Android tablet or phone, yes, I sometimes use them for programming.
 
 # Target
 
@@ -12,9 +12,7 @@ This repo is for Emacs in termux environment on Android tablet or phone, yes, I 
 
 # About Programming language
 
-Thanks to Eglot, we can program in Emacs (almost) perfectly.
-
-And why NOT lsp-mode? It has too many dependecies, some of them NOT work on termux, e.g `s` package.
+Thanks to Eglot / LSP Mode, we can program in Emacs (almost) perfectly.
 
 # 1-2-3
 
