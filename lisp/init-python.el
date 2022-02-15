@@ -1,6 +1,5 @@
 ;;; init-python.el --- config for python -*- lexical-binding: t -*-
 ;;; Commentary:
-;; Why NOT elpy? Because it can NOT works on termux.
 
 ;;; Code:
 

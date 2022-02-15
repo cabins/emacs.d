@@ -91,12 +91,6 @@
   :diminish
   :hook (prog-mode . highlight-parentheses-mode))
 
-;; undo tree
-(use-package undo-tree
-  :when (< emacs-major-version 28) ; Emacs 28 introduces `undo-redo' command with C-M-_ keybinding
-  :diminish
-  :hook (after-init . global-undo-tree-mode))
-
 ;; Settings for which-key - suggest next key
 (use-package which-key
   :diminish
@@ -106,6 +100,7 @@
 (use-package yasnippet
   :diminish yas-minor-mode
   :hook (prog-mode . yas-minor-mode)
+  :config (yas-reload-all)
   :bind ("C-o" . yas-expand))
 (use-package yasnippet-snippets :diminish)
 

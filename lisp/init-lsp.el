@@ -3,13 +3,11 @@
 ;;; Code:
 
 (use-package lsp-mode
-  :commands (lsp lsp-deferred lsp-format-buffer lsp-organize-imports)
   :init
-  (add-hook 'lsp-mode-hook
-	    (lambda ()
-	      (lsp-enable-which-key-integration)
-	      (add-hook 'before-save-hook #'lsp-organize-imports t t)
-	      (add-hook 'before-save-hook #'lsp-format-buffer t t)))
+  (add-hook 'lsp-mode-hook (lambda ()
+	                     (lsp-enable-which-key-integration)
+	                     (add-hook 'before-save-hook #'lsp-organize-imports t t)
+	                     (add-hook 'before-save-hook #'lsp-format-buffer t t)))
   (add-hook 'prog-mode-hook (lambda() (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode)(lsp-deferred))))
   :config
   (setq lsp-auto-guess-root t
@@ -20,7 +18,6 @@
 
 (use-package lsp-ui
   :after lsp-mode
-  :commands lsp-ui-mode
   :init
   (setq lsp-ui-doc-include-signature t
 	lsp-ui-doc-position 'at-point
@@ -41,6 +38,9 @@
 ;;   ;;   (add-hook 'go-mode-hook (lambda() (require 'dap-go)))
 ;;   ;;   (add-hook 'java-mode-hook (lambda() (require 'dap-java)))
 ;;   )
+
+(use-package lsp-java
+  :hook (java-mode . 'lsp))
 
 (provide 'init-lsp)
 ;;; init-lsp.el ends here

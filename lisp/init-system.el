@@ -20,7 +20,7 @@
       help-window-select t
       inhibit-startup-screen t	   ; disable the startup screen splash
       inhibit-default-init t
-      initial-major-mode 'text-mode
+      initial-major-mode 'fundamental-mode
       ;; initial-scratch-message nil
       make-backup-files nil             ; disable backup file
       next-line-add-newlines nil
@@ -31,6 +31,8 @@
       scroll-up-aggressively 0.01
       scroll-down-aggressively 0.01
       visible-bell nil)
+
+(menu-bar-mode -1)
 
 (provide 'init-system)
 ;;; init-system.el ends here
