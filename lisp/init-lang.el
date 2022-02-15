@@ -7,14 +7,14 @@
 ;;; Commentary:
 ;;; Code:
 
-(require 'init-eglot)                   ; eglot
+(require 'init-eglot) ; eglot
 ;; (require 'init-lsp)                     ; lsp
 (require 'init-elisp)			; elisp
-(require 'init-go)			; golang
-(require 'init-java)                    ; java
+(require 'init-go)              ; golang
+;;(require 'init-java)                    ; java
 (require 'init-python)			; python
 (require 'init-rust)			; rust
-(require 'init-web)			; web development
+(require 'init-web)             ; web development
 (use-package json-mode)			; json support
 (use-package markdown-mode)		; markdown support
 (use-package protobuf-mode)		; protobuf support
