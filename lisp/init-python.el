@@ -1,5 +1,6 @@
 ;;; init-python.el --- config for python -*- lexical-binding: t -*-
 ;;; Commentary:
+;; Why NOT elpy? Because it can NOT works on termux.
 
 ;;; Code:
 
@@ -29,11 +30,6 @@ eg.from datetime import datetime."
   (check-run-command "autoflake"
 		     (format "-i --remove-all-unused-imports %s"
 			     (buffer-file-name))))
-
-;; elpy
-(use-package elpy
-  :init
-  (advice-add 'python-mode :before 'elpy-enable))
 
 (add-hook
  'python-mode-hook

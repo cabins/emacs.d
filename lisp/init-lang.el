@@ -7,11 +7,10 @@
 ;;; Commentary:
 ;;; Code:
 
-;; (require 'init-eglot)
-(require 'init-lsp)
-
+(require 'init-eglot)                   ; eglot
 (require 'init-elisp)			; elisp
 (require 'init-go)			; golang
+(require 'init-java)                    ; java
 (require 'init-python)			; python
 (require 'init-rust)			; rust
 (require 'init-web)			; web development
