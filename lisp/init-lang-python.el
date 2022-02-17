@@ -1,4 +1,4 @@
-;;; init-python.el --- config for python -*- lexical-binding: t -*-
+;;; init-lang-python.el --- config for python -*- lexical-binding: t -*-
 ;;; Commentary:
 
 ;;; Code:
@@ -38,8 +38,8 @@ eg.from datetime import datetime."
    (define-key python-mode-map (kbd "C-c p s") 'python-isort)
    (define-key python-mode-map (kbd "C-c p r") 'python-remove-all-unused-imports)))
 
-(provide 'init-python)
+(provide 'init-lang-python)
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
 ;; End:
-;;; init-python.el ends here
+;;; init-lang-python.el ends here

@@ -1,4 +1,4 @@
-;;; init-go.el --- config for golang -*- lexical-binding: t -*-
+;;; init-lang-go.el --- config for golang -*- lexical-binding: t -*-
 ;;; Commentary:
 ;; Thanks to Eglot, we just need to install the `go-mode'.
 ;;; Code:
@@ -12,9 +12,9 @@
 ;; (use-package go-gen-test)
 ;; (use-package go-tag)
 
-(provide 'init-go)
+(provide 'init-lang-go)
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
 ;; End:
-;;; init-go.el ends here
+;;; init-lang-go.el ends here
