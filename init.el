@@ -16,19 +16,19 @@
 (push (expand-file-name "lisp" user-emacs-directory) load-path)
 
 ;; change Emacs default settings here, variables only (NOT include built-in packages)
-(require 'init-system)			;better emacs configs
+(require 'init-system)
 
-;; settings for Melpa/Elpa/GNU repos for Emacs
-(require 'init-elpa)			;package initialize
+;; settings for Melpa/Elpa/GNU repos for Emacs package manager
+(require 'init-elpa)
 
 ;; change default Emacs settings with built-in packages
-(require 'init-builtin)			;better builtin packages
+(require 'init-builtin)
 
 ;; all the third-part packages configed here
-(require 'init-package)			;third-part packages
+(require 'init-package)
 
-;; settings for programming languages (include LSP feature)
-(require 'init-lang)			;for programming
+;; settings for programming languages (include IDE/LSP feature)
+(require 'init-lang)
 
 ;; DON'T forget to define and load custom file at last
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))

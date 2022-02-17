@@ -7,22 +7,26 @@
 ;;; Commentary:
 ;;; Code:
 
+;; language server
 (require 'init-eglot) ; eglot
-;; (require 'init-lsp)                     ; lsp
-(require 'init-elisp)			; elisp
-(require 'init-go)              ; golang
-;;(require 'init-java)                    ; java
-(require 'init-python)			; python
-(require 'init-rust)			; rust
-(require 'init-web)             ; web development
-(use-package json-mode)			; json support
-(use-package markdown-mode)		; markdown support
-(use-package protobuf-mode)		; protobuf support
-(use-package restclient			; restclient support
-  :mode (("\\.http\\'" . restclient-mode)))
-(use-package yaml-mode)			; yaml support
+;; (require 'init-lsp)   ; lsp, enable this line if you like lsp-mode and disable eglot line
 
-(use-package quickrun)
+;; specific languages
+(require 'init-go)
+(require 'init-python)
+(require 'init-rust)
+(require 'init-web)
+
+;; program useful text/config files
+(use-package json-mode)
+(use-package markdown-mode)
+(use-package protobuf-mode)
+(use-package yaml-mode)
+
+;; useful tools
+(use-package quickrun)                  ; quickrun code
+(use-package restclient                 ; restclient support
+  :mode (("\\.http\\'" . restclient-mode)))
 
 (provide 'init-lang)
 
