@@ -13,6 +13,7 @@
     (shell-command (format "%s %s" command arg-string))
     (revert-buffer t t t)))
 
+;; BE CAREFUL! Maybe bugs here, always call this function manually.
 ;;;###autoload
 (defun python-isort ()
   "Sort the imports with isort."
@@ -21,6 +22,7 @@
 		     (format "--atomic --profile=black %s"
 			     (buffer-file-name))))
 
+;; BE CAREFUL! Maybe bugs here, always call this function manually.
 ;;;###autoload
 (defun python-remove-all-unused-imports ()
   "Remove all the unused imports, do NOT use pyimport, as it has bugs.

@@ -16,9 +16,10 @@
   :diminish "Cmp"
   :hook (after-init . global-company-mode)
   :config (setq company-minimum-prefix-length 1
-                company-echo-delay 0
-                company-show-numbers t
-                company-begin-commands '(self-insert-command)))
+                ;;company-echo-delay 0
+                ;;company-show-numbers t
+                company-show-quick-access t
+                ))
 
 ;; ctrlf, good isearch alternative
 (use-package ctrlf
