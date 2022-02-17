@@ -12,10 +12,10 @@
 ;; (require 'init-lsp)   ; lsp, enable this line if you like lsp-mode and disable eglot line
 
 ;; specific languages
-(require 'init-go)
-(require 'init-python)
-(require 'init-rust)
-(require 'init-web)
+(require 'init-lang-go)
+(require 'init-lang-python)
+(require 'init-lang-rust)
+(require 'init-lang-web)
 
 ;; program useful text/config files
 (use-package json-mode)

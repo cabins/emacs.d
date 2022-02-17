@@ -1,4 +1,4 @@
-;;; init-web.el --- config for web developemnt -*- lexical-binding: t -*-
+;;; init-lang-web.el --- config for web developemnt -*- lexical-binding: t -*-
 ;;; Commentary:
 
 ;;; Code:
@@ -17,9 +17,9 @@
 
 (use-package typescript-mode)
 
-(provide 'init-web)
+(provide 'init-lang-web)
 
-;;; init-web.el ends here
+;;; init-lang-web.el ends here
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars unresolved)
 ;; End:
