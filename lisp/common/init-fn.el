@@ -44,7 +44,7 @@
       (dolist (face '(default fixed-pitch fixed-pitch-serif variable-pitch))
 	    (set-face-attribute face nil :family ef)))
     (when em
-      (dolist (charset `(unicode unicode-bmp ,(if (> emacs-major-version) 'emoji 'symbol)))
+      (dolist (charset `(unicode unicode-bmp ,(if (> emacs-major-version 27) 'emoji 'symbol)))
         (set-fontset-font t charset em nil 'prepend)))
     (when cf
       (dolist (charset '(kana han cjk-misc bopomofo))
