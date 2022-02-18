@@ -1,6 +1,6 @@
 ;;; init-system.el --- configs for startup -*- lexical-binding: t -*-
 ;;; Commentary:
-;; (c) Cabins Kong, 2020-2021
+;; (c) Cabins Kong, 2022-
 
 ;;; Code:
 

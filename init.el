@@ -5,7 +5,7 @@
 ;; Version: 1.0
 ;; Homepage: https://github.com/cabins/termux-emacs
 ;;; Commentary:
-;; (c) Cabins Kong, 2020-2021
+;; (c) Cabins Kong, 2022-
 
 ;;; Code:
 
@@ -13,22 +13,23 @@
 (setq default-directory "~/")
 
 ;; update load-path to make customized lisp codes work
-(push (expand-file-name "lisp" user-emacs-directory) load-path)
+(dolist (folder '("common" "lang" "feature" "platform" "version"))
+  (push (expand-file-name (format "lisp/%s" folder) user-emacs-directory) load-path))
 
-;; change Emacs default settings here, variables only (NOT include built-in packages)
-(require 'init-system)
+;; settings depend on emacs version
+(require 'init-version)
 
-;; settings for Melpa/Elpa/GNU repos for Emacs package manager
-(require 'init-elpa)
+;; common settings (no dependecies with version/os)
+(require 'init-common)
 
-;; change default Emacs settings with built-in packages
-(require 'init-builtin)
-
-;; all the third-part packages configed here
-(require 'init-package)
+;; different settings depends on os platform
+(require 'init-platform)
 
 ;; settings for programming languages (include IDE/LSP feature)
 (require 'init-lang)
+
+;; other features, such as UI/daemon etc.
+(require 'init-feature)
 
 ;; DON'T forget to define and load custom file at last
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))

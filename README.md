@@ -1,21 +1,19 @@
 # About this project
 
-
 This is `NOT` a part of [GNU Emacs](https://www.gnu.org/software/emacs/) but a personal-daily-use configuration maintained by © Cabins from China.
 
-This repo is for Emacs in [termux](https://termux.com/) environment on Android tablet or phone, yes, I sometimes use them for programming.
 
 # Target
 
-1. For Emacs in termux
+1. For Emacs in Windows/macOS/Android (By [termux](https://termux.com/)), and of course Linux.
 2. Lightweight oriented
 
 # About Programming language
 
-Thanks to Eglot / LSP Mode, we can program in Emacs (almost) perfectly.
+Thanks to Eglot / LSP Mode (Eglot is enabled default), we can program in Emacs (almost) perfectly.
 
 > Specific language server
-- Java: put jdt-folder/plugins/org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar to your CLASSPATH environment variable.
+- Java: put jdt-folder/plugins/org.eclipse.equinox.launcher_VERSION.jar to your CLASSPATH environment variable.
 - Other: Install the server, and put them into PATH environment variable.
 
 # 1-2-3-Go!
