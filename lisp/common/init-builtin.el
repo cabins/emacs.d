@@ -1,6 +1,6 @@
 ;;; init-builtin.el --- initialize the builtin plugins -*- lexical-binding: t -*-
 ;;; Commentary:
-;; (c) Cabins Kong, 2020-2021
+;; (c) Cabins Kong, 2022-
 
 ;;; Code:
 
@@ -11,6 +11,9 @@
 (setq-default tab-width 4)
 ;; only use spaces instead of TAB, use C-q TAB to input the TAB char
 (setq-default indent-tabs-mode nil)
+
+;; auto-fill-mode, Help by command or variable name
+(add-hook 'after-init-hook 'auto-fill-mode)
 
 ;; auto revert
 ;; `global-auto-revert-mode' is provided by autorevert.el (builtin)
