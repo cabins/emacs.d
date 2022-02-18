@@ -21,7 +21,7 @@ Thanks to Eglot / LSP Mode (Eglot is enabled default), we can program in Emacs (
 1. Just run the code below:
 
 ```bash
-git clone https://github.com/cabins/termux-emacs ~/.emacs.d
+git clone https://github.com/cabins/emacs.d ~/.emacs.d
 ```
 
 2. And then launch your Emacs, wait for the package installation finish.
