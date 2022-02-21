@@ -68,7 +68,7 @@
 ;; column number is useless in most time, but useful when debug code.
 (add-hook 'after-init-hook 'column-number-mode)
 
-;; Org Mode
+;; Org Modev
 (use-package org
   :ensure nil
   :config
@@ -77,10 +77,8 @@
         org-startup-indented t))
 
 ;; Prettify Symbols
-;; `global-prettify-symbols-mode' is provided by prog-mode.el
-(use-package prog-mode
-  :ensure nil
-  :config (global-prettify-symbols-mode t))
+;; `global-prettify-symbols-mode' and `prettify-symbols-mode' are provided by prog-mode.el
+(add-hook 'prog-mode-hook 'prettify-symbols-mode)
 
 ;; Recentf
 (use-package recentf

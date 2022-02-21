@@ -9,7 +9,7 @@
 ;; this maybe useful, if you want to update all the packages with command, just like me
 (use-package auto-package-update
   :init (setq auto-package-update-delete-old-versions t
-	      auto-package-update-hide-results t))
+	          auto-package-update-hide-results t))
 
 ;; Settings for company, auto-complete for texting, coding, etc.
 (use-package company
@@ -28,14 +28,18 @@
 ;; crux, a collection of many useful extensions/commands
 (use-package crux
   :bind (("C-c C-d" . #'crux-duplicate-current-line-or-region)
-	 ("C-a" . #'crux-move-beginning-of-line)))
+	     ("C-a" . #'crux-move-beginning-of-line)))
 
 ;; Settings for exec-path-from-shell
 ;; fix the PATH environment variable issue
 (use-package exec-path-from-shell
   :defer nil
-  :if (memq window-system '(mac ns x))
-  :init (exec-path-from-shell-initialize))
+  :when (or (memq window-system '(mac ns x))
+            (unless (memq system-type '(ms-dos windows-nt))
+              (daemonp)))
+  :init
+  (exec-path-from-shell-copy-env "CLASSPATH")
+  (exec-path-from-shell-initialize))
 
 ;; format all, formatter for almost languages
 ;; great for programmers
@@ -60,17 +64,17 @@
 (use-package info-colors
   :hook (Info-selection . info-colors-fontify-node))
 
-;; move-text, move line or region with M-<up>/<down>
-(use-package move-text
-  :hook (after-init . move-text-default-bindings))
+;; move-dup, move/copy line or region
+(use-package move-dup
+  :hook (after-init . global-move-dup-mode))
 
 ;; neotree, file tree manager
 (use-package neotree
   :commands (neo-buffer--lock-width neo-buffer--unlock-width)
   :config (setq neo-autorefresh t
-		neo-theme 'nerd
-		neo-click-changes-root t
-		neo-smart-open t)
+		        neo-theme 'nerd
+		        neo-click-changes-root t
+		        neo-smart-open t)
   :bind ("<f8>" . neotree-toggle))
 
 ;; org-superstar
