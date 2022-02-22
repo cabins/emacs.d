@@ -55,7 +55,7 @@
 
 ;; java mode with lsp
 (use-package lsp-java
-  :hook (java-mode . 'lsp))
+  :hook (java-mode . lsp))
 
 (provide 'init-lsp)
 ;;; init-lsp.el ends here
