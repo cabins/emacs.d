@@ -22,9 +22,6 @@
 ;; settings with cc-mode
 (add-hook 'c-mode-common-hook 'c-toggle-auto-hungry-state)
 
-;; comment or uncomment, provided by `newcomment.el'
-(global-set-key (kbd "C-c C-;") #'comment-or-uncomment-region)
-
 ;; Delete Behavior
 ;; `delete-selection-mode' is provided by delsel.el (builtin)
 ;; `delete-trailing-whitespace' is provided by simple.el (builtin)
