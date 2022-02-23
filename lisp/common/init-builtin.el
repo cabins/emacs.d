@@ -19,6 +19,9 @@
 ;; `global-auto-revert-mode' is provided by autorevert.el (builtin)
 (add-hook 'after-init-hook 'global-auto-revert-mode)
 
+;; settings with cc-mode
+(add-hook 'c-mode-common-hook 'c-toggle-auto-hungry-state)
+
 ;; comment or uncomment, provided by `newcomment.el'
 (global-set-key (kbd "C-c C-;") #'comment-or-uncomment-region)
 
@@ -68,7 +71,7 @@
 ;; column number is useless in most time, but useful when debug code.
 (add-hook 'after-init-hook 'column-number-mode)
 
-;; Org Modev
+;; Org Mode
 (use-package org
   :ensure nil
   :config
