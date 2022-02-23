@@ -15,8 +15,7 @@
 (prefer-coding-system 'utf-8)
 
 ;;; emacs settings
-(setq auto-save-default nil	   ; disable auto save
-      auto-window-vscroll nil
+(setq auto-window-vscroll nil
       help-window-select t
       inhibit-startup-screen t	   ; disable the startup screen splash
       inhibit-default-init t

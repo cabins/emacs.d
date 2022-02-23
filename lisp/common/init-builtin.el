@@ -19,6 +19,9 @@
 ;; `global-auto-revert-mode' is provided by autorevert.el (builtin)
 (add-hook 'after-init-hook 'global-auto-revert-mode)
 
+;; auto save to the visited file
+(add-hook 'after-init-hook 'auto-save-visited-mode)
+
 ;; settings with cc-mode
 (add-hook 'c-mode-common-hook 'c-toggle-auto-hungry-state)
 
