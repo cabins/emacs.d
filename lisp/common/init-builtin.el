@@ -38,7 +38,10 @@
 
 ;; fido-mode
 ;; `fido-mode' is provided by icomplete.el
-(add-hook 'after-init-hook 'fido-mode)
+;;(add-hook 'after-init-hook 'fido-mode)
+(if (fboundp 'fido-vertical-mode)
+    (add-hook 'after-init-hook 'fido-vertical-mode)
+  (add-hook 'after-init-hook 'fido-mode))
 
 ;; Flymake
 (use-package flymake
