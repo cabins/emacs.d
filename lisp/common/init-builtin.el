@@ -67,6 +67,9 @@
 ;; this package introduced in Emacs 26, so only enabled when 26+
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 
+;; minibuffer
+(add-hook 'after-init-hook 'minibuffer-electric-default-mode)
+
 ;; modeline settings
 ;; column number is useless in most time, but useful when debug code.
 (add-hook 'after-init-hook 'column-number-mode)
