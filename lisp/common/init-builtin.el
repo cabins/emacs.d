@@ -89,6 +89,11 @@
 ;; `global-prettify-symbols-mode' and `prettify-symbols-mode' are provided by prog-mode.el
 (add-hook 'prog-mode-hook 'prettify-symbols-mode)
 
+;; pulse the cursor line
+(dolist (cmd '(recenter-top-bottom other-window))
+  (advice-add cmd :after
+              (lambda (&rest _) (pulse-momentary-highlight-one-line (point)))))
+
 ;; Recentf
 (use-package recentf
   :hook (after-init . recentf-mode)
