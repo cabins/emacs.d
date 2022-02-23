@@ -32,7 +32,9 @@
       scroll-down-aggressively 0.01
       visible-bell nil)
 
-(menu-bar-mode -1)
+;; fix touchpad vertical scroll issue
+(global-set-key [wheel-up] 'previous-line)
+(global-set-key [wheel-down] 'next-line)
 
 (provide 'init-system)
 ;;; init-system.el ends here
