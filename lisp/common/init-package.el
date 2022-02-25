@@ -38,6 +38,7 @@
               (daemonp)))
   :init
   (exec-path-from-shell-copy-env "CLASSPATH")
+  (exec-path-from-shell-copy-env "JAVA_HOME")
   (exec-path-from-shell-initialize))
 
 ;; format all, formatter for almost languages
