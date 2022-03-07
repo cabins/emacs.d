@@ -26,8 +26,12 @@
   :hook (after-init . ctrlf-mode))
 
 ;; crux, a collection of many useful extensions/commands
-(use-package crux
-  :bind (("C-a" . #'crux-move-beginning-of-line)))
+;; without key-binding you can use
+;; C-a for its original definition
+;; M-m to the indent of line
+;; C-M-<ARROW> for duplicate lines
+;; crux commands? Pls use M-x.
+(use-package crux)
 
 ;; Settings for exec-path-from-shell
 ;; fix the PATH environment variable issue
