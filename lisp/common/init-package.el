@@ -27,8 +27,7 @@
 
 ;; crux, a collection of many useful extensions/commands
 (use-package crux
-  :bind (("C-c C-d" . #'crux-duplicate-current-line-or-region)
-	     ("C-a" . #'crux-move-beginning-of-line)))
+  :bind (("C-a" . #'crux-move-beginning-of-line)))
 
 ;; Settings for exec-path-from-shell
 ;; fix the PATH environment variable issue
