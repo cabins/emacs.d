@@ -16,10 +16,7 @@
   :diminish "Cmp"
   :hook (after-init . global-company-mode)
   :config (setq company-minimum-prefix-length 1
-                ;;company-echo-delay 0
-                ;;company-show-numbers t
-                company-show-quick-access t
-                ))
+                company-show-quick-access t))
 
 ;; ctrlf, good isearch alternative
 (use-package ctrlf
@@ -28,7 +25,7 @@
 ;; crux, a collection of many useful extensions/commands
 ;; without key-binding you can use
 ;; C-a for its original definition
-;; M-m to the indent of line
+;; M-m to the indentation of current line
 ;; C-M-<ARROW> for duplicate lines
 ;; crux commands? Pls use M-x.
 (use-package crux)

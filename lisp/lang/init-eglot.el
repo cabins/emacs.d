@@ -17,6 +17,7 @@
           rust-mode
           web-mode) . eglot-ensure)
   :bind (("C-c e f" . #'eglot-format)
+         ("C-c e a" . #'eglot-code-actions)
          ("C-c e i" . #'eglot-code-action-organize-imports)
          ("C-c e q" . #'eglot-code-action-quickfix))
   :config
