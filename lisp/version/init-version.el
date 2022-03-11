@@ -4,7 +4,7 @@
 ;;; Code:
 
 (when (< emacs-major-version 26)
-  (error "Configuration error! Requires Emacs 26+."))
+  (error "Configuration error! Requires Emacs 26+!"))
 
 ;; Settings for Emacs 28+ with native-compilation
 (when (and (fboundp 'native-comp-available-p)
