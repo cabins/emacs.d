@@ -103,6 +103,9 @@
                 recentf-max-saved-items 100)
   (add-to-list 'recentf-exclude '("~\/.emacs.d\/elpa\/")))
 
+;; global visual line mode
+(add-hook 'after-init-hook 'global-visual-line-mode)
+
 ;; windmove.el, use shift-<arrow key> to switch buffers
 (use-package windmove
   :init (windmove-default-keybindings))
