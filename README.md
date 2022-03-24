@@ -1,22 +1,19 @@
-# About this project
+# About
 
 This is `NOT` a part of [GNU Emacs](https://www.gnu.org/software/emacs/) but a personal-daily-use configuration maintained by © Cabins from China.
 
 
 # Target
 
-1. For Emacs in Windows/macOS/Android (By [termux](https://termux.com/)), and of course Linux.
-2. Lightweight oriented
+1. Works on Windows & macOS & GNU/Linux & Android (By [termux](https://termux.com/)).
+2. Lightweight
+3. Emacs 27+ (28+ preferred)
 
-# About Programming language
+# Programming
 
-Thanks to Eglot / LSP Mode (Eglot is enabled default), we can program in Emacs (almost) perfectly.
+Thanks to Eglot / lsp-mode (Eglot is enabled default), programming in Emacs is (almostly) perfect. All you need to do is `install the specific server and put it into the PATH environment variable`. The supported servers are listed in Eglot / lsp-mode repo.
 
-> Specific language server
-- Java: put jdt-folder/plugins/org.eclipse.equinox.launcher_VERSION.jar to your CLASSPATH environment variable.
-- Other: Install the server, and put them into PATH environment variable.
-
-# 1-2-3-Go!
+# Installation
 
 1. Just run the code below:
 
@@ -24,5 +21,5 @@ Thanks to Eglot / LSP Mode (Eglot is enabled default), we can program in Emacs (
 git clone https://github.com/cabins/emacs.d ~/.emacs.d
 ```
 
-2. And then launch your Emacs, wait for the package installation finish.
+2. Launch Emacs.
 3. Enjoy the life.
