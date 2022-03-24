@@ -11,9 +11,11 @@ This is `NOT` a part of [GNU Emacs](https://www.gnu.org/software/emacs/) but a p
 
 # Programming
 
-By [Eglot](https://github.com/joaotavora/eglot) (Enabled default) / [lsp-mode](https://github.com/emacs-lsp/lsp-mode).
+By [Eglot](https://github.com/joaotavora/eglot) (default) / [lsp-mode](https://github.com/emacs-lsp/lsp-mode).
 
 All you need to do is `install the specific server and put it into the PATH environment variable`. The supported servers are listed in Eglot / lsp-mode repo.
+
+> Solution for jdtls on Windows issue: put the bin/jdtls.bat into the server/bin folder.
 
 # Installation
 

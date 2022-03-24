@@ -9,3 +9,5 @@
 !lisp/
 !lisp/**
 !lisp/**/**
+!bin/
+!bin/**
