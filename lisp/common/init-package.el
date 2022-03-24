@@ -35,11 +35,11 @@
 (use-package exec-path-from-shell
   :defer nil
   :when (or (memq window-system '(mac ns x))
-            (unless (memq system-type '(ms-dos windows-nt))
+            (unless (memq system-type '(windows-nt dos))
               (daemonp)))
   :init
-  (exec-path-from-shell-copy-env "CLASSPATH")
-  (exec-path-from-shell-copy-env "JAVA_HOME")
+  ;; (exec-path-from-shell-copy-env "CLASSPATH")
+  ;; (exec-path-from-shell-copy-env "JAVA_HOME")
   (exec-path-from-shell-initialize))
 
 ;; format all, formatter for almost languages
