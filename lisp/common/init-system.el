@@ -31,9 +31,13 @@
       scroll-down-aggressively 0.01
       visible-bell nil)
 
+(if (fboundp 'pixel-scroll-precision-mode)
+    (pixel-scroll-precision-mode)
+  (pixel-scroll-mode))
+
 ;; fix touchpad vertical scroll issue
-(global-set-key [wheel-up] 'previous-line)
-(global-set-key [wheel-down] 'next-line)
+;;(global-set-key [wheel-up] 'previous-line)
+;;(global-set-key [wheel-down] 'next-line)
 
 (provide 'init-system)
 ;;; init-system.el ends here
