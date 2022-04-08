@@ -5,7 +5,10 @@
 ;;; Code:
 
 ;; alias for yes-or-no-pair
-(defalias 'yes-or-no-p 'y-or-n-p)
+
+(if (> emacs-major-version 28)
+    (setq use-short-answers t)
+  (defalias 'yes-or-no-p 'y-or-n-p))
 
 ;; make tab-width always 4
 (setq-default tab-width 4)
@@ -42,6 +45,9 @@
 (if (fboundp 'fido-vertical-mode)
     (add-hook 'after-init-hook 'fido-vertical-mode)
   (add-hook 'after-init-hook 'fido-mode))
+;; customized
+(setq completions-detailed t
+      completions-format 'one-column)
 
 ;; Flymake
 (use-package flymake
@@ -76,6 +82,7 @@
 ;; modeline settings
 ;; column number is useless in most time, but useful when debug code.
 (add-hook 'after-init-hook 'column-number-mode)
+(setq mode-line-compact t)
 
 ;; Org Mode
 (use-package org
