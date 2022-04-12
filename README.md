@@ -10,7 +10,7 @@ This is `NOT` a part of [GNU Emacs](https://www.gnu.org/software/emacs/) but a p
 
 1. Works on Windows & macOS & GNU/Linux & Android (By [termux](https://termux.com/))
 2. Lightweight
-3. Emacs 27+ (28+ preferred)
+3. Only latest version of Emacs (current is 28) is supported
 
 # Programming
 

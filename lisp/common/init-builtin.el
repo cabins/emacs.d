@@ -4,11 +4,8 @@
 
 ;;; Code:
 
-;; alias for yes-or-no-pair
-
-(if (> emacs-major-version 28)
-    (setq use-short-answers t)
-  (defalias 'yes-or-no-p 'y-or-n-p))
+;; use short answers for YES/NO ect.
+(setq use-short-answers t)
 
 ;; make tab-width always 4
 (setq-default tab-width 4)
@@ -25,36 +22,18 @@
 ;; auto save to the visited file
 (add-hook 'after-init-hook 'auto-save-visited-mode)
 
-;; settings with cc-mode
-(add-hook 'c-mode-common-hook 'c-toggle-auto-hungry-state)
-
 ;; Delete Behavior
 ;; `delete-selection-mode' is provided by delsel.el (builtin)
 ;; `delete-trailing-whitespace' is provided by simple.el (builtin)
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
 (add-hook 'after-init-hook 'delete-selection-mode)
 
-;; Electric-Pair
-;; default value of `electric-indent-mode' is t
-(add-hook 'prog-mode-hook 'electric-layout-mode)
-(add-hook 'prog-mode-hook 'electric-pair-mode)
-
 ;; fido-mode
 ;; `fido-mode' is provided by icomplete.el
-;;(add-hook 'after-init-hook 'fido-mode)
-(if (fboundp 'fido-vertical-mode)
-    (add-hook 'after-init-hook 'fido-vertical-mode)
-  (add-hook 'after-init-hook 'fido-mode))
+(add-hook 'after-init-hook 'fido-vertical-mode)
 ;; customized
 (setq completions-detailed t
       completions-format 'one-column)
-
-;; Flymake
-(use-package flymake
-  :hook (prog-mode . flymake-mode)
-  :config
-  (global-set-key (kbd "M-n") #'flymake-goto-next-error)
-  (global-set-key (kbd "M-p") #'flymake-goto-prev-error))
 
 ;; Flyspell
 ;; to use this package, you may install 'aspell' and dict by manual
@@ -64,17 +43,8 @@
 (use-package flyspell
   :hook ((text-mode org-mode) . flyspell-mode))
 
-;; HideShow Minor Mode
-(use-package hideshow
-  :init (add-hook 'hs-minor-mode-hook (lambda () (diminish 'hs-minor-mode)))
-  :hook (prog-mode . hs-minor-mode))
-
 ;; ibuffer
 (defalias 'list-buffers 'ibuffer)
-
-;; Line Number
-;; this package introduced in Emacs 26, so only enabled when 26+
-(add-hook 'prog-mode-hook 'display-line-numbers-mode)
 
 ;; minibuffer
 (add-hook 'after-init-hook 'minibuffer-electric-default-mode)

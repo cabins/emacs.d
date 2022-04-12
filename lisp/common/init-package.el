@@ -44,10 +44,10 @@
 
 ;; format all, formatter for almost languages
 ;; great for programmers
-(use-package format-all
-  :diminish
-  :hook (prog-mode . format-all-ensure-formatter)
-  :bind ("C-c f" . #'format-all-buffer))
+;; (use-package format-all
+;;   :diminish
+;;   :hook (prog-mode . format-all-ensure-formatter)
+;;   :bind ("C-c f" . #'format-all-buffer))
 
 ;; gnu-elpa-keyring-update
 (use-package gnu-elpa-keyring-update)
@@ -85,25 +85,10 @@
 (use-package popwin
   :hook (after-init . popwin-mode))
 
-;; Show the delimiters as rainbow color
-(use-package rainbow-delimiters
-  :hook (prog-mode . rainbow-delimiters-mode))
-(use-package highlight-parentheses
-  :diminish
-  :hook (prog-mode . highlight-parentheses-mode))
-
 ;; Settings for which-key - suggest next key
 (use-package which-key
   :diminish
   :hook (after-init . which-key-mode))
-
-;; Settings for yasnippet
-(use-package yasnippet
-  :diminish yas-minor-mode
-  :hook (prog-mode . yas-minor-mode)
-  :config (yas-reload-all)
-  :bind ("C-o" . yas-expand))
-(use-package yasnippet-snippets :diminish)
 
 (provide 'init-package)
 
