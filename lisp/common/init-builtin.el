@@ -32,7 +32,10 @@
 ;; `fido-mode' is provided by icomplete.el
 (add-hook 'after-init-hook 'fido-vertical-mode)
 ;; customized
-(setq completions-detailed t
+(setq read-buffer-completion-ignore-case t
+      read-file-name-completion-ignore-case t
+      completion-ignore-case t
+      completions-detailed t
       completions-format 'one-column)
 
 ;; Flyspell
@@ -45,6 +48,9 @@
 
 ;; ibuffer
 (defalias 'list-buffers 'ibuffer)
+
+;; iSearch
+(setq isearch-allow-motion t)
 
 ;; minibuffer
 (add-hook 'after-init-hook 'minibuffer-electric-default-mode)

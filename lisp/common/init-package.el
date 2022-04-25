@@ -44,10 +44,10 @@
 
 ;; format all, formatter for almost languages
 ;; great for programmers
-;; (use-package format-all
-;;   :diminish
-;;   :hook (prog-mode . format-all-ensure-formatter)
-;;   :bind ("C-c f" . #'format-all-buffer))
+(use-package format-all
+  :diminish
+  :hook (prog-mode . format-all-ensure-formatter)
+  :bind ("C-c f" . #'format-all-buffer))
 
 ;; gnu-elpa-keyring-update
 (use-package gnu-elpa-keyring-update)
