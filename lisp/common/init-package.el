@@ -85,31 +85,6 @@
 (use-package popwin
   :hook (after-init . popwin-mode))
 
-;; pyim - Chinese input methods
-(use-package pyim
-  :init
-  ; if you want to use pyim as default
-  ; (setq default-input-method "pyim")
-  :config
-  ; add flypy method
-  (pyim-scheme-add
-   '(flypy
-     :document "小鹤音形输入法"
-     :class xingma
-     :first-chars "abcdefghijklmnopqrstuvwxyz"
-     :rest-chars "abcdefghijklmnopqrstuvwxyz'"
-     :code-prefix "flypy/" ;词库中所有的 code 都以 "flypy/" 开头，防止和其它词库冲突。
-     :code-split-length 4 ;默认将用户输入切成 4 个字符长的 code 列表（不计算 code-prefix）
-     :code-maximum-length 4 ;词库中，code 的最大长度（不计算 code-prefix）
-     :prefer-triggers nil))
-  (pyim-extra-dicts-add-dict
-   '(:name "flypy" :file (concat user-emacs-directory "pyim-flypy.pyim")))
-  (define-key pyim-mode-map ";"
-              (lambda ()
-                (interactive)
-                (pyim-select-word-by-number 2)))
-  (pyim-default-scheme 'flypy))
-
 ;; Settings for which-key - suggest next key
 (use-package which-key
   :diminish
