@@ -17,6 +17,9 @@
                   (tenon--font-setup))))
   (tenon--font-setup))
 
+;; flypy - 小鹤音形输入法
+(require 'init-chinese-flypy)
+
 (provide 'init-feature)
 
 ;; Local Variables:
