@@ -88,7 +88,8 @@
 ;; pyim - Chinese input methods
 (use-package pyim
   :init
-  (setq default-input-method "pyim")
+  ; if you want to use pyim as default
+  ; (setq default-input-method "pyim")
   :config
   ; add flypy method
   (pyim-scheme-add
