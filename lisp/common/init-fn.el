@@ -55,7 +55,7 @@
       (dolist (charset '(kana han cjk-misc bopomofo))
 	    (set-fontset-font t charset cf))
       (setq face-font-rescale-alist
-	        (mapcar (lambda (item) (cons item 1.3)) `(,cf ,em))))))
+	        (mapcar (lambda (item) (cons item 1.2)) `(,cf ,em))))))
 
 ;;;autoload
 (defun tenon--cleaner-ui ()
