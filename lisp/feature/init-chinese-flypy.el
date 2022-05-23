@@ -2,16 +2,13 @@
 ;;; Commentary:
 ;;    Emacs原生输入法（quail）配置小鹤音形输入法
 
-(require 'quail)
+;;; Code:
 
+(require 'quail)
 (quail-define-package "chinese-flypy" "Chinese-GB" "鹤" t
                       "小鹤音形输入法"
                       '((" " . quail-select-current)
-                        (";" . (lambda () (interactive) (quail-next-translation)(quail-select-current)))
-                        ("." . quail-next-translation)
-                        ("[" . quail-next-translation)
-                        ("," . quail-prev-translation)
-                        ("]" . quail-prev-translation))
+                        (";" . (lambda () (interactive)(quail-next-translation)(quail-select-current))))
                       t nil nil nil)
 
 
@@ -57523,7 +57520,24 @@
  ("xhgw" ["https://flypy.com"])
  ("xhlt" ["https://bbs.flypy.com"])
  ("xhwp" ["http://flypy.ys168.com"])
- ("xhrm ["https://help.flypy.com"]")
+ ("xhrm" ["https://help.flypy.com"])
+ ("," ["，"])
+ ("." "。")
+ ("[" ["【" "〔"])
+ ("]" ["】" "〕"])
+ ("\\" "、")
+ (":" "：；")
+ ("'" "‘’")
+ ("\"" "“”")
+ ("<" ["《" "<"])
+ (">" ["》" ">"])
+ ("?" "？")
+ ("!" "！")
+ ("$" "￥$")
+ ("^" ["……"])
+ ("(" "（")
+ (")" "）")
+ ("`" "·")
  )
 
 ;; use flypy as default
