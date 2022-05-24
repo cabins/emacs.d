@@ -32,14 +32,6 @@
   :diminish
   :hook (prog-mode . highlight-parentheses-mode))
 
-;; Yasnippet
-(use-package yasnippet
-  :diminish yas-minor-mode
-  :hook (prog-mode . yas-minor-mode)
-  :config (yas-reload-all)
-  :bind ("C-o" . yas-expand))
-(use-package yasnippet-snippets :diminish)
-
 ;; Language Server
 (require 'init-eglot) ; eglot
 ;; (require 'init-lsp)   ; lsp, enable this line if you like lsp-mode and disable eglot line
