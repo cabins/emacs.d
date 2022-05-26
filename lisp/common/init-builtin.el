@@ -49,7 +49,8 @@
 (defalias 'list-buffers 'ibuffer)
 
 ;; iSearch
-(setq isearch-allow-motion t)
+(setq isearch-allow-motion t
+      isearch-lazy-count t)
 
 ;; minibuffer
 (add-hook 'after-init-hook 'minibuffer-electric-default-mode)
