@@ -17,10 +17,6 @@
   :config (setq company-minimum-prefix-length 1
                 company-show-quick-access t))
 
-;; ctrlf, good isearch alternative
-(use-package ctrlf
-  :hook (after-init . ctrlf-mode))
-
 ;; crux, a collection of many useful extensions/commands
 ;; without key-binding you can use
 ;; C-a for its original definition
