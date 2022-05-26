@@ -11,10 +11,9 @@
   :init (setq auto-package-update-delete-old-versions t
 	          auto-package-update-hide-results t))
 
-;; Settings for company, auto-complete for texting, coding, etc.
+;; Settings for company, auto-complete only for coding.
 (use-package company
-  :diminish "Cmp"
-  :hook (after-init . global-company-mode)
+  :hook (prog-mode . company-mode)
   :config (setq company-minimum-prefix-length 1
                 company-show-quick-access t))
 
@@ -37,10 +36,7 @@
   :when (or (memq window-system '(mac ns x))
             (unless (memq system-type '(windows-nt dos))
               (daemonp)))
-  :init
-  ;; (exec-path-from-shell-copy-env "CLASSPATH")
-  ;; (exec-path-from-shell-copy-env "JAVA_HOME")
-  (exec-path-from-shell-initialize))
+  :init (exec-path-from-shell-initialize))
 
 ;; format all, formatter for almost languages
 ;; great for programmers
@@ -78,8 +74,7 @@
 (use-package org-superstar
   :hook (org-mode . org-superstar-mode)
   :config
-  (setq org-superstar-prettify-item-bullets t
-        org-superstar-headline-bullets-list '("🐭" "🐮" "🐯" "🐰" "🐲" "🐸" "🐴" "🐑" "🐵" "🐔" "🐶" "🐷")))
+  (setq org-superstar-prettify-item-bullets t))
 
 ;; popwin
 (use-package popwin

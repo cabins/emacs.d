@@ -8,9 +8,9 @@
 (setq use-short-answers t)
 
 ;; make tab-width always 4
-(setq-default tab-width 4)
 ;; only use spaces instead of TAB, use C-q TAB to input the TAB char
-(setq-default indent-tabs-mode nil)
+(setq-default tab-width 4
+              indent-tabs-mode nil)
 
 ;; auto-fill-mode, Help by command or variable name
 (add-hook 'after-init-hook 'auto-fill-mode)
@@ -43,8 +43,7 @@
 ;; for example, "pacman -S aspell" on archlinux
 ;; and "pacman -S pacman -S mingw64/mingw-w64-x86_64-aspell{,-en}" on msys2 (Windows)
 ;; for performance issue, do NOT use on Windows
-(use-package flyspell
-  :hook ((text-mode org-mode) . flyspell-mode))
+(add-hook 'text-mode-hook 'flyspell-mode)
 
 ;; ibuffer
 (defalias 'list-buffers 'ibuffer)
@@ -90,8 +89,7 @@
 (add-hook 'after-init-hook 'global-visual-line-mode)
 
 ;; windmove.el, use shift-<arrow key> to switch buffers
-(use-package windmove
-  :init (windmove-default-keybindings))
+(add-hook 'after-init-hook 'windmove-default-keybindings)
 
 (provide 'init-builtin)
 
