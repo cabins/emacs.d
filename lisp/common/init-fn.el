@@ -4,24 +4,15 @@
 
 ;;; Code:
 
+;; for debug
 ;;;###autoload
-(defun tenon--change-theme ()
-  "Change theme."
-
-  (interactive)
-  (let ((theme-list custom-enabled-themes))
-    (call-interactively 'load-theme)
-    (unless (equal custom-enabled-themes theme-list)
-      (mapcar #'disable-theme theme-list))))
-
-;;;###autoload
-(defmacro tenon--timer (&rest body)
+(defmacro cabins/timer (&rest body)
   "Measure the time of code BODY running."
   `(let ((time (current-time)))
      ,@body
      (float-time (time-since time))))
 
-(defun tenon--available-font (font-list)
+(defun cabins/available-font (font-list)
   "Get the first available font from FONT-LIST."
 
   (catch 'font
@@ -35,22 +26,23 @@
 (defvar en-fonts-list '("Cascadia Code" "Courier New" "Monaco" "Ubuntu Mono")
   "定义使用的英文字体候选列表.")
 
-(defvar emoji-fonts-list '("Apple Color Emoji" "Segoe UI Emoji" "Noto Color Emoji" "Symbola" "Symbol")
+(defvar emoji-fonts-list '("Apple Color Emoji" "Noto Color Emoji" "Segoe UI Emoji" "Symbola" "Symbol")
   "定义使用Emoji字体候选列表.")
 
 ;;;###autoload
-(defun tenon--font-setup ()
+(defun cabins/font-setup ()
   "Font setup."
 
   (interactive)
-  (let* ((cf (tenon--available-font cn-fonts-list))
-	     (ef (tenon--available-font en-fonts-list))
-         (em (tenon--available-font emoji-fonts-list)))
+  (let* ((cf (cabins/available-font cn-fonts-list))
+	     (ef (cabins/available-font en-fonts-list))
+         (em (cabins/available-font emoji-fonts-list)))
     (when ef
       (dolist (face '(default fixed-pitch fixed-pitch-serif variable-pitch))
 	    (set-face-attribute face nil :family ef)))
     (when em
-      (set-fontset-font t 'emoji em))
+      (set-fontset-font t 'emoji em)
+      (set-fontset-font t 'symbol em))
     (when cf
       (dolist (charset '(kana han cjk-misc bopomofo))
 	    (set-fontset-font t charset cf))
