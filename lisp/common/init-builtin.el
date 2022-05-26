@@ -68,10 +68,6 @@
         org-hide-emphasis-markers t
         org-startup-indented t))
 
-;; Prettify Symbols
-;; `global-prettify-symbols-mode' and `prettify-symbols-mode' are provided by prog-mode.el
-(add-hook 'prog-mode-hook 'prettify-symbols-mode)
-
 ;; pulse the cursor line
 (dolist (cmd '(recenter-top-bottom other-window))
   (advice-add cmd :after
