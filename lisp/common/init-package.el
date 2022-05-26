@@ -44,9 +44,8 @@
 ;; gnu-elpa-keyring-update
 (use-package gnu-elpa-keyring-update)
 
-;; iedit
-(use-package iedit
-  :bind ("C-M-;" . iedit-mode))
+;; iedit - edit same text in one buffer or region
+(use-package iedit)
 
 ;; info-colors, make the info manual as colorful
 (use-package info-colors
