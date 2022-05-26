@@ -5,12 +5,6 @@
 
 ;;; Code:
 
-;; Auto update packages
-;; this maybe useful, if you want to update all the packages with command, just like me
-(use-package auto-package-update
-  :init (setq auto-package-update-delete-old-versions t
-	          auto-package-update-hide-results t))
-
 ;; Settings for company, auto-complete only for coding.
 (use-package company
   :hook (prog-mode . company-mode)
