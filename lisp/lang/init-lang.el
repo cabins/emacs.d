@@ -27,10 +27,6 @@
 ;; cc-mode
 (add-hook 'c-mode-common-hook 'c-toggle-auto-hungry-state)
 
-;; Rainbow delimiters
-(use-package rainbow-delimiters
-  :hook (prog-mode . rainbow-delimiters-mode))
-
 ;; Language Server
 ;; `eglot', a light-weight lsp client
 (require 'init-eglot)
