@@ -45,6 +45,12 @@
 ;; for performance issue, do NOT use on Windows
 (add-hook 'text-mode-hook 'flyspell-mode)
 
+;; Follow Mode - Continue reading with parallel buffer
+(add-hook 'after-init-hook 'follow-mode)
+
+;; Highlight Current Line
+(add-hook 'after-init-hook 'global-hl-line-mode)
+
 ;; ibuffer
 (defalias 'list-buffers 'ibuffer)
 
@@ -68,7 +74,7 @@
         org-hide-emphasis-markers t
         org-startup-indented t))
 
-;; pulse the cursor line
+;; Pulse the cursor line
 (dolist (cmd '(recenter-top-bottom other-window))
   (advice-add cmd :after
               (lambda (&rest _) (pulse-momentary-highlight-one-line (point)))))
@@ -82,7 +88,10 @@
                 recentf-max-saved-items 100)
   (add-to-list 'recentf-exclude '("~\/.emacs.d\/elpa\/")))
 
-;; global visual line mode
+;; Repeat Mode (builtin from 28)
+(add-hook 'after-init-hook 'repeat-mode)
+
+;; Global visual line mode
 (add-hook 'after-init-hook 'global-visual-line-mode)
 
 ;; windmove.el, use shift-<arrow key> to switch buffers
