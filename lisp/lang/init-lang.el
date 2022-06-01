@@ -25,7 +25,7 @@
   (global-set-key (kbd "M-p") #'flymake-goto-prev-error))
 
 ;; cc-mode
-(add-hook 'c-mode-common-hook 'c-toggle-auto-hungry-state)
+(add-hook 'c-mode-common-hook 'c-toggle-hungry-state)
 
 ;; Language Server
 ;; `eglot', a light-weight lsp client

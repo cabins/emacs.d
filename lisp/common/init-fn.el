@@ -4,14 +4,6 @@
 
 ;;; Code:
 
-;; for debug
-;;;###autoload
-(defmacro cabins/timer (&rest body)
-  "Measure the time of code BODY running."
-  `(let ((time (current-time)))
-     ,@body
-     (float-time (time-since time))))
-
 (defun cabins/available-font (font-list)
   "Get the first available font from FONT-LIST."
 
@@ -23,7 +15,7 @@
 (defvar cn-fonts-list '("黑体" "STHeiti" "微软雅黑" "文泉译微米黑")
   "定义使用的中文字体候选列表.")
 
-(defvar en-fonts-list '("Cascadia Code" "Courier New" "Monaco" "Ubuntu Mono")
+(defvar en-fonts-list '("Cascadia Code" "Consolas" "Menlo" "Monaco" "Ubuntu Mono")
   "定义使用的英文字体候选列表.")
 
 (defvar emoji-fonts-list '("Apple Color Emoji" "Noto Color Emoji" "Segoe UI Emoji" "Symbola" "Symbol")

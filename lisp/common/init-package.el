@@ -31,7 +31,6 @@
 ;; format all, formatter for almost languages
 ;; great for programmers
 (use-package format-all
-  :diminish
   :hook (prog-mode . format-all-ensure-formatter)
   :bind ("C-c f" . #'format-all-buffer))
 
@@ -70,7 +69,6 @@
 
 ;; Settings for which-key - suggest next key
 (use-package which-key
-  :diminish
   :hook (after-init . which-key-mode))
 
 (provide 'init-package)

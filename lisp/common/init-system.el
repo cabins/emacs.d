@@ -22,7 +22,6 @@
       inhibit-default-init t
       initial-major-mode 'fundamental-mode
       make-backup-files nil             ; disable backup file
-      next-line-add-newlines nil
       read-process-output-max (* 64 1024)
       scroll-conservatively 10000
       visible-bell nil)
