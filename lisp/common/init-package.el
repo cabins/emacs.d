@@ -48,15 +48,6 @@
 (use-package move-dup
   :hook (after-init . global-move-dup-mode))
 
-;; neotree, file tree manager
-(use-package neotree
-  :commands (neo-buffer--lock-width neo-buffer--unlock-width)
-  :config (setq neo-autorefresh t
-		        neo-theme 'nerd
-		        neo-click-changes-root t
-		        neo-smart-open t)
-  :bind ("<f8>" . neotree-toggle))
-
 ;; org-superstar
 ;; make the org mode more beautiful with optimized leading chars
 (use-package org-superstar
