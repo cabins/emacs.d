@@ -13,7 +13,6 @@
             (display-line-numbers-mode)
             (electric-layout-mode)
             (electric-pair-mode)
-            (highlight-parentheses-mode)
             (hs-minor-mode)
             (prettify-symbols-mode)))
 
@@ -24,8 +23,12 @@
   (global-set-key (kbd "M-n") #'flymake-goto-next-error)
   (global-set-key (kbd "M-p") #'flymake-goto-prev-error))
 
-;; cc-mode
+;; CC mode
 (add-hook 'c-mode-common-hook 'c-toggle-hungry-state)
+
+;; Highlight Parentheses
+(use-package highlight-parentheses
+  :hook (prog-mode . highlight-parentheses-mode))
 
 ;; Language Server
 ;; `eglot', a light-weight lsp client

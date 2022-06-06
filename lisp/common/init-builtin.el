@@ -91,6 +91,14 @@
 ;; Repeat Mode (builtin from 28)
 (add-hook 'after-init-hook 'repeat-mode)
 
+;; Show Paren Mode
+(setq show-paren-when-point-in-periphery t
+      show-paren-when-point-inside-paren t)
+
+;; Sppedbar Keybinding
+(when window-system
+  (global-set-key (kbd "<f8>") #'speedbar))
+
 ;; Global visual line mode
 (add-hook 'after-init-hook 'global-visual-line-mode)
 
