@@ -50,8 +50,8 @@
 
 ;; Useful Tools
 (use-package quickrun)                  ; quickrun code
-(use-package restclient                 ; restclient support
-  :mode (("\\.http\\'" . restclient-mode)))
+(use-package restclient
+  :mode (("\\.http\\'" . restclient-mode))) ; restclient support
 
 (provide 'init-lang)
 
