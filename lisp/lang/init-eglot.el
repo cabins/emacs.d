@@ -26,8 +26,8 @@
   (defun eglot-actions-before-save()
     (add-hook 'before-save-hook
               (lambda ()
-                (call-interactively #'eglot-format)
-                (call-interactively #'eglot-code-action-organize-imports))))
+                (call-interactively #'eglot-code-action-organize-imports)
+                (call-interactively #'eglot-format))))
   (add-hook 'eglot--managed-mode-hook #'eglot-actions-before-save))
 
 (provide 'init-eglot)
