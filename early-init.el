@@ -3,6 +3,9 @@
 ;; Runs before package and UI initializetion happens.
 ;;; Code:
 
+(unless (>= emacs-major-version 28)
+  (error "ONLY EMACS v28+ IS SUPPORTED!"))
+
 ;; For speed up the startup, please do NOT forget reset it to default
 ;; after Emacs after-init-hook, or it may cause freezes.
 (setq gc-cons-threshold most-positive-fixnum)
@@ -27,13 +30,6 @@
 
 ;; System default coding
 (set-language-environment 'utf-8)
-
-;; Load theme early to avoid the blinking
-;; use new modus theme when greater than 28
-;; Comment out these lines, if you use customized themes.
-;; (if (>= emacs-major-version 28)
-;;     (load-theme 'modus-vivendi t)
-;;   (load-theme 'wombat t))
 
 ;;; early-init.el ends here
 ;; Local Variables:

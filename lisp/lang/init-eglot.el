@@ -24,10 +24,8 @@
   ;; (setq eglot-ignored-server-capabilities '(:documentHighlightProvider))
   (add-to-list 'eglot-server-programs '(web-mode "vls"))
   (defun eglot-actions-before-save()
-    (add-hook 'before-save-hook
-              (lambda ()
-                (call-interactively #'eglot-code-action-organize-imports)
-                (call-interactively #'eglot-format))))
+    (add-hook 'before-save-hook #'eglot-format)
+    (add-hook 'before-save-hook #'eglot-code-action-organize-imports))
   (add-hook 'eglot--managed-mode-hook #'eglot-actions-before-save))
 
 (provide 'init-eglot)

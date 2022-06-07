@@ -2,8 +2,7 @@
 
 ;; Author: Cabins
 ;; Maintainer: Cabins
-;; Version: 1.0
-;; Homepage: https://github.com/cabins/termux-emacs
+
 ;;; Commentary:
 ;; (c) Cabins Kong, 2022-
 
@@ -13,11 +12,8 @@
 (setq default-directory "~/")
 
 ;; update load-path to make customized lisp codes work
-(dolist (folder '("common" "lang" "feature" "platform" "version"))
+(dolist (folder '("common" "lang" "feature" "platform"))
   (push (expand-file-name (format "lisp/%s" folder) user-emacs-directory) load-path))
-
-;; settings depend on emacs version
-(require 'init-version)
 
 ;; common settings (no dependecies with version/os)
 (require 'init-common)
