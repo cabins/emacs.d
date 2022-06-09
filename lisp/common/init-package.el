@@ -7,7 +7,8 @@
 
 ;; Settings for company, auto-complete only for coding.
 (use-package company
-  :hook (prog-mode . company-mode)
+  :hook ((prog-mode . company-mode)
+         (inferior-emacs-lisp-mode . company-mode))
   :config (setq company-minimum-prefix-length 1
                 company-show-quick-access t))
 
