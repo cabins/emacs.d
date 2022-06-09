@@ -7,10 +7,9 @@
 (defun cabins/available-font (font-list)
   "Get the first available font from FONT-LIST."
 
-  (catch 'font
-    (dolist (font font-list)
-      (if (member font (font-family-list))
-	      (throw 'font font)))))
+  (cl-loop for font in font-list
+           when (member font (font-family-list))
+           return font))
 
 (defvar cn-fonts-list '("黑体" "STHeiti" "微软雅黑" "文泉译微米黑")
   "定义使用的中文字体候选列表.")

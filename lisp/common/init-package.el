@@ -52,7 +52,7 @@
 ;; make the org mode more beautiful with optimized leading chars
 (use-package org-superstar
   :hook (org-mode . org-superstar-mode)
-  :config (setq org-superstar-prettify-item-bullets t))
+  :config (setq org-superstar-prettify-item-bullets nil))
 
 ;; popwin
 (use-package popwin
