@@ -8,6 +8,7 @@
 ;;; Code:
 
 ;; Common features when programming
+;; **************************************************
 (add-hook 'prog-mode-hook
           (lambda ()
             (display-line-numbers-mode)
@@ -17,11 +18,9 @@
             (prettify-symbols-mode)))
 
 ;; Flymake
-(use-package flymake
-  :hook (prog-mode . flymake-mode)
-  :config
-  (global-set-key (kbd "M-n") #'flymake-goto-next-error)
-  (global-set-key (kbd "M-p") #'flymake-goto-prev-error))
+(add-hook 'prog-mode-hook 'flymake-mode)
+(global-set-key (kbd "M-n") #'flymake-goto-next-error)
+(global-set-key (kbd "M-p") #'flymake-goto-prev-error)
 
 ;; CC mode
 (add-hook 'c-mode-common-hook 'c-toggle-hungry-state)
@@ -31,16 +30,35 @@
   :hook (prog-mode . highlight-parentheses-mode))
 
 ;; Language Server
-;; `eglot', a light-weight lsp client
+;; **************************************************
+;; `eglot', a light-weight LSP client
 (require 'init-eglot)
-;; `lsp-mode', enable next line if you like lsp-mode and disable the previous eglot line
+;; `lsp-mode', a full-feature LSP client
 ;; (require 'init-lsp)
 
-;; Specific Languages
-(require 'init-lang-go)
-(require 'init-lang-python)
-(require 'init-lang-rust)
-(require 'init-lang-web)
+;; Languages
+;; **************************************************
+
+;; Golang
+(use-package go-mode)
+
+;; Rust
+(use-package rust-mode
+  :config
+  (setq rust-format-on-save t)
+  (define-key rust-mode-map (kbd "C-c C-c") 'rust-run))
+
+;; Web Developemnt
+(use-package emmet-mode
+  :hook ((web-mode css-mode) . emmet-mode))
+(use-package web-mode
+  :init
+  ;; use web-mode to handle vue/html files
+  (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
+  :config
+  (setq web-mode-enable-current-element-highlight t))
+(use-package typescript-mode)
 
 ;; Program Useful text/config files
 (use-package json-mode)
