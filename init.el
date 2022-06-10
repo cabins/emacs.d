@@ -12,8 +12,8 @@
 (setq default-directory "~/")
 
 ;; update load-path to make customized lisp codes work
-(dolist (folder '("common" "lang" "feature" "platform"))
-  (push (expand-file-name (format "lisp/%s" folder) user-emacs-directory) load-path))
+(dolist (folder (directory-files (concat user-emacs-directory "lisp") t directory-files-no-dot-files-regexp))
+  (add-to-list 'load-path folder))
 
 ;; common settings (no dependecies with version/os)
 (require 'init-common)
