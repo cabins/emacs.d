@@ -2,6 +2,7 @@
 
 ;; Author: Cabins
 ;; Maintainer: Cabins
+;; Github: https://github.com/cabins/emacs.d
 
 ;;; Commentary:
 ;; (c) Cabins Kong, 2022-
