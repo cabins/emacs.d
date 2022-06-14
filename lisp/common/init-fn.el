@@ -3,6 +3,7 @@
 ;; (c) Cabins Kong, 2022-
 
 ;;; Code:
+(require 'subr-x)
 
 (defun cabins/available-font (font-list)
   "Get the first available font from FONT-LIST."
@@ -39,6 +40,7 @@
 	    (set-fontset-font t charset cf))
       (setq face-font-rescale-alist
 	        (mapcar (lambda (item) (cons item 1.2)) `(,cf ,em))))))
+(add-hook 'after-init-hook #'cabins/font-setup)
 
 ;;;autoload
 (defun tenon--cleaner-ui ()
@@ -58,6 +60,20 @@
   ;; tooltips in echo-aera
   (when (and (fboundp 'tooltip-mode) (not (eq tooltip-mode -1)))
     (tooltip-mode -1)))
+
+;;;autoload
+(defun cabins/set-theme-on-windows ()
+  "Set theme on Windows 10 based on system dark mode."
+
+  (interactive)
+  (when (memq system-type '(ms-dos windows-nt cygwin))
+    (setq modus-themes-mode-line '(borderless (padding . 4) (height . 0.9)))
+    (let* ((cmd "powershell (Get-ItemProperty -Path HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize -Name AppsUseLightTheme).AppsUseLightTheme")
+           (mode (string-trim (shell-command-to-string cmd))))
+      (if (equal mode "1")
+          (load-theme 'modus-operandi t)
+        (load-theme 'modus-vivendi t)))))
+(add-hook 'after-init-hook #'cabins/set-theme-on-windows)
 
 (provide 'init-fn)
 ;;; init-fn.el ends here
