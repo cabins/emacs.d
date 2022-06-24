@@ -45,7 +45,7 @@
 ;; Rust
 (use-package rust-mode
   :config
-  (setq rust-format-on-save t)
+  ;; (setq rust-format-on-save t)
   (define-key rust-mode-map (kbd "C-c C-c") 'rust-run))
 
 ;; Web Developemnt
@@ -61,7 +61,6 @@
 (use-package typescript-mode)
 
 ;; Program Useful text/config files
-(use-package json-mode)
 (use-package markdown-mode)
 (use-package protobuf-mode)
 (use-package yaml-mode)

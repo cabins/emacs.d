@@ -1,4 +1,4 @@
-;;; init.el --- the entry of emacs config -*- lexical-binding: t -*-
+ ;;; init.el --- the entry of emacs config -*- lexical-binding: t -*-
 
 ;; Author: Cabins
 ;; Maintainer: Cabins
