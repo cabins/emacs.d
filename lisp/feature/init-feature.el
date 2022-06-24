@@ -18,6 +18,7 @@
 
 ;; flypy - 小鹤音形输入法
 (require 'init-chinese-flypy)
+(require 'init-chinese-wb98)
 
 (provide 'init-feature)
 
