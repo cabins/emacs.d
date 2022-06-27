@@ -16,10 +16,6 @@
                          (cabins/font-setup)
                          (cabins/set-theme-on-windows)))))
 
-;; flypy - 小鹤音形输入法
-(require 'init-chinese-flypy)
-(require 'init-chinese-wb98)
-
 (provide 'init-feature)
 
 ;; Local Variables:
