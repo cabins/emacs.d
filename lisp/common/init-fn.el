@@ -31,7 +31,7 @@
   (dolist (face '(default fixed-pitch fixed-pitch-serif variable-pitch))
 	(set-face-attribute face nil :family (cabins/available-font '("Cascadia Code PL" "Consolas" "Menlo" "Monaco" "Ubuntu Mono" "Courier"))))
   ;; Chinese font settings
-  (cabins/font-setup-charset '("楷体" "STKaiti" "黑体" "STHeiti" "微软雅黑" "文泉译微米黑" "Noto Sans SC") '(han))
+  (cabins/font-setup-charset '("等线" "苹方" "微软雅黑" "文泉译微米黑" "Noto Sans SC") '(han))
   ;; Emoji font settings
   (cabins/font-setup-charset '("Apple Color Emoji" "Noto Color Emoji" "Segoe UI Emoji" "Symbola" "Symbol") '(emoji)))
 (add-hook 'after-init-hook #'cabins/font-setup)
