@@ -102,8 +102,12 @@
 ;; Global visual line mode
 (add-hook 'after-init-hook 'global-visual-line-mode)
 
-;; windmove.el, use shift-<arrow key> to switch buffers
-(add-hook 'after-init-hook 'windmove-default-keybindings)
+;; windmove.el, use C-c <arrow key> to switch buffers
+;; (add-hook 'after-init-hook 'windmove-default-keybindings)
+(global-set-key (kbd "C-c <left>")  'windmove-left)
+(global-set-key (kbd "C-c <right>") 'windmove-right)
+(global-set-key (kbd "C-c <up>")    'windmove-up)
+(global-set-key (kbd "C-c <down>")  'windmove-down)
 
 (provide 'init-builtin)
 

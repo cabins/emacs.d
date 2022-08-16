@@ -12,7 +12,6 @@
 (add-hook 'prog-mode-hook
           (lambda ()
             (display-line-numbers-mode)
-            (electric-layout-mode)
             (electric-pair-mode)
             (hs-minor-mode)
             (prettify-symbols-mode)))
