@@ -72,7 +72,16 @@
   :config
   (setq org-hide-leading-stars t
         org-hide-emphasis-markers t
-        org-startup-indented t))
+        org-startup-indented t
+        org-latex-listings 'minted
+        ;; use tectonic to export pdf
+        org-latex-pdf-process '("tectonic -Z shell-escape %f"))
+  ;; solve CJK issue when export to pdf
+  (add-to-list 'org-latex-packages-alist '("" "ctex"))
+  ;; highlight code block
+  (add-to-list 'org-latex-packages-alist '("" "minted"))
+  ;; long word wrap when export to pdf
+  (add-to-list 'org-latex-packages-alist '("" "seqsplit")))
 
 ;; Pulse the cursor line
 (dolist (cmd '(recenter-top-bottom other-window))
