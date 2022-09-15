@@ -14,7 +14,7 @@
   (add-hook 'after-make-frame-functions
             (lambda (frame) (with-selected-frame frame
                          (cabins/font-setup)
-                         (cabins/set-theme-on-windows)))))
+                         (cabins/load-theme)))))
 
 (provide 'init-feature)
 

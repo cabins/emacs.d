@@ -40,20 +40,14 @@
 (defun tenon--cleaner-ui ()
   "Remove all the unnecessary elements."
 
-  (when (and (fboundp 'scroll-bar-mode) (not (eq scroll-bar-mode -1)))
-    (scroll-bar-mode -1))
-
-  (when (and (fboundp 'tool-bar-mode) (not (eq tool-bar-mode -1)))
-    (tool-bar-mode -1))
-
-  (if (and (fboundp 'menu-bar-mode)
-           (display-graphic-p))
-      (menu-bar-mode +1)
-    (menu-bar-mode -1))
-
   ;; tooltips in echo-aera
-  (when (and (fboundp 'tooltip-mode) (not (eq tooltip-mode -1)))
-    (tooltip-mode -1)))
+  (when (fboundp 'tooltip-mode) (tooltip-mode -1))
+  (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+  (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+  ;; for menu-bar, only show when runs on GUI mode
+  (if (and (display-graphic-p) (fboundp 'menu-bar-mode))
+      (menu-bar-mode +1)
+    (menu-bar-mode -1)))
 
 ;;;###autoload
 (defun cabins/available-theme (theme-list)
@@ -84,8 +78,6 @@
     (if (cabins/os-dark-mode)
         (load-theme light-theme t)
       (load-theme dark-theme t))))
-
-(add-hook 'frame-after-make-frame 'cabins/load-theme)
 
 (provide 'init-fn)
 ;;; init-fn.el ends here
