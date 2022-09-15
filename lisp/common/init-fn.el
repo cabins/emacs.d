@@ -74,7 +74,6 @@
   (interactive)
   (let ((light-theme (cabins/available-theme '(modus-operandi leuven tsdh-light tango whiteboard)))
         (dark-theme (cabins/available-theme '(modus-vivendi leuven-dark tsdh-dark tango-dark wombat dichromacy))))
-
     (if (cabins/os-dark-mode)
         (load-theme light-theme t)
       (load-theme dark-theme t))))
