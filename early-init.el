@@ -29,7 +29,7 @@
 (setq frame-inhibit-implied-resize t)
 
 ;; System default coding
-(set-language-environment 'utf-8)
+;; (set-language-environment 'utf-8)
 
 ;;; early-init.el ends here
 ;; Local Variables:

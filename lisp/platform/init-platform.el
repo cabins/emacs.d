@@ -9,7 +9,7 @@
 (cond
  (os--windows
   ;; fix the  issue on Windows
-  (setq buffer-file-coding-system 'utf-8)
+  ;; (setq buffer-file-coding-system 'utf-8)
   (when (boundp 'w32-get-true-file-attributes)
     (setq w32-get-true-file-attributes nil
 	      w32-pipe-read-delay 0

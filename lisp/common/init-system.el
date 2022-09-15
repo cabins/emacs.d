@@ -12,7 +12,7 @@
 ;;; system coding
 ;; although others may add many other settings here,
 ;; but I think the next line is enough
-(prefer-coding-system 'utf-8)
+;; (prefer-coding-system 'utf-8)
 ;; (set-language-environment "UTF-8")
 
 ;;; emacs settings
