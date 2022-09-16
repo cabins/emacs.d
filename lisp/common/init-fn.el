@@ -57,19 +57,37 @@
            when (member theme (custom-available-themes))
            return theme))
 
+;; (defun cabins/os-dark-mode()
+;;   "Check the os dark mode, only support Windows for now."
+;;   ;; support for Windows 10+
+;;   (when (memq system-type '(ms-dos windows-nt cygwin))
+;;     (let* ((cmd "powershell (Get-ItemProperty -Path HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize -Name AppsUseLightTheme).AppsUseLightTheme")
+;;            (mode (string-trim (shell-command-to-string cmd))))
+;;       (if (equal mode "0") t nil)))
+;;   ;; support for macOS [under testing]
+;;   (when (eq system-type 'darwin)
+;;     (let* ((cmd "defaults read -g AppleInterfaceStyle")
+;;            (mode (string-trim (shell-command-to-string cmd))))
+;;       (if (equal mode "Dark") t nil)))
+;;   ;; support for linux, GNOME only
+;;   (when (eq system-type 'gnu/linux)
+;;     (let* ((cmd "gsettings get org.gnome.desktop.interface color-scheme")
+;;            (mode (string-trim (shell-command-to-string cmd))))
+;;       (if (equal mode "'prefer-dark'") t nil))))
+
 (defun cabins/os-dark-mode()
   "Check the os dark mode, only support Windows for now."
 
-  (when (memq system-type '(ms-dos windows-nt cygwin))
-    (let* ((cmd "powershell (Get-ItemProperty -Path HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize -Name AppsUseLightTheme).AppsUseLightTheme")
-           (mode (string-trim (shell-command-to-string cmd))))
-      (if (equal mode "0") t nil)))
-  ;; TODO support for macOS
-  ;; support for linux, GNOME only
-  (when (eq system-type 'gnu/linux)
-    (let* ((cmd "gsettings get org.gnome.desktop.interface color-scheme")
-           (mode (string-trim (shell-command-to-string cmd))))
-      (if (equal mode "'prefer-dark'") t nil))))
+  (let* ((cmd (cond
+               ((member system-type '(ms-dos windows-nt cygwin))
+                "powershell (Get-ItemProperty -Path HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize -Name AppsUseLightTheme).AppsUseLightTheme")
+               ((eq system-type 'darwin)
+                "defaults read -g AppleInterfaceStyle")
+               ((eq system-type 'gnu/linux)
+                "gsettings get org.gnome.desktop.interface color-scheme")))
+         (mode (string-trim (shell-command-to-string cmd))))
+    (message mode)
+    (if (member mode '("0" "Dark" "'prefer-dark'")) t nil)))
 
 (defun cabins/load-theme()
   "Load theme, Auto change color scheme according to system dark mode on Windows."
