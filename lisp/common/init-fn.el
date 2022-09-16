@@ -80,6 +80,7 @@
     (if (cabins/os-dark-mode)
         (load-theme dark-theme t)
       (load-theme light-theme t))))
+(add-hook 'emacs-startup-hook 'cabins/load-theme)
 
 (provide 'init-fn)
 ;;; init-fn.el ends here
