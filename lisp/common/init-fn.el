@@ -63,10 +63,13 @@
   (when (memq system-type '(ms-dos windows-nt cygwin))
     (let* ((cmd "powershell (Get-ItemProperty -Path HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize -Name AppsUseLightTheme).AppsUseLightTheme")
            (mode (string-trim (shell-command-to-string cmd))))
-      (if (equal mode "1") t nil)))
+      (if (equal mode "0") t nil)))
   ;; TODO support for macOS
-  ;; TODO support for linux, GNOME only
-  )
+  ;; support for linux, GNOME only
+  (when (eq system-type 'gnu/linux)
+    (let* ((cmd "gsettings get org.gnome.desktop.interface color-scheme")
+           (mode (string-trim (shell-command-to-string cmd))))
+      (if (equal mode "'prefer-dark'") t nil))))
 
 (defun cabins/load-theme()
   "Load theme, Auto change color scheme according to system dark mode on Windows."
@@ -75,8 +78,8 @@
   (let ((light-theme (cabins/available-theme '(modus-operandi leuven tsdh-light tango whiteboard)))
         (dark-theme (cabins/available-theme '(modus-vivendi leuven-dark tsdh-dark tango-dark wombat dichromacy))))
     (if (cabins/os-dark-mode)
-        (load-theme light-theme t)
-      (load-theme dark-theme t))))
+        (load-theme dark-theme t)
+      (load-theme light-theme t))))
 
 (provide 'init-fn)
 ;;; init-fn.el ends here
