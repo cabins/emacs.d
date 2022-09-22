@@ -57,24 +57,6 @@
            when (member theme (custom-available-themes))
            return theme))
 
-;; (defun cabins/os-dark-mode()
-;;   "Check the os dark mode, only support Windows for now."
-;;   ;; support for Windows 10+
-;;   (when (memq system-type '(ms-dos windows-nt cygwin))
-;;     (let* ((cmd "powershell (Get-ItemProperty -Path HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize -Name AppsUseLightTheme).AppsUseLightTheme")
-;;            (mode (string-trim (shell-command-to-string cmd))))
-;;       (if (equal mode "0") t nil)))
-;;   ;; support for macOS [under testing]
-;;   (when (eq system-type 'darwin)
-;;     (let* ((cmd "defaults read -g AppleInterfaceStyle")
-;;            (mode (string-trim (shell-command-to-string cmd))))
-;;       (if (equal mode "Dark") t nil)))
-;;   ;; support for linux, GNOME only
-;;   (when (eq system-type 'gnu/linux)
-;;     (let* ((cmd "gsettings get org.gnome.desktop.interface color-scheme")
-;;            (mode (string-trim (shell-command-to-string cmd))))
-;;       (if (equal mode "'prefer-dark'") t nil))))
-
 (defun cabins/os-dark-mode()
   "Check the os dark mode, only support Windows for now."
 
@@ -93,11 +75,14 @@
   "Load theme, Auto change color scheme according to system dark mode on Windows."
 
   (interactive)
-  (let ((light-theme (cabins/available-theme '(modus-operandi leuven tsdh-light tango whiteboard)))
-        (dark-theme (cabins/available-theme '(modus-vivendi leuven-dark tsdh-dark tango-dark wombat dichromacy))))
-    (if (cabins/os-dark-mode)
-        (load-theme dark-theme t)
-      (load-theme light-theme t))))
+  (when (display-graphic-p)
+    (let ((light-theme (cabins/available-theme '(modus-operandi leuven tsdh-light tango whiteboard)))
+          (dark-theme (cabins/available-theme '(modus-vivendi leuven-dark tsdh-dark tango-dark wombat dichromacy))))
+      (if (cabins/os-dark-mode)
+          (load-theme dark-theme t)
+        (load-theme light-theme t)))))
+
+(add-hook 'emacs-startup-hook 'cabins/font-setup)
 (add-hook 'emacs-startup-hook 'cabins/load-theme)
 
 (provide 'init-fn)
