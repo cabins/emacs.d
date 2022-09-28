@@ -7,10 +7,12 @@
 
 ;;; Code:
 
+(add-to-list 'load-path (concat user-emacs-directory "submodule/lsp-bridge"))
+
 (use-package lsp-bridge
   :ensure nil
   :hook ((c-mode c++-mode go-mode java-mode js-mode python-mode rust-mode web-mode) . lsp-bridge-mode)
-  :bind (("C-c e a" . #'lsp-bridge-code-action))
+  :bind (("C-c l a" . #'lsp-bridge-code-action))
   :config
   (defun lsp-bridge-actions-before-save()
     (add-hook 'before-save-hook #'lsp-bridge-code-format))
