@@ -9,6 +9,9 @@
 
 (add-to-list 'load-path (concat user-emacs-directory "submodule/lsp-bridge"))
 
+(use-package posframe)
+(use-package yasnippet)
+
 (use-package lsp-bridge
   :ensure nil
   :hook ((c-mode c++-mode go-mode java-mode js-mode python-mode rust-mode web-mode) . lsp-bridge-mode)
