@@ -16,9 +16,6 @@
 (dolist (folder (directory-files (concat user-emacs-directory "lisp") t directory-files-no-dot-files-regexp))
   (add-to-list 'load-path folder))
 
-(dolist (module (directory-files (concat user-emacs-directory "submodule") t directory-files-no-dot-files-regexp))
-  (add-to-list 'load-path module))
-
 ;; common settings (no dependecies with version/os)
 (require 'init-common)
 
