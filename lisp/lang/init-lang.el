@@ -31,9 +31,11 @@
 ;; Language Server
 ;; **************************************************
 ;; `eglot', a light-weight LSP client
-(require 'init-eglot)
+;; (require 'init-eglot)
 ;; `lsp-mode', a full-feature LSP client
 ;; (require 'init-lsp)
+;; `lsp-bridge', the fastest LSP client
+(require 'init-lsp-bridge)
 
 ;; Languages
 ;; **************************************************
