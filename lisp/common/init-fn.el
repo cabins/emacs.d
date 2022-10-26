@@ -30,7 +30,7 @@
              return (set-fontset-font t 'emoji (font-spec :family font) nil 'prepend))
 
     ;; Chinese characters
-    (cl-loop for font in '("WenQuanYi Micro Hei" "PingFang SC" "Microsoft Yahei UI" "Microsoft Yahei" "STFangsong")
+    (cl-loop for font in '("霞鹜文楷" "WenQuanYi Micro Hei" "PingFang SC" "Microsoft Yahei UI" "Microsoft Yahei" "STFangsong")
              when (font-installed-p font)
              return (progn
                       (setq face-font-rescale-alist `((,font . 1.2)))
