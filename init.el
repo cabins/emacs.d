@@ -36,6 +36,7 @@
 (provide 'init)
 
 ;;; init.el ends here
- ;; Local Variables:
+;;; Local Variables:
+;; coding: utf-8
 ;; byte-compile-warnings: (not unresolved obsolete)
 ;; End:

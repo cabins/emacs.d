@@ -15,7 +15,7 @@
   (interactive)
   (when (display-graphic-p)
     ;; Default font
-    (cl-loop for font in '("Cascadia Code" "Fira Code" "Jetbrains Mono" "SF Mono" "Hack" "Source Code Pro" "Menlo" "Monaco" "DejaVu Sans Mono" "Consolas")
+    (cl-loop for font in '("Courier Prime" "Cascadia Code" "Fira Code" "Jetbrains Mono" "Hack" "Source Code Pro" "Menlo" "Monaco" "Consolas")
              when (font-installed-p font)
              return (set-face-attribute 'default nil :family font))
 
@@ -45,7 +45,7 @@
   (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
   (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
   ;; for menu-bar, only show when runs on GUI mode
-  (if (and (display-graphic-p) (fboundp 'menu-bar-mode))
+  (if (and (display-graphic-p) (fboundp 'menu-bar-mode) (eq system-type 'darwin))
       (menu-bar-mode +1)
     (menu-bar-mode -1)))
 
@@ -77,7 +77,7 @@
   (interactive)
   (when (display-graphic-p)
     (let ((light-theme (cabins/available-theme '(modus-operandi leuven tsdh-light tango whiteboard)))
-          (dark-theme (cabins/available-theme '(modus-vivendi leuven-dark tsdh-dark tango-dark wombat dichromacy))))
+          (dark-theme (cabins/available-theme '(dracula modus-vivendi leuven-dark tsdh-dark tango-dark wombat dichromacy))))
       (if (cabins/os-dark-mode)
           (load-theme dark-theme t)
         (load-theme light-theme t)))))

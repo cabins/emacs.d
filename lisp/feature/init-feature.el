@@ -3,6 +3,11 @@
 
 ;;; Code:
 
+(advice-add 'load-theme :after
+            (lambda (&rest _)
+              (set-face-attribute 'mode-line nil :box nil)
+              (set-face-attribute 'mode-line-inactive nil :box nil)))
+
 ;; UI
 ;; disable scrollbar/toolbar on all platform
 ;; keep the menu bar on all UI mode
@@ -13,8 +18,8 @@
 (when (daemonp)
   (add-hook 'after-make-frame-functions
             (lambda (frame) (with-selected-frame frame
-                         (cabins/font-setup)
-                         (cabins/load-theme)))))
+                          (cabins/font-setup)
+                          (cabins/load-theme)))))
 
 (provide 'init-feature)
 
