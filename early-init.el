@@ -12,7 +12,7 @@
 (add-hook 'after-init-hook #'(lambda () (setq gc-cons-threshold 800000)))
 
 ;; Prevent unwanted runtime compilation for native-comp users
-(setq native-comp-deferred-compilation nil)
+(setq inhibit-automatic-native-compilation t)
 
 ;; Package initialize occurs automatically, before `user-init-file' is loaded
 ;; but after `early-init-file'. If you want to handle package initialization,
@@ -28,8 +28,16 @@
 ;; Do not resize the frame at this early stage.
 (setq frame-inhibit-implied-resize t)
 
+;; Clean GUI
+(push '(scroll-bar-mode . nil) default-frame-alist)
+(push '(tool-bar-mode . nil) default-frame-alist)
+(push '(menu-bar-mode . nil) default-frame-alist)
+
 ;; System default coding
 ;; (set-language-environment 'utf-8)
+
+;; Misc settings
+(setq mode-line-compact t)
 
 ;;; early-init.el ends here
 ;; Local Variables:
