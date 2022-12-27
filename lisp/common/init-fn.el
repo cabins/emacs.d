@@ -37,17 +37,18 @@
                       (set-fontset-font t '(#x4e00 . #x9fff) (font-spec :family font))))))
 
 ;;;###autoload
-(defun tenon--cleaner-ui ()
+(defun make-ui-cleaner ()
   "Remove all the unnecessary elements."
 
   ;; tooltips in echo-aera
   (when (fboundp 'tooltip-mode) (tooltip-mode -1))
   (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
   (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-  ;; for menu-bar, only show when runs on GUI mode
-  (if (and (display-graphic-p) (fboundp 'menu-bar-mode) (eq system-type 'darwin))
+  ;; for menu-bar, only show when runs on GUI mode & macos
+  (when (fboundp 'menu-bar-mode)
+    (if (and (display-graphic-p) (eq system-type 'darwin))
       (menu-bar-mode +1)
-    (menu-bar-mode -1)))
+    (menu-bar-mode -1))))
 
 ;;;###autoload
 (defun cabins/available-theme (theme-list)

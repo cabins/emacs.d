@@ -11,8 +11,8 @@
 ;; UI
 ;; disable scrollbar/toolbar on all platform
 ;; keep the menu bar on all UI mode
-(add-hook 'window-setup-hook #'tenon--cleaner-ui)
-(add-hook 'tty-setup-hook #'tenon--cleaner-ui)
+(add-hook 'window-setup-hook #'make-ui-cleaner)
+(add-hook 'tty-setup-hook #'make-ui-cleaner)
 
 ;; daemon
 (when (daemonp)
