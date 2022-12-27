@@ -58,7 +58,7 @@
   :config
   (add-to-list 'eglot-server-programs '(web-mode "vls"))
   (advice-add 'eglot-code-action-organize-imports :before #'eglot-format-buffer)
-  (add-hook 'eglot--managed-mode-hook (lambda () (add-hook 'before-save-hook #'eglot-format-buffer))))
+  (add-hook 'eglot-managed-mode-hook (lambda () (add-hook 'before-save-hook #'eglot-format-buffer))))
 
 
 (provide 'init-lang)
