@@ -3,55 +3,40 @@
 ;; Author: Cabins
 ;; Maintainer: Cabins
 ;; Homepage: github.com/cabins
-
 ;;; Commentary:
 ;;; Code:
 
-;; Common features when programming
-;; **************************************************
-(add-hook 'prog-mode-hook
-          (lambda ()
-            (display-line-numbers-mode)
-            (electric-pair-mode)
-            (hs-minor-mode)
-            (prettify-symbols-mode)))
+;; 编程模式下建议开启的一些设置
+(defun prog-extra-modes()
+  "Extra modes when in programming mode."
+
+  (column-number-mode)
+  (display-line-numbers-mode)
+  (electric-pair-mode)
+  (flymake-mode)
+  (hs-minor-mode)
+  (prettify-symbols-mode)
+
+  (use-package highlight-parentheses
+    :hook (prog-mode . highlight-parentheses-mode)))
+(add-hook 'prog-mode-hook 'prog-extra-modes)
 
 ;; Flymake
-(add-hook 'prog-mode-hook 'flymake-mode)
 (global-set-key (kbd "M-n") #'flymake-goto-next-error)
 (global-set-key (kbd "M-p") #'flymake-goto-prev-error)
 
 ;; CC mode
 (add-hook 'c-mode-common-hook 'c-toggle-hungry-state)
 
-;; Highlight Parentheses
-(use-package highlight-parentheses
-  :hook (prog-mode . highlight-parentheses-mode))
-
-;; Language Server
-;; **************************************************
-;; `eglot', a light-weight LSP client
-(require 'init-eglot)
-;; `lsp-mode', a full-feature LSP client
-;; (require 'init-lsp)
-;; `lsp-bridge', the fastest LSP client
-;; (require 'init-lsp-bridge)
-
-;; Languages
-;; **************************************************
-
-;; Golang
-(use-package go-mode)
-
-;; Rust
-(use-package rust-mode
-  :config
-  ;; (setq rust-format-on-save t)
-  (define-key rust-mode-map (kbd "C-c C-c") 'rust-run))
-
-;; Web Developemnt
+;; 非内置支持的一些编程语言模式
 (use-package emmet-mode
   :hook ((web-mode css-mode) . emmet-mode))
+(use-package go-mode)
+(use-package kotlin-mode)
+(use-package markdown-mode)
+(use-package protobuf-mode)
+(use-package rust-mode)
+(use-package typescript-mode)
 (use-package web-mode
   :init
   ;; use web-mode to handle vue/html files
@@ -59,17 +44,22 @@
   (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
   :config
   (setq web-mode-enable-current-element-highlight t))
-(use-package typescript-mode)
-
-;; Program Useful text/config files
-(use-package markdown-mode)
-(use-package protobuf-mode)
 (use-package yaml-mode)
 
-;; Useful Tools
+;; 一些感觉比较有用的工具
 (use-package quickrun)                  ; quickrun code
 (use-package restclient
   :mode (("\\.http\\'" . restclient-mode))) ; restclient support
+
+;; Language Server (eglot - builtin)
+;; **************************************************
+(use-package eglot
+  :hook ((c-mode c++-mode css-mode go-mode java-mode js-mode kotlin-mode python-mode rust-mode ruby-mode web-mode) . eglot-ensure)
+  :config
+  (add-to-list 'eglot-server-programs '(web-mode "vls"))
+  (advice-add 'eglot-code-action-organize-imports :before #'eglot-format-buffer)
+  (add-hook 'eglot--managed-mode-hook (lambda () (add-hook 'before-save-hook #'eglot-format-buffer))))
+
 
 (provide 'init-lang)
 

@@ -5,7 +5,9 @@
 ;;; Code:
 
 ;; Misc configurations for default
-(setq-default fill-column 72 ;; RFC2822 Style
+(setq-default cursor-type 'bar
+              fill-column 72 ;; RFC2822 Style
+              frame-title-format "🎫 %b %p"
               indent-tabs-mode nil ;; Use space for indent
               isearch-allow-motion t
               isearch-lazy-count t
@@ -63,10 +65,6 @@
 
 ;; minibuffer
 (add-hook 'after-init-hook 'minibuffer-electric-default-mode)
-
-;; modeline settings
-;; column number is useless in most time, but useful when debug code.
-(add-hook 'after-init-hook 'column-number-mode)
 
 ;; Org Mode
 (use-package org

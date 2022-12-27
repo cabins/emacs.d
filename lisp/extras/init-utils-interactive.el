@@ -20,13 +20,6 @@
   (funcall-interactively 'crux-find-user-custom-file)
   (funcall-interactively 'delete-other-windows))
 
-;;;###autoload
-(defun check-upgrade()
-  "Checking upgrade of packages."
-  (interactive)
-  (call-interactively 'package-refresh-contents)
-  (call-interactively 'package-update-all))
-
 ;; ********** keybindings **********
 (global-set-key (kbd "C-,") 'preferences)
 (global-set-key (kbd "<M-RET>") #'toggle-frame-maximized)
