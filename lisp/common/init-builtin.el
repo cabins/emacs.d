@@ -109,6 +109,10 @@
 (setq speedbar-show-unknown-files t)
 (global-set-key (kbd "<f8>") #'speedbar)
 
+;; Tree-sitter mode (global)
+(if (treesit-available-p)
+    (add-hook 'after-init-hook 'global-tree-sitter-mode))
+
 ;; Global visual line mode
 (add-hook 'after-init-hook 'global-visual-line-mode)
 

@@ -9,38 +9,37 @@
 
 ;;; Code:
 
-;; set the startup default directory, not essential but recommended.
+;; Default directory location(Not necessary, but RECOMMENDED)
 (setq default-directory "~/")
 
-;; update load-path to make customized lisp codes work
+;; All the start config files, which will be autoloaded
 (dolist (folder (directory-files (concat user-emacs-directory "lisp") t directory-files-no-dot-files-regexp))
   (add-to-list 'load-path folder))
 
-;; customized functions
+;; Customized functions
 (require 'init-fn)
 
-;; change Emacs default settings here, variables only (NOT include built-in packages)
+;; Some essential configs according to different OS
 (require 'init-system)
 
-;; settings for Melpa/Elpa/GNU repos for Emacs package manager
+;; Package manager configs
 (require 'init-elpa)
 
-;; change default Emacs settings with built-in packages
+;; Emacs builtin packages
 (require 'init-builtin)
 
-;; all the third-part packages configed here
+;; Third part packages
 (require 'init-package)
 
-;; different settings depends on os platform
+;;Configs for OS
 (require 'init-platform)
 
-;; settings for programming languages (include IDE/LSP feature)
+;; Configs for programming languages
 (require 'init-lang)
 
-;; other features, such as UI/daemon etc.
+;; Miscellaneous configs
 (require 'init-feature)
 
-;; DON'T forget to define and load custom file at last
 (setq custom-file (locate-user-emacs-file "custom.el"))
 (when (file-exists-p custom-file)
     (load custom-file))

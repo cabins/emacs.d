@@ -17,22 +17,18 @@
   (package-initialize))
 
 ;; these code run only once, when use-package is not installed
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+;; (unless (package-installed-p 'use-package)
+;; (package-refresh-contents)
+;; (package-install 'use-package))
 
 ;; make use-package default behavior better
 ;; with `use-package-always-ensure' you won't need ":ensure t" all the time
 ;; with `use-package-always-defer' you won't need ":defer t" all the time
+(require 'use-package)
 (setq use-package-always-ensure t
       use-package-always-defer t
       use-package-enable-imenu-support t
       use-package-expand-minimally t)
-(require 'use-package)
-
-;; diminish & delight, as use-package optional dependency
-;; (use-package diminish)
-;; (use-package delight)
 
 (provide 'init-elpa)
 ;;; init-elpa.el ends here
