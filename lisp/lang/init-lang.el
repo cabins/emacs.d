@@ -3,7 +3,9 @@
 ;; Author: Cabins
 ;; Maintainer: Cabins
 ;; Homepage: github.com/cabins
-;;; Commentary:
+;;; Commentary: I delete some packages, such as `go-mode', `rust-mode', `typescript-mode' etc,
+;;              Because I use the relevant '-ts-mode' since Emacs 29.1.
+;;              If you want use the -ts-mode, you may install the dll/so files with `treesit-install-language-grammar', if you do NOT want to install any third-part packages.
 ;;; Code:
 
 ;; 编程模式下建议开启的一些设置
@@ -31,12 +33,8 @@
 ;; 非内置支持的一些编程语言模式
 (use-package emmet-mode
   :hook ((web-mode css-mode) . emmet-mode))
-(use-package go-mode)
-(use-package kotlin-mode)
 (use-package markdown-mode)
 (use-package protobuf-mode)
-(use-package rust-mode)
-(use-package typescript-mode)
 (use-package web-mode
   :init
   ;; use web-mode to handle vue/html files
@@ -44,7 +42,6 @@
   (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
   :config
   (setq web-mode-enable-current-element-highlight t))
-(use-package yaml-mode)
 
 ;; 一些感觉比较有用的工具
 (use-package quickrun)                  ; quickrun code
@@ -54,12 +51,24 @@
 ;; Language Server (eglot - builtin)
 ;; **************************************************
 (use-package eglot
-  :hook ((c-mode c++-mode css-mode go-mode java-mode js-mode kotlin-mode python-mode rust-mode ruby-mode web-mode) . eglot-ensure)
+  :hook (prog-mode . eglot-ensure)
   :config
   (add-to-list 'eglot-server-programs '(web-mode "vls"))
   (advice-add 'eglot-code-action-organize-imports :before #'eglot-format-buffer)
   (add-hook 'eglot-managed-mode-hook (lambda () (add-hook 'before-save-hook #'eglot-format-buffer))))
 
+(if (treesit-available-p)
+    (use-package treesit
+      :ensure nil
+      :mode(("\\.go\\'" . go-ts-mode)
+            ("/go\\.mod\\'" . go-mod-ts-mode)
+            ("\\.java\\'" . java-ts-mode)
+            ("\\.rs\\'" . rust-ts-mode)
+            ("\\.ts\\'" . typescript-ts-mode)
+            ("\\.pyc?\\'" . python-ts-mode))
+      :config
+      (add-to-list 'treesit-language-source-alist '(gomod . ("https://github.com/camdencheek/tree-sitter-go-mod")))
+      (add-to-list 'treesit-language-source-alist '(kotlin . ("https://github.com/fwcd/tree-sitter-kotlin")))))
 
 (provide 'init-lang)
 
