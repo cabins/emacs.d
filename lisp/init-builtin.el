@@ -21,6 +21,15 @@
               use-short-answers t ;; Use y/n for yes/no case
               )
 
+(setq auto-window-vscroll nil
+      help-window-select t
+      inhibit-startup-screen t	   ; disable the startup screen splash
+      inhibit-default-init t
+      make-backup-files nil             ; disable backup file
+      read-process-output-max (* 64 1024)
+      scroll-conservatively 10000
+      visible-bell nil)
+
 ;; auto-fill-mode, Help by command or variable name
 (add-hook 'after-init-hook 'auto-fill-mode)
 
@@ -87,6 +96,9 @@
 (dolist (cmd '(recenter-top-bottom other-window))
   (advice-add cmd :after
               (lambda (&rest _) (pulse-momentary-highlight-one-line (point)))))
+
+;; Pixel scroll mode
+(add-hook 'after-init-hook 'pixel-scroll-precision-mode)
 
 ;; Recentf
 (use-package recentf

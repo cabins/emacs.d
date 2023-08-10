@@ -11,16 +11,10 @@
 
 ;; Default directory location(Not necessary, but RECOMMENDED)
 (setq default-directory "~/")
-
-;; All the start config files, which will be autoloaded
-(dolist (folder (directory-files (concat user-emacs-directory "lisp") t directory-files-no-dot-files-regexp))
-  (add-to-list 'load-path folder))
+(add-to-list 'load-path (concat user-emacs-directory "lisp"))
 
 ;; Customized functions
 (require 'init-fn)
-
-;; Some essential configs according to different OS
-(require 'init-system)
 
 ;; Package manager configs
 (require 'init-elpa)
