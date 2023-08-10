@@ -17,10 +17,7 @@
   (electric-pair-mode)
   (flymake-mode)
   (hs-minor-mode)
-  (prettify-symbols-mode)
-
-  (use-package highlight-parentheses
-    :hook (prog-mode . highlight-parentheses-mode)))
+  (prettify-symbols-mode))
 (add-hook 'prog-mode-hook 'prog-extra-modes)
 
 ;; Flymake
@@ -48,6 +45,9 @@
 (use-package restclient
   :mode (("\\.http\\'" . restclient-mode))) ; restclient support
 
+(use-package highlight-parentheses
+  :hook (prog-mode . highlight-parentheses-mode))
+
 ;; Language Server (eglot - builtin)
 ;; **************************************************
 (use-package eglot
@@ -65,7 +65,8 @@
             ("\\.java\\'" . java-ts-mode)
             ("\\.rs\\'" . rust-ts-mode)
             ("\\.ts\\'" . typescript-ts-mode)
-            ("\\.pyc?\\'" . python-ts-mode))
+            ("\\.pyc?\\'" . python-ts-mode)
+            ("\\.ya?ml\\'" . yaml-ts-mode))
       :config
       (add-to-list 'treesit-language-source-alist '(gomod . ("https://github.com/camdencheek/tree-sitter-go-mod")))
       (add-to-list 'treesit-language-source-alist '(kotlin . ("https://github.com/fwcd/tree-sitter-kotlin")))))
