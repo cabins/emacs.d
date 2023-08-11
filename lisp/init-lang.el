@@ -62,14 +62,20 @@
       :ensure nil
       :mode(("\\.go\\'" . go-ts-mode)
             ("/go\\.mod\\'" . go-mod-ts-mode)
-            ("\\.java\\'" . java-ts-mode)
             ("\\.rs\\'" . rust-ts-mode)
             ("\\.ts\\'" . typescript-ts-mode)
-            ("\\.pyc?\\'" . python-ts-mode)
             ("\\.ya?ml\\'" . yaml-ts-mode))
       :config
       (add-to-list 'treesit-language-source-alist '(gomod . ("https://github.com/camdencheek/tree-sitter-go-mod")))
-      (add-to-list 'treesit-language-source-alist '(kotlin . ("https://github.com/fwcd/tree-sitter-kotlin")))))
+      (add-to-list 'treesit-language-source-alist '(kotlin . ("https://github.com/fwcd/tree-sitter-kotlin")))
+      :init
+      (add-to-list 'major-mode-remap-alist '(c-mode . c-ts-mode))
+      (add-to-list 'major-mode-remap-alist '(c++-mode . c++-ts-mode))
+      (add-to-list 'major-mode-remap-alist '(java-mode . java-ts-mode))
+      (add-to-list 'major-mode-remap-alist '(js-json-mode . json-ts-mode))
+      (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
+      )
+  )
 
 (provide 'init-lang)
 
