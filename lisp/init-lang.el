@@ -45,9 +45,6 @@
 (use-package restclient
   :mode (("\\.http\\'" . restclient-mode))) ; restclient support
 
-(use-package highlight-parentheses
-  :hook (prog-mode . highlight-parentheses-mode))
-
 ;; Language Server (eglot - builtin)
 ;; **************************************************
 (use-package eglot

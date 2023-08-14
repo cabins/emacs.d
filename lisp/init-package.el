@@ -53,10 +53,6 @@
   :hook (org-mode . org-superstar-mode)
   :config (setq org-superstar-prettify-item-bullets nil))
 
-;; popwin
-(use-package popwin
-  :hook (after-init . popwin-mode))
-
 ;; Settings for which-key - suggest next key
 (use-package which-key
   :hook (after-init . which-key-mode))
