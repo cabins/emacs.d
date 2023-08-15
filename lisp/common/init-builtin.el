@@ -7,7 +7,6 @@
 ;; Misc configurations for default
 (setq-default cursor-type 'bar
               fill-column 72 ;; RFC2822 Style
-              frame-title-format "🎫 %b %p"
               indent-tabs-mode nil ;; Use space for indent
               isearch-allow-motion t
               isearch-lazy-count t

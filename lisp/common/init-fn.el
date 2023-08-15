@@ -85,6 +85,8 @@
 
 (add-hook 'emacs-startup-hook 'cabins/font-setup)
 (add-hook 'emacs-startup-hook 'cabins/load-theme)
+(add-hook 'window-setup-hook #'make-ui-cleaner)
+(add-hook 'tty-setup-hook #'make-ui-cleaner)
 
 (provide 'init-fn)
 ;;; init-fn.el ends here

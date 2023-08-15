@@ -15,10 +15,8 @@
   (electric-pair-mode)
   (flymake-mode)
   (hs-minor-mode)
-  (prettify-symbols-mode)
+  (prettify-symbols-mode))
 
-  (use-package highlight-parentheses
-    :hook (prog-mode . highlight-parentheses-mode)))
 (add-hook 'prog-mode-hook 'prog-extra-modes)
 
 ;; Flymake
