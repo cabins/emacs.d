@@ -8,6 +8,11 @@
 ;;              If you want use the -ts-mode, you may install the dll/so files with `treesit-install-language-grammar', if you do NOT want to install any third-part packages.
 ;;; Code:
 
+(defun gh-repo (short-name)
+  "Get the full path of Github url from SHORT-NAME."
+
+  (concat "https://github.com/" short-name))
+
 ;; 编程模式下建议开启的一些设置
 (defun prog-extra-modes()
   "Extra modes when in programming mode."
@@ -63,8 +68,8 @@
             ("\\.ts\\'" . typescript-ts-mode)
             ("\\.ya?ml\\'" . yaml-ts-mode))
       :config
-      (add-to-list 'treesit-language-source-alist '(gomod . ("https://github.com/camdencheek/tree-sitter-go-mod")))
-      (add-to-list 'treesit-language-source-alist '(kotlin . ("https://github.com/fwcd/tree-sitter-kotlin")))
+      (add-to-list 'treesit-language-source-alist '(gomod . ((gh-repo "camdencheek/tree-sitter-go-mod"))))
+      (add-to-list 'treesit-language-source-alist '(kotlin . ((gh-repo "fwcd/tree-sitter-kotlin"))))
       :init
       (add-to-list 'major-mode-remap-alist '(c-mode . c-ts-mode))
       (add-to-list 'major-mode-remap-alist '(c++-mode . c++-ts-mode))
