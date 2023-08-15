@@ -5,6 +5,10 @@
 ;;; Code:
 (require 'subr-x)
 
+;;;;;;;;;;;;;;;;;;;
+;; FONT SETTINGS ;;
+;;;;;;;;;;;;;;;;;;;
+
 (defun font-installed-p (font-name)
   "Check if font with FONT-NAME is available."
   (find-font (font-spec :name font-name)))
@@ -36,6 +40,10 @@
                       (setq face-font-rescale-alist `((,font . 1.2)))
                       (set-fontset-font t '(#x4e00 . #x9fff) (font-spec :family font))))))
 
+;;;;;;;;;;;;;;;;;
+;; UI SETTINGS ;;
+;;;;;;;;;;;;;;;;;
+
 ;;;###autoload
 (defun make-ui-cleaner ()
   "Remove all the unnecessary elements."
@@ -45,6 +53,10 @@
   (scroll-bar-mode -1)
   (tool-bar-mode -1)
   )
+
+;;;;;;;;;;;;;;;;;;;;
+;; THEME SETTINGS ;;
+;;;;;;;;;;;;;;;;;;;;
 
 ;;;###autoload
 (defun cabins/available-theme (theme-list)
@@ -78,6 +90,28 @@
       (if (cabins/os-dark-mode)
           (load-theme dark-theme t)
         (load-theme light-theme t)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; INTERACTIVE FUNCTIONS ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;###autoload
+(defun preferences()
+  "Nothing, but alias like `crux-find-user-init-file', inspired by VSCode."
+
+  (interactive)
+  (find-file-other-window user-init-file))
+
+;;;###autoload
+(defun preferences-custom()
+  "Nothing, but alias like `crux-find-user-custom-file', inspired by VSCode."
+
+  (interactive)
+  (find-file-other-window custom-file))
+
+;; ********** keybindings **********
+(global-set-key (kbd "C-,") 'preferences)
+(global-set-key (kbd "<M-RET>") #'toggle-frame-maximized)
+
 
 (add-hook 'emacs-startup-hook 'cabins/font-setup)
 (add-hook 'emacs-startup-hook 'cabins/load-theme)
