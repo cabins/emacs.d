@@ -38,7 +38,7 @@
 (use-package markdown-mode)
 (use-package protobuf-mode)
 (use-package web-mode
-  :init
+  :custom
   ;; use web-mode to handle vue/html files
   (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
@@ -54,30 +54,14 @@
 ;; **************************************************
 (use-package eglot
   :hook (prog-mode . eglot-ensure)
-  :config
+  :custom
   (add-to-list 'eglot-server-programs '(web-mode "vls"))
+  :config
   (advice-add 'eglot-code-action-organize-imports :before #'eglot-format-buffer)
   (add-hook 'eglot-managed-mode-hook (lambda () (add-hook 'before-save-hook #'eglot-format-buffer))))
 
 (if (treesit-available-p)
-    (use-package treesit
-      :ensure nil
-      :mode(("\\.go\\'" . go-ts-mode)
-            ("/go\\.mod\\'" . go-mod-ts-mode)
-            ("\\.rs\\'" . rust-ts-mode)
-            ("\\.ts\\'" . typescript-ts-mode)
-            ("\\.ya?ml\\'" . yaml-ts-mode))
-      :config
-      (add-to-list 'treesit-language-source-alist '(gomod . ((gh-repo "camdencheek/tree-sitter-go-mod"))))
-      (add-to-list 'treesit-language-source-alist '(kotlin . ((gh-repo "fwcd/tree-sitter-kotlin"))))
-      :init
-      (add-to-list 'major-mode-remap-alist '(c-mode . c-ts-mode))
-      (add-to-list 'major-mode-remap-alist '(c++-mode . c++-ts-mode))
-      (add-to-list 'major-mode-remap-alist '(java-mode . java-ts-mode))
-      (add-to-list 'major-mode-remap-alist '(js-json-mode . json-ts-mode))
-      (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
-      )
-  )
+    (require 'init-treesit))
 
 (provide 'init-lang)
 
