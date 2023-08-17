@@ -5,6 +5,20 @@
 
 ;;; Code:
 
+;; add melpa to package-archives
+(use-package package
+  :ensure nil
+  :custom (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+  :init (unless (bound-and-true-p package--initialized)(package-initialize)))
+
+;; make use-package default behavior better
+;; with `use-package-always-ensure' you won't need ":ensure t" all the time
+;; with `use-package-always-defer' you won't need ":defer t" all the time
+(setq use-package-always-ensure t
+      use-package-always-defer t
+      use-package-enable-imenu-support t
+      use-package-expand-minimally t)
+
 ;; Settings for company, auto-complete only for coding.
 (use-package company
   :hook ((prog-mode . company-mode)

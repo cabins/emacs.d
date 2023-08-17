@@ -112,11 +112,18 @@
 (global-set-key (kbd "C-,") 'preferences)
 (global-set-key (kbd "<M-RET>") #'toggle-frame-maximized)
 
+;;(add-hook 'tty-setup-hook #'make-ui-cleaner)
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            ;; (make-ui-cleaner)
+            (cabins/font-setup)
+            (cabins/load-theme)))
 
-(add-hook 'emacs-startup-hook 'cabins/font-setup)
-(add-hook 'emacs-startup-hook 'cabins/load-theme)
-(add-hook 'window-setup-hook #'make-ui-cleaner)
-(add-hook 'tty-setup-hook #'make-ui-cleaner)
+(when (daemonp)
+  (add-hook 'after-make-frame-functions
+            (lambda (frame) (with-selected-frame frame
+                          (cabins/font-setup)
+                          (cabins/load-theme)))))
 
 (provide 'init-fn)
 ;;; init-fn.el ends here

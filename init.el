@@ -16,23 +16,17 @@
 ;; Customized functions
 (require 'init-fn)
 
-;; Package manager configs
-(require 'init-elpa)
+;; Third part packages
+(require 'init-package)
 
 ;; Emacs builtin packages
 (require 'init-builtin)
-
-;; Third part packages
-(require 'init-package)
 
 ;;Configs for OS
 (require 'init-platform)
 
 ;; Configs for programming languages
 (require 'init-lang)
-
-;; Miscellaneous configs
-(require 'init-feature)
 
 (setq custom-file (locate-user-emacs-file "custom.el"))
 (when (file-exists-p custom-file)
