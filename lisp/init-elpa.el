@@ -7,14 +7,8 @@
 ;; add melpa to package-archives
 (use-package package
   :ensure nil
-  :demand t
-  :defer nil
-  :config
-  ;; (setq package-check-signature nil)
-  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-  :init
-  (unless (bound-and-true-p package--initialized)
-    (package-initialize)))
+  :custom (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+  :init (unless (bound-and-true-p package--initialized)(package-initialize)))
 
 ;; make use-package default behavior better
 ;; with `use-package-always-ensure' you won't need ":ensure t" all the time

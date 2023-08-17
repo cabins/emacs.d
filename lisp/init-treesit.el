@@ -29,14 +29,16 @@
 (use-package dockerfile-ts-mode
   :ensure nil
   :demand t
-  :after (treesit))
+  :after (treesit)
+  :config
+  (add-to-list 'treesit-language-source-alist '(dockerfile . ("https://github.com/camdencheek/tree-sitter-dockerfile"))))
 
 (use-package go-ts-mode
   :ensure nil
   :demand t
   :after (treesit)
   :config
-  (add-to-list 'treesit-language-source-alist '(gomod . ((gh-repo "camdencheek/tree-sitter-go-mod")))))
+  (add-to-list 'treesit-language-source-alist '(gomod . ("https://github.com/camdencheek/tree-sitter-go-mod"))))
 
 (use-package rust-ts-mode
   :ensure nil
@@ -51,7 +53,9 @@
 (use-package yaml-ts-mode
   :ensure nil
   :demand t
-  :after (treesit))
+  :after (treesit)
+  :config
+  (add-to-list 'treesit-language-source-alist '(yaml . ("https://github.com/ikatyang/tree-sitter-yaml"))))
 
 (provide 'init-treesit)
 

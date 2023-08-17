@@ -19,7 +19,7 @@
   (interactive)
   (when (display-graphic-p)
     ;; Default font
-    (cl-loop for font in '("Cascadia Code PL" "Jetbrains Mono" "Source Code Pro" "Menlo" "Monaco" "Consolas")
+    (cl-loop for font in '("Sometype Mono" "IntelOne Mono" "Cascadia Code PL" "Menlo" "Monaco" "Consolas")
              when (font-installed-p font)
              return (set-face-attribute 'default nil :family font))
 
