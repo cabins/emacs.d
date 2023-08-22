@@ -9,9 +9,15 @@
 ;; FONT SETTINGS ;;
 ;;;;;;;;;;;;;;;;;;;
 
-(defun font-installed-p (font-name)
-  "Check if font with FONT-NAME is available."
-  (find-font (font-spec :name font-name)))
+(defun cabins/set-font-common (character font-list &optional scale-factor)
+  "Set fonts for multi CHARACTER from FONT-LIST and modify style with SCALE-FACTOR."
+  
+  (cl-loop for font in font-list
+           when (find-font (font-spec :name font))
+           return (if (not character)
+                      (set-face-attribute 'default nil :family font)
+                    (if scale-factor (setq face-font-rescale-alist `((,font . ,scale-factor))))
+                    (set-fontset-font t character (font-spec :family font)))))
 
 (defun cabins/font-setup ()
   "Font setup."
@@ -19,26 +25,13 @@
   (interactive)
   (when (display-graphic-p)
     ;; Default font
-    (cl-loop for font in '("Sometype Mono" "IntelOne Mono" "Cascadia Code PL" "Menlo" "Monaco" "Consolas")
-             when (font-installed-p font)
-             return (set-face-attribute 'default nil :family font))
-
+    (cabins/set-font-common nil '("Sometype Mono" "Cascadia Code PL" "Menlo" "Consolas"))
     ;; Unicode characters
-    (cl-loop for font in '("Segoe UI Symbol" "Symbola" "Symbol")
-             when (font-installed-p font)
-             return (set-fontset-font t 'unicode font nil 'prepend))
-
+    (cabins/set-font-common 'unicode '("Segoe UI Symbol" "Symbola" "Symbol"))
     ;; Emoji
-    (cl-loop for font in '("Noto Color Emoji" "Apple Color Emoji")
-             when (font-installed-p font)
-             return (set-fontset-font t 'emoji (font-spec :family font) nil 'prepend))
-
+    (cabins/set-font-common 'emoji '("Noto Color Emoji" "Apple Color Emoji"))
     ;; Chinese characters
-    (cl-loop for font in '("汇文明朝体" "霞鹜文楷" "WenQuanYi Micro Hei" "PingFang SC" "Microsoft Yahei UI")
-             when (font-installed-p font)
-             return (progn
-                      (setq face-font-rescale-alist `((,font . 1.2)))
-                      (set-fontset-font t '(#x4e00 . #x9fff) (font-spec :family font))))))
+    (cabins/set-font-common 'han '("楷体" "WenQuanYi Micro Hei" "PingFang SC" "Microsoft Yahei UI") 1.2)))
 
 ;;;;;;;;;;;;;;;;;
 ;; UI SETTINGS ;;
@@ -77,7 +70,6 @@
                ((eq system-type 'gnu/linux)
                 "gsettings get org.gnome.desktop.interface color-scheme")))
          (mode (string-trim (shell-command-to-string cmd))))
-    (message mode)
     (if (member mode '("0" "Dark" "'prefer-dark'")) t nil)))
 
 (defun cabins/load-theme()

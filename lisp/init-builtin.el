@@ -94,6 +94,7 @@
 ;; Org Mode
 (use-package org
   :ensure nil
+  :hook (org-mode . org-num-mode)
   :config
   (setq org-hide-leading-stars t
         org-hide-emphasis-markers t
