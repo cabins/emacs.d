@@ -1,24 +1,26 @@
 # About
 
-This is `NOT` a part of [GNU Emacs](https://www.gnu.org/software/emacs/) but a personal-daily-use configuration maintained by Â© Cabins from China.
+This is `NOT` a part of [GNU Emacs](https://www.gnu.org/software/emacs/) but a personal-daily-use configuration maintained by @ Cabins from China.
 
 # Dev Code
 
-`å™ªé¹ƒ`, English name? No, just Chinese `å™ªé¹ƒ`.
+`Ôë¾é`, English name? No, just Chinese `Ôë¾é`.
 
 # Target
 
 1. Works on Windows & macOS & GNU/Linux & Android (By [termux](https://termux.com/))
 2. Lightweight
-3. Only latest version of Emacs (current is 28) is supported
+3. Only latest version of Emacs (current is 29) is supported
 
 # Programming
 
-By [Eglot](https://github.com/joaotavora/eglot) (default) / [lsp-mode](https://github.com/emacs-lsp/lsp-mode).
+By [Eglot](https://github.com/joaotavora/eglot) (default), you may use [lsp-mode](https://github.com/emacs-lsp/lsp-mode) as prefer by yourself.
 
 All you need to do is `install the specific server and put it into the PATH environment variable`. The supported servers are listed in Eglot / lsp-mode repo.
 
 > Solution for jdtls on Windows issue: put the bin/jdtls.bat into the server/bin folder.
+
+As treesit is added as built-in package, some programming mode now is managed by `-ts-mode`, such as `go-ts-mode`, `rust-ts-mode` etc.
 
 # Installation
 
