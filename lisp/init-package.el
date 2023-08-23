@@ -6,9 +6,14 @@
 ;;; Code:
 
 ;; add melpa to package-archives
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-(unless (bound-and-true-p package--initialized)(package-initialize))
+;; (require 'package)
+;; (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+;; (unless (bound-and-true-p package--initialized)(package-initialize))
+
+(use-package package
+  :config
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+  (unless (bound-and-true-p package--initialized)(package-initialize)))
 
 ;; make use-package default behavior better
 ;; with `use-package-always-ensure' you won't need ":ensure t" all the time
