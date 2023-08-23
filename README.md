@@ -4,7 +4,7 @@ This is `NOT` a part of [GNU Emacs](https://www.gnu.org/software/emacs/) but a p
 
 # Dev Code
 
-`Ôë¾é`, English name? No, just Chinese `Ôë¾é`.
+`å™ªé¹ƒ`, English name? No, just Chinese `å™ªé¹ƒ`.
 
 # Target
 
