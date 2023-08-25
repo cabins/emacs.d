@@ -17,7 +17,7 @@
            return (if (not character)
                       (set-face-attribute 'default nil :family font)
                     (if scale-factor (setq face-font-rescale-alist `((,font . ,scale-factor))))
-                    (set-fontset-font t character (font-spec :family font)))))
+                    (set-fontset-font t character (font-spec :family font) nil 'prepend))))
 
 (defun cabins/font-setup ()
   "Font setup."
