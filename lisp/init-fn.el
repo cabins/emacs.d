@@ -11,7 +11,7 @@
 
 (defun cabins/set-font-common (character font-list &optional scale-factor)
   "Set fonts for multi CHARACTER from FONT-LIST and modify style with SCALE-FACTOR."
-  
+
   (cl-loop for font in font-list
            when (find-font (font-spec :name font))
            return (if (not character)
@@ -44,8 +44,7 @@
   ;; tooltips in echo-aera
   (tooltip-mode -1)
   (scroll-bar-mode -1)
-  (tool-bar-mode -1)
-  )
+  (tool-bar-mode -1))
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; THEME SETTINGS ;;
@@ -77,11 +76,9 @@
 
   (interactive)
   (when (display-graphic-p)
-    (let ((light-theme (cabins/available-theme '(modus-operandi leuven tsdh-light tango)))
-          (dark-theme (cabins/available-theme '(modus-vivendi leuven-dark tsdh-dark tango-dark))))
-      (if (cabins/os-dark-mode)
-          (load-theme dark-theme t)
-        (load-theme light-theme t)))))
+    (if (cabins/os-dark-mode)
+        (load-theme (cabins/available-theme '(modus-vivendi leuven-dark tsdh-dark tango-dark)) t)
+      (load-theme (cabins/available-theme '(modus-operandi leuven tsdh-light tango)) t))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; INTERACTIVE FUNCTIONS ;;

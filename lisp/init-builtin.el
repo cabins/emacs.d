@@ -80,6 +80,7 @@
 
 ;; Highlight Current Line
 (use-package hl-line
+  :when (display-graphic-p)
   :ensure nil
   :hook (after-init . global-hl-line-mode))
 
