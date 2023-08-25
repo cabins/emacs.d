@@ -41,10 +41,9 @@
 (defun make-ui-cleaner ()
   "Remove all the unnecessary elements."
 
-  ;; tooltips in echo-aera
-  (tooltip-mode -1)
-  (scroll-bar-mode -1)
-  (tool-bar-mode -1))
+  (when (display-graphic-p)
+    (scroll-bar-mode -1)
+    (tool-bar-mode -1)))
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; THEME SETTINGS ;;
@@ -56,29 +55,27 @@
 
   (cl-loop for theme in theme-list
            when (member theme (custom-available-themes))
-           return theme))
-
-(defun cabins/os-dark-mode()
-  "Check the os dark mode, only support Windows for now."
-
-  (let* ((cmd (cond
-               ((member system-type '(ms-dos windows-nt cygwin))
-                "powershell (Get-ItemProperty -Path HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize -Name AppsUseLightTheme).AppsUseLightTheme")
-               ((eq system-type 'darwin)
-                "defaults read -g AppleInterfaceStyle")
-               ((eq system-type 'gnu/linux)
-                "gsettings get org.gnome.desktop.interface color-scheme")))
-         (mode (string-trim (shell-command-to-string cmd))))
-    (if (member mode '("0" "Dark" "'prefer-dark'")) t nil)))
+           return (load-theme theme t)))
 
 (defun cabins/load-theme()
   "Load theme, Auto change color scheme according to system dark mode on Windows."
 
   (interactive)
   (when (display-graphic-p)
-    (if (cabins/os-dark-mode)
-        (load-theme (cabins/available-theme '(modus-vivendi leuven-dark tsdh-dark tango-dark)) t)
-      (load-theme (cabins/available-theme '(modus-operandi leuven tsdh-light tango)) t))))
+    ;; choose theme according to system dark/light mode
+    (if (let* ((cmd (cond
+                     ((member system-type '(ms-dos windows-nt cygwin))
+                      "powershell (Get-ItemProperty -Path HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize -Name AppsUseLightTheme).AppsUseLightTheme")
+                     ((eq system-type 'darwin)
+                      "defaults read -g AppleInterfaceStyle")
+                     ((eq system-type 'gnu/linux)
+                      "gsettings get org.gnome.desktop.interface color-scheme")))
+               (mode (string-trim (shell-command-to-string cmd))))
+          (if (member mode '("0" "Dark" "'prefer-dark'"))
+              t
+            nil))
+        (cabins/available-theme '(modus-vivendi leuven-dark tsdh-dark tango-dark))
+      (cabins/available-theme '(modus-operandi leuven tsdh-light tango)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; INTERACTIVE FUNCTIONS ;;
@@ -104,15 +101,15 @@
 ;;(add-hook 'tty-setup-hook #'make-ui-cleaner)
 (add-hook 'emacs-startup-hook
           (lambda ()
-            ;; (make-ui-cleaner)
             (cabins/font-setup)
             (cabins/load-theme)))
 
 (when (daemonp)
   (add-hook 'after-make-frame-functions
-            (lambda (frame) (with-selected-frame frame
-                          (cabins/font-setup)
-                          (cabins/load-theme)))))
+            (lambda (frame)
+              (with-selected-frame frame
+                (cabins/font-setup)
+                (cabins/load-theme)))))
 
 (provide 'init-fn)
 ;;; init-fn.el ends here

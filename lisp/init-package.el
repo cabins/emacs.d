@@ -70,12 +70,6 @@
 (use-package move-dup
   :hook (after-init . global-move-dup-mode))
 
-;; org-superstar
-;; make the org mode more beautiful with optimized leading chars
-(use-package org-superstar
-  :hook (org-mode . org-superstar-mode)
-  :config (setq org-superstar-prettify-item-bullets nil))
-
 ;; Settings for which-key - suggest next key
 (use-package which-key
   :hook (after-init . which-key-mode))

@@ -16,11 +16,11 @@
 ;; Customized functions
 (require 'init-fn)
 
-;; Third part packages
-(require 'init-package)
-
 ;; Emacs builtin packages
 (require 'init-builtin)
+
+;; Third part packages
+(require 'init-package)
 
 ;;Configs for OS
 (require 'init-platform)
