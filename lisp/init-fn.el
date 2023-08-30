@@ -31,7 +31,8 @@
     ;; Emoji
     (cabins/set-font-common 'emoji '("Noto Color Emoji" "Apple Color Emoji"))
     ;; Chinese characters
-    (cabins/set-font-common 'han '("楷体" "WenQuanYi Micro Hei" "PingFang SC" "Microsoft Yahei UI") 1.2)))
+    (dolist (charset '(kana han bopomofo cjk-misc))
+      (cabins/set-font-common 'han '("KaiTi" "WenQuanYi Micro Hei" "PingFang SC" "Microsoft Yahei UI") 1.2))))
 
 ;;;;;;;;;;;;;;;;;
 ;; UI SETTINGS ;;
@@ -63,19 +64,17 @@
   (interactive)
   (when (display-graphic-p)
     ;; choose theme according to system dark/light mode
-    (if (let* ((cmd (cond
-                     ((member system-type '(ms-dos windows-nt cygwin))
-                      "powershell (Get-ItemProperty -Path HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize -Name AppsUseLightTheme).AppsUseLightTheme")
-                     ((eq system-type 'darwin)
-                      "defaults read -g AppleInterfaceStyle")
-                     ((eq system-type 'gnu/linux)
-                      "gsettings get org.gnome.desktop.interface color-scheme")))
-               (mode (string-trim (shell-command-to-string cmd))))
-          (if (member mode '("0" "Dark" "'prefer-dark'"))
-              t
-            nil))
-        (cabins/available-theme '(modus-vivendi leuven-dark tsdh-dark tango-dark))
-      (cabins/available-theme '(modus-operandi leuven tsdh-light tango)))))
+    (let* ((cmd (cond
+                 ((member system-type '(ms-dos windows-nt cygwin))
+                  "powershell (Get-ItemProperty -Path HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize -Name AppsUseLightTheme).AppsUseLightTheme")
+                 ((eq system-type 'darwin)
+                  "defaults read -g AppleInterfaceStyle")
+                 ((eq system-type 'gnu/linux)
+                  "gsettings get org.gnome.desktop.interface color-scheme")))
+           (mode (string-trim (shell-command-to-string cmd))))
+      (if (member mode '("0" "Dark" "'prefer-dark'"))
+          (cabins/available-theme '(modus-vivendi leuven-dark tsdh-dark tango-dark))
+        (cabins/available-theme '(modus-operandi leuven tsdh-light tango))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; INTERACTIVE FUNCTIONS ;;

@@ -24,9 +24,6 @@
 (global-set-key (kbd "M-n") #'flymake-goto-next-error)
 (global-set-key (kbd "M-p") #'flymake-goto-prev-error)
 
-;; CC mode
-(add-hook 'c-mode-common-hook 'c-toggle-hungry-state)
-
 ;; 非内置支持的一些编程语言模式
 (use-package emmet-mode
   :hook ((web-mode css-mode) . emmet-mode))
@@ -40,20 +37,18 @@
   :config
   (setq web-mode-enable-current-element-highlight t))
 
-;; 一些感觉比较有用的工具
+;; ;; 一些感觉比较有用的工具
 (use-package quickrun)                  ; quickrun code
-(use-package restclient
-  :mode (("\\.http\\'" . restclient-mode))) ; restclient support
+;; (use-package restclient
+;;   :mode (("\\.http\\'" . restclient-mode))) ; restclient support
 
 ;; Language Server (eglot - builtin)
 ;; **************************************************
 (use-package eglot
   :hook (prog-mode . eglot-ensure)
-  :custom
-  (add-to-list 'eglot-server-programs '(web-mode "vls"))
-  :config
-  (advice-add 'eglot-code-action-organize-imports :before #'eglot-format-buffer)
-  (add-hook 'eglot-managed-mode-hook (lambda () (add-hook 'before-save-hook #'eglot-format-buffer))))
+  :custom (add-to-list 'eglot-server-programs '(web-mode "vls"))
+  :bind ("C-c e f" . eglot-format)
+  :config (advice-add 'eglot-code-action-organize-imports :before #'eglot-format-buffer))
 
 (if (treesit-available-p)
     (require 'init-treesit))

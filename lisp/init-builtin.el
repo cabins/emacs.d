@@ -20,18 +20,10 @@
               read-process-output-max (* 64 1024)
               ring-bell-function 'ignore
               scroll-conservatively 10000
-              tab-width 4 ;; Tab width
               truncate-lines nil
               truncate-partial-width-windows nil
               use-short-answers t ;; Use y/n for yes/no case
               visible-bell nil)
-
-;; auto-fill-mode (provide by `simple.el'), Help by command or variable name
-;; `delete-trailing-whitespace' is provided by simple.el (builtin)
-(use-package simple
-  :hook ((after-init . auto-fill-mode)
-         (after-init . delete-trailing-whitespace)
-         (after-init . global-visual-line-mode)))
 
 ;; auto revert
 ;; `global-auto-revert-mode' is provided by autorevert.el (builtin)
@@ -40,7 +32,8 @@
 
 ;; auto save to the visited file (provided by `files.el')
 (use-package files
-  :hook (after-init . auto-save-visited-mode))
+  :hook
+  (after-init . auto-save-visited-mode))
 
 ;; Delete Behavior
 ;; `delete-selection-mode' is provided by delsel.el (builtin)
@@ -51,12 +44,7 @@
 ;; `fido-mode' is provided by icomplete.el
 (use-package icomplete
   :hook (after-init . fido-vertical-mode)
-  :config
-  (setq read-buffer-completion-ignore-case t
-        read-file-name-completion-ignore-case t
-        completion-ignore-case t
-        completions-detailed t
-        completions-format 'one-column))
+  :config (setq completions-detailed t))
 
 ;; Flyspell
 ;; to use this package, you may install 'aspell' and dict by manual
@@ -66,10 +54,6 @@
 (use-package flyspell
   :unless (memq system-type '(ms-dos windows-nt cygwin))
   :hook (text-mode . flspell-mode))
-
-;; Follow Mode - Continue reading with parallel buffer
-(use-package follow
-  :hook (after-init . follow-mode))
 
 ;; Highlight Current Line
 (use-package hl-line
@@ -105,19 +89,12 @@
   (advice-add cmd :after
               (lambda (&rest _) (pulse-momentary-highlight-one-line (point)))))
 
-;; Pixel scroll mode
-(add-hook 'after-init-hook 'pixel-scroll-precision-mode)
-
 ;; Recentf
 (use-package recentf
   :hook (after-init . recentf-mode)
   :bind (("C-c r" . #'recentf-open-files))
   :custom
   (add-to-list 'recentf-exclude '("~\/.emacs.d\/elpa\/")))
-
-;; Repeat Mode (builtin from 28)
-(use-package repeat
-  :hook (after-init . repeat-mode))
 
 ;; Show Paren Mode
 (use-package paren
@@ -131,6 +108,9 @@
   :config
   (setq speedbar-show-unknown-files t)
   (global-set-key (kbd "<f8>") #'speedbar))
+
+;; whitespace
+(add-hook 'before-save-hook #'whitespace-cleanup)
 
 ;; windmove.el, use C-c <arrow key> to switch buffers
 (use-package windmove
