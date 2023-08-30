@@ -9,6 +9,7 @@
 (use-package treesit
   :ensure nil
   :when (treesit-available-p)
+  :config (setq treesit-font-lock-level 4)
   :init
   (setq treesit-language-source-alist
         '((bash       . ("https://github.com/tree-sitter/tree-sitter-bash"))
