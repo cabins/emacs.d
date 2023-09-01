@@ -25,28 +25,17 @@
 (global-set-key (kbd "M-p") #'flymake-goto-prev-error)
 
 ;; 非内置支持的一些编程语言模式
-(use-package emmet-mode
-  :hook ((web-mode css-mode) . emmet-mode))
-(use-package markdown-mode)
 (use-package protobuf-mode)
-(use-package web-mode
-  :custom
-  ;; use web-mode to handle vue/html files
-  (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
-  :config
-  (setq web-mode-enable-current-element-highlight t))
 
 ;; ;; 一些感觉比较有用的工具
-(use-package quickrun)                  ; quickrun code
-;; (use-package restclient
-;;   :mode (("\\.http\\'" . restclient-mode))) ; restclient support
+(use-package quickrun)
+(use-package restclient
+  :mode (("\\.http\\'" . restclient-mode)))
 
 ;; Language Server (eglot - builtin)
 ;; **************************************************
 (use-package eglot
   :hook (prog-mode . eglot-ensure)
-  :custom (add-to-list 'eglot-server-programs '(web-mode "vls"))
   :bind ("C-c e f" . eglot-format)
   :config (advice-add 'eglot-code-action-organize-imports :before #'eglot-format-buffer))
 

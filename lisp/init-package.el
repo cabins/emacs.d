@@ -5,11 +5,6 @@
 
 ;;; Code:
 
-;; add melpa to package-archives
-;; (require 'package)
-;; (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-;; (unless (bound-and-true-p package--initialized)(package-initialize))
-
 (use-package package
   :config
   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
