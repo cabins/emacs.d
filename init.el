@@ -43,7 +43,7 @@
     (cabins--set-font-common 'emoji '("Noto Color Emoji" "Apple Color Emoji"))
     ;; Chinese characters
     (dolist (charset '(kana han bopomofo cjk-misc))
-      (cabins--set-font-common 'han '("KaiTi" "WenQuanYi Micro Hei" "PingFang SC" "Microsoft Yahei UI") 1.2))))
+      (cabins--set-font-common 'han '("STKaiTi" "WenQuanYi Micro Hei" "Microsoft Yahei UI") 1.2))))
 
 ;;;###autoload
 (defun make-ui-cleaner ()
