@@ -426,6 +426,7 @@
 (use-package tree-sitter-langs
   :ensure t
   :defer t
+  :hook (prog-mode . tree-sitter-mode)
   :when (< emacs-major-version 29))
 
 (setq custom-file (locate-user-emacs-file "custom.el"))
