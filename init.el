@@ -339,11 +339,14 @@
 (global-set-key (kbd "M-n") #'flymake-goto-next-error)
 (global-set-key (kbd "M-p") #'flymake-goto-prev-error)
 
-;; Protobuf support
-(use-package protobuf-mode)
-
 ;; Some useful tools
 (use-package quickrun :ensure t :defer t)
+
+;; 非内置支持的一些编程语言模式
+(use-package protobuf-mode
+  :ensure t
+  :defer t)
+
 (use-package restclient
   :ensure t
   :defer t
