@@ -3,8 +3,8 @@
 ;; Runs before package and UI initializetion happens.
 ;;; Code:
 
-(unless (>= emacs-major-version 29)
-  (error "ONLY EMACS v29+ IS SUPPORTED!"))
+(unless (>= emacs-major-version 28)
+  (error "ONLY EMACS v28+ IS SUPPORTED!"))
 
 ;; For speed up the startup, please do NOT forget reset it to default
 ;; after Emacs after-init-hook, or it may cause freezes.
@@ -32,9 +32,8 @@
 (push '(scroll-bar-mode . nil) default-frame-alist)
 (push '(tool-bar-mode . nil) default-frame-alist)
 
-(tooltip-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
+(when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
 ;; System default coding
 ;; (set-language-environment 'utf-8)
