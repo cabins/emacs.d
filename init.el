@@ -17,6 +17,7 @@
 ;; definitions
 (defvar cabins--os-win (memq system-type '(ms-dos windows-nt cygwin)))
 (defvar cabins--os-mac (eq system-type 'darwin))
+(defvar cabins--os-termux (and (eq system-type 'gnu/linux)) (string-prefix-p "aarch" system-configuration))
 
 ;;;###autoload
 (defun cabins--set-font-common (character font-list &optional scale-factor)
@@ -421,12 +422,14 @@
 (use-package tree-sitter
   :ensure t
   :defer t
+  :unless cabins--os-termux
   :when (< emacs-major-version 29))
 
 (use-package tree-sitter-langs
   :ensure t
   :defer t
   :hook (prog-mode . tree-sitter-mode)
+  :unless cabins--os-termux
   :when (< emacs-major-version 29))
 
 (setq custom-file (locate-user-emacs-file "custom.el"))
