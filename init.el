@@ -1,7 +1,5 @@
 ;;; init.el --- the entry of emacs config -*- lexical-binding: t -*-
-
 ;; Author: Cabins
-;; Maintainer: Cabins
 ;; Github: https://github.com/cabins/emacs.d
 
 ;;; Commentary:
@@ -17,7 +15,7 @@
 ;; definitions
 (defvar cabins--os-win (memq system-type '(ms-dos windows-nt cygwin)))
 (defvar cabins--os-mac (eq system-type 'darwin))
-(defvar cabins--os-termux (and (eq system-type 'gnu/linux)) (string-prefix-p "aarch" system-configuration))
+(defvar cabins--ver-28 (= emacs-major-version 28))
 
 ;;;###autoload
 (defun cabins--set-font-common (character font-list &optional scale-factor)
@@ -36,23 +34,18 @@
 
   (interactive)
   (when (display-graphic-p)
-    ;; Default font
     (cabins--set-font-common nil '("Sometype Mono" "Cascadia Code PL" "Menlo" "Consolas"))
-    ;; Unicode characters
     (cabins--set-font-common 'unicode '("Segoe UI Symbol" "Symbola" "Symbol"))
-    ;; Emoji
     (cabins--set-font-common 'emoji '("Noto Color Emoji" "Apple Color Emoji"))
-    ;; Chinese characters
     (dolist (charset '(kana han bopomofo cjk-misc))
-      (cabins--set-font-common 'han '("KaiTi" "STKaiTi" "WenQuanYi Micro Hei") 1.2))))
+      (cabins--set-font-common charset '("KaiTi" "STKaiTi" "WenQuanYi Micro Hei") 1.2))))
 
 ;;;###autoload
 (defun cabins--cleaner-ui ()
   "Remove all the unnecessary elements."
 
-  (when (display-graphic-p)
     (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-    (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))))
+    (when (fboundp 'tool-bar-mode) (tool-bar-mode -1)))
 
 ;;;###autoload
 (defun cabins--available-theme (theme-list)
@@ -109,15 +102,11 @@
 	    (lambda (frame) (with-selected-frame frame
 			  (cabins--reset-ui)))))
 
-;; keybindings
-(global-set-key (kbd "C-,") #'cabins--user-init-file)
-(global-set-key (kbd "<M-RET>") #'toggle-frame-maximized)
-
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (unless (bound-and-true-p package--initialized)
   (package-initialize))
-(when (< emacs-major-version 29)
+(when cabins--ver-28
   (package-install 'use-package))
 
 ;; ;; packages
@@ -129,35 +118,25 @@
 
 ;; Emacs builtin packages
 (setq-default auto-window-vscroll nil
-	      inhibit-default-init t
 	      inhibit-startup-screen t	   ; disable the startup screen splash
 	      isearch-allow-motion t
 	      isearch-lazy-count t
 	      load-prefer-newer t
 	      make-backup-files nil             ; disable backup file
 	      read-file-name-completion-ignore-case t
-	      read-process-output-max (* 64 1024)
-	      ring-bell-function 'ignore
-	      scroll-conservatively 10000
-	      truncate-lines nil
-	      truncate-partial-width-windows nil
 	      use-short-answers t ;; Use y/n for yes/no case
-	      visible-bell nil)
+	      )
 
 ;; auto revert
 ;; `global-auto-revert-mode' is provided by autorevert.el (builtin)
-(use-package autorevert
-  :hook (after-init . global-auto-revert-mode))
+(add-hook 'after-init-hook 'global-auto-revert-mode)
 
 ;; auto save to the visited file (provided by `files.el')
-(use-package files
-  :hook
-  (after-init . auto-save-visited-mode))
+(add-hook 'after-init-hook 'auto-save-visited-mode)
 
 ;; Delete Behavior
 ;; `delete-selection-mode' is provided by delsel.el (builtin)
-(use-package delsel
-  :hook (after-init . delete-selection-mode))
+(add-hook 'after-init-hook 'delete-selection-mode)
 
 ;; fido-mode
 ;; `fido-mode' is provided by icomplete.el
@@ -183,8 +162,7 @@
 (defalias 'list-buffers 'ibuffer)
 
 ;; minibuffer
-(use-package minibuf-eldef
-  :hook (after-init . minibuffer-electric-default-mode))
+(add-hook 'after-init-hook 'minibuffer-electric-default-mode)
 
 ;; Org Mode
 (use-package org
@@ -210,10 +188,8 @@
 
 ;; Recentf
 (use-package recentf
-  :hook (after-init . recentf-mode)
-  :bind (("C-c r" . #'recentf-open-files))
-  :custom
-  (add-to-list 'recentf-exclude '("~\/.emacs.d\/elpa\/")))
+  :bind (("C-c r" . #'recentf-open))
+  :custom (add-to-list 'recentf-exclude '("~\/.emacs.d\/elpa\/")))
 
 ;; Show Paren Mode
 (use-package paren
@@ -231,7 +207,7 @@
 ;; whitespace
 (add-hook 'before-save-hook #'whitespace-cleanup)
 
-;; windmove.el, use C-c <arrow key> to switch buffers
+;; windmove.el, use  <SHIFT - arrow key> to switch buffers
 (use-package windmove
   :config (windmove-default-keybindings))
 
@@ -243,9 +219,7 @@
       use-package-expand-minimally t)
 
 ;; Settings for company, auto-complete only for coding.
-(use-package company
-  :ensure t
-  :defer t
+(use-package company :ensure t :defer t
   :hook ((prog-mode . company-mode)
 	 (inferior-emacs-lisp-mode . company-mode)))
 
@@ -255,15 +229,12 @@
 ;; M-m to the indentation of current line
 ;; C-M-<ARROW> for duplicate lines
 ;; crux commands? Pls use M-x.
-(use-package crux
-  :ensure t
-  :defer t)
+(use-package crux :ensure t :defer t)
 
 ;; Settings for exec-path-from-shell
 ;; fix the PATH environment variable issue
 (use-package exec-path-from-shell
   :ensure t
-  :defer nil
   :when (or (memq window-system '(mac ns x))
 	    (unless cabins--os-win
 	      (daemonp)))
@@ -271,37 +242,25 @@
 
 ;; format all, formatter for almost languages
 ;; great for programmers
-(use-package format-all
-  :ensure t
-  :defer t
+(use-package format-all :ensure t :defer t
   :bind ("C-c f" . #'format-all-buffer))
 
 ;; gnu-elpa-keyring-update
-(use-package gnu-elpa-keyring-update
-  :ensure t
-  :defer t)
+(use-package gnu-elpa-keyring-update :ensure t :defer t)
 
 ;; iedit - edit same text in one buffer or region
-(use-package iedit
-  :ensure t
-  :defer t)
+(use-package iedit :ensure t :defer t)
 
 ;; info-colors, make the info manual as colorful
-(use-package info-colors
-  :ensure t
-  :defer t
+(use-package info-colors :ensure t :defer t
   :hook (Info-selection . info-colors-fontify-node))
 
 ;; move-dup, move/copy line or region
-(use-package move-dup
-  :ensure t
-  :defer t
+(use-package move-dup :ensure t :defer t
   :hook (after-init . global-move-dup-mode))
 
 ;; Settings for which-key - suggest next key
-(use-package which-key
-  :ensure t
-  :defer t
+(use-package which-key :ensure t :defer t
   :hook (after-init . which-key-mode))
 
 ;;Configs for OS
@@ -324,17 +283,12 @@
   (set-selection-coding-system 'utf-8))
 
 ;; Configs for programming languages
-(defun prog-extra-modes()
-  "Extra modes when in programming mode."
-
-  (column-number-mode)
-  (display-line-numbers-mode)
-  (electric-pair-mode)
-  (flymake-mode)
-  (hs-minor-mode)
-  (prettify-symbols-mode))
-
-(add-hook 'prog-mode-hook 'prog-extra-modes)
+(add-hook 'prog-mode-hook 'column-number-mode)
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
+(add-hook 'prog-mode-hook 'electric-pair-mode)
+(add-hook 'prog-mode-hook 'flymake-mode)
+(add-hook 'prog-mode-hook 'hs-minor-mode)
+(add-hook 'prog-mode-hook 'prettify-symbols-mode)
 
 ;; Flymake
 (global-set-key (kbd "M-n") #'flymake-goto-next-error)
@@ -344,27 +298,21 @@
 (use-package quickrun :ensure t :defer t)
 
 ;; 非内置支持的一些编程语言模式
-(use-package protobuf-mode
-  :ensure t
-  :defer t)
+(use-package protobuf-mode :ensure t :defer t)
 
-(use-package restclient
-  :ensure t
-  :defer t
+(use-package restclient :ensure t :defer t
   :mode (("\\.http\\'" . restclient-mode)))
 
-;; Language Server (eglot - builtin)
-(when (< emacs-major-version 29)
+;; Language Server (eglot - builtin since v29)
+(when cabins--ver-28
   (package-install 'eglot))
 
-;; **************************************************
 (use-package eglot
   :hook (prog-mode . eglot-ensure)
   :bind ("C-c e f" . eglot-format)
   :config (advice-add 'eglot-code-action-organize-imports :before #'eglot-format-buffer))
 
 (use-package treesit
-  :ensure nil
   :when (and (fboundp 'treesit-available-p) (treesit-available-p))
   :config (setq treesit-font-lock-level 4)
   :init
