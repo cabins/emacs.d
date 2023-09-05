@@ -419,19 +419,6 @@
   (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
   (add-to-list 'auto-mode-alist '("\\.y[a]?ml\\'" . yaml-ts-mode)))
 
-(use-package tree-sitter
-  :ensure t
-  :defer t
-  :unless cabins--os-termux
-  :when (< emacs-major-version 29))
-
-(use-package tree-sitter-langs
-  :ensure t
-  :defer t
-  :hook (prog-mode . tree-sitter-mode)
-  :unless cabins--os-termux
-  :when (< emacs-major-version 29))
-
 (setq custom-file (locate-user-emacs-file "custom.el"))
 (when (file-exists-p custom-file)
   (load custom-file))
