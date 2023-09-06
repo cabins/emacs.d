@@ -9,16 +9,17 @@ This is `NOT` a part of [GNU Emacs](https://www.gnu.org/software/emacs/) but a p
 # Target
 
 1. Works on Windows & macOS & GNU/Linux & Android (By [termux](https://termux.com/))
-2. Lightweight
-3. Only latest version of Emacs (current is 29) is supported
+2. Lightweight (as possible as vanilla with built-in packages)
+3. Only latest version of Emacs (current is 29) is supported, old version config may be found in other branch
 
 # Programming
 
-By [Eglot](https://github.com/joaotavora/eglot) (default), you may use [lsp-mode](https://github.com/emacs-lsp/lsp-mode) as prefer by yourself.
+By [Eglot](https://github.com/joaotavora/eglot) (built-in since v29), you may use [lsp-mode](https://github.com/emacs-lsp/lsp-mode) as prefer by yourself.
 
 All you need to do is `install the specific server and put it into the PATH environment variable`. The supported servers are listed in Eglot / lsp-mode repo.
 
-> Solution for jdtls on Windows issue: put the bin/jdtls.bat into the server/bin folder.
+> Solution for jdtls on Windows issue: install `jdtls` with `scoop` will be good.
+> `scoop install jdtls`
 
 As treesit is added as built-in package, some programming mode now is managed by `-ts-mode`, such as `go-ts-mode`, `rust-ts-mode` etc.
 
@@ -30,5 +31,5 @@ As treesit is added as built-in package, some programming mode now is managed by
 git clone https://github.com/cabins/emacs.d ~/.emacs.d
 ```
 
-2. Launch Emacs.
+2. Launch Emacs, and wait the package installation.
 3. Enjoy the life.
