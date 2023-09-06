@@ -44,8 +44,8 @@
 (defun cabins--cleaner-ui ()
   "Remove all the unnecessary elements."
 
-    (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-    (when (fboundp 'tool-bar-mode) (tool-bar-mode -1)))
+  (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+  (when (fboundp 'tool-bar-mode) (tool-bar-mode -1)))
 
 ;;;###autoload
 (defun cabins--available-theme (theme-list)
@@ -100,7 +100,7 @@
 (when (daemonp)
   (add-hook 'after-make-frame-functions
 	    (lambda (frame) (with-selected-frame frame
-			  (cabins--reset-ui)))))
+			      (cabins--reset-ui)))))
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
@@ -188,7 +188,10 @@
 
 ;; Recentf
 (use-package recentf
-  :bind (("C-c r" . #'recentf-open))
+  :hook (after-init . recentf-mode)
+  ;; recentf-open since v29.1, recentf-open-files since v22
+  ;; for v28, here use the latter one
+  :bind (("C-c r" . #'recentf-open-files))
   :custom (add-to-list 'recentf-exclude '("~\/.emacs.d\/elpa\/")))
 
 ;; Show Paren Mode
@@ -295,11 +298,8 @@
 (global-set-key (kbd "M-p") #'flymake-goto-prev-error)
 
 ;; Some useful tools
-(use-package quickrun :ensure t :defer t)
-
-;; 非内置支持的一些编程语言模式
 (use-package protobuf-mode :ensure t :defer t)
-
+(use-package quickrun :ensure t :defer t)
 (use-package restclient :ensure t :defer t
   :mode (("\\.http\\'" . restclient-mode)))
 
@@ -310,7 +310,7 @@
 (use-package eglot
   :hook (prog-mode . eglot-ensure)
   :bind ("C-c e f" . eglot-format)
-  :config (advice-add 'eglot-code-action-organize-imports :before #'eglot-format-buffer))
+  :config (advice-add 'eglot-code-action-organize-imports :before #'eglot-format))
 
 (use-package treesit
   :when (and (fboundp 'treesit-available-p) (treesit-available-p))
