@@ -100,7 +100,7 @@
 (when (daemonp)
   (add-hook 'after-make-frame-functions
 	    (lambda (frame) (with-selected-frame frame
-			      (cabins--reset-ui)))))
+			  (cabins--reset-ui)))))
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
@@ -313,7 +313,9 @@
   :config (advice-add 'eglot-code-action-organize-imports :before #'eglot-format))
 
 (use-package treesit
-  :when (and (fboundp 'treesit-available-p) (treesit-available-p))
+  :when (and (>= emacs-major-version 29)
+	     (fboundp 'treesit-available-p)
+	     (treesit-available-p))
   :config (setq treesit-font-lock-level 4)
   :init
   (setq treesit-language-source-alist
