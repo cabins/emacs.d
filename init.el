@@ -15,6 +15,10 @@
 ;; definitions
 (defvar cabins--os-win (memq system-type '(ms-dos windows-nt cygwin)))
 (defvar cabins--os-mac (eq system-type 'darwin))
+(defvar cabins--fonts-default '("Sometype Mono" "Cascadia Code PL" "Menlo" "Consolas"))
+(defvar cabins--fonts-unicode '("Segoe UI Symbol" "Symbola" "Symbol"))
+(defvar cabins--fonts-emoji '("Noto Color Emoji" "Apple Color Emoji"))
+(defvar cabins--fonts-cjk '("KaiTi" "STKaiTi" "WenQuanYi Micro Hei"))
 
 ;;;###autoload
 (defun cabins--set-font-common (character font-list &optional scale-factor)
@@ -28,16 +32,16 @@
 		    (set-fontset-font t character (font-spec :family font) nil 'prepend))))
 
 ;;;###autoload
-(defun cabins--font-setup ()
-  "Font setup."
+(defun cabins--font-setup (&optional default-fonts unicode-fonts emoji-fonts cjk-fonts)
+  "Font setup, with optional DEFAULT-FONTS, UNICODE-FONTS, EMOJI-FONTS, CJK-FONTS."
 
   (interactive)
   (when (display-graphic-p)
-    (cabins--set-font-common nil '("Sometype Mono" "Cascadia Code PL" "Menlo" "Consolas"))
-    (cabins--set-font-common 'unicode '("Segoe UI Symbol" "Symbola" "Symbol"))
-    (cabins--set-font-common 'emoji '("Noto Color Emoji" "Apple Color Emoji"))
+    (cabins--set-font-common nil (if default-fonts default-fonts cabins--fonts-default))
+    (cabins--set-font-common 'unicode (if unicode-fonts unicode-fonts cabins--fonts-unicode))
+    (cabins--set-font-common 'emoji (if emoji-fonts emoji-fonts cabins--fonts-emoji))
     (dolist (charset '(kana han bopomofo cjk-misc))
-      (cabins--set-font-common charset '("KaiTi" "STKaiTi" "WenQuanYi Micro Hei") 1.2))))
+      (cabins--set-font-common charset (if cjk-fonts cjk-fonts cabins--fonts-cjk) 1.2))))
 
 ;;;###autoload
 (defun cabins--cleaner-ui ()
@@ -45,14 +49,6 @@
 
   (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
   (when (fboundp 'tool-bar-mode) (tool-bar-mode -1)))
-
-;;;###autoload
-(defun cabins--available-theme (theme-list)
-  "Get the first available theme from THEME-LIST."
-
-  (cl-loop for theme in theme-list
-	   when (member theme (custom-available-themes))
-	   return (load-theme theme t)))
 
 ;;;###autoload
 (defun cabins--load-theme()
@@ -63,15 +59,19 @@
     ;; choose theme according to system dark/light mode
     (let* ((cmd (cond
 		 (cabins--os-win
-		  "powershell (Get-ItemProperty -Path HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize -Name AppsUseLightTheme).AppsUseLightTheme")
+		  (concat
+		   "powershell "
+		   "(Get-ItemProperty -Path "
+		   "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize "
+		   "-Name AppsUseLightTheme).AppsUseLightTheme"))
 		 (cabins--os-mac
 		  "defaults read -g AppleInterfaceStyle")
 		 ((eq system-type 'gnu/linux)
 		  "gsettings get org.gnome.desktop.interface color-scheme")))
 	   (mode (string-trim (shell-command-to-string cmd))))
       (if (member mode '("0" "Dark" "'prefer-dark'"))
-	  (cabins--available-theme '(modus-vivendi leuven-dark tsdh-dark tango-dark))
-	(cabins--available-theme '(modus-operandi leuven tsdh-light tango))))))
+	  (load-theme 'modus-vivendi t)
+	(load-theme 'modus-operandi t)))))
 
 ;;;###autoload
 (defun cabins--user-init-file()
@@ -95,11 +95,11 @@
   (cabins--font-setup)
   (cabins--load-theme))
 
-(add-hook 'emacs-startup-hook #'cabins--reset-ui)
+(add-hook 'after-init-hook #'cabins--reset-ui)
 (when (daemonp)
   (add-hook 'after-make-frame-functions
 	    (lambda (frame) (with-selected-frame frame
-			  (cabins--reset-ui)))))
+			      (cabins--reset-ui)))))
 
 ;; packages
 (use-package package
@@ -110,14 +110,11 @@
 
 ;; Emacs builtin packages
 (setq-default auto-window-vscroll nil
-	      inhibit-startup-screen t	   ; disable the startup screen splash
+	      inhibit-startup-screen t ; disable the startup screen splash
 	      isearch-allow-motion t
 	      isearch-lazy-count t
-	      load-prefer-newer t
-	      make-backup-files nil             ; disable backup file
-	      read-file-name-completion-ignore-case t
-	      use-short-answers t ;; Use y/n for yes/no case
-	      )
+	      make-backup-files nil	; disable backup file
+	      use-short-answers t)
 
 ;; auto revert
 ;; `global-auto-revert-mode' is provided by autorevert.el (builtin)
@@ -162,16 +159,7 @@
   :config
   (setq org-hide-leading-stars t
 	org-hide-emphasis-markers t
-	org-startup-indented t
-	org-latex-listings 'minted
-	;; use tectonic to export pdf
-	org-latex-pdf-process '("tectonic -Z shell-escape %f"))
-  ;; solve CJK issue when export to pdf
-  (add-to-list 'org-latex-packages-alist '("" "ctex"))
-  ;; highlight code block
-  (add-to-list 'org-latex-packages-alist '("" "minted"))
-  ;; long word wrap when export to pdf
-  (add-to-list 'org-latex-packages-alist '("" "seqsplit")))
+	org-startup-indented t))
 
 ;; Pulse the cursor line
 (dolist (cmd '(recenter-top-bottom other-window))
@@ -180,7 +168,7 @@
 
 ;; Recentf
 (use-package recentf
-  :hook (after-init . recentf-mode)
+  ;;:hook (after-init . recentf-mode)
   ;; recentf-open since v29.1, recentf-open-files since v22
   :bind (("C-c r" . #'recentf-open))
   :custom (add-to-list 'recentf-exclude '("~\/.emacs.d\/elpa\/")))
@@ -214,8 +202,7 @@
 
 ;; Settings for company, auto-complete only for coding.
 (use-package company :ensure t :defer t
-  :hook ((prog-mode . company-mode)
-	 (inferior-emacs-lisp-mode . company-mode)))
+  :hook (after-init . global-company-mode))
 
 ;; crux, a collection of many useful extensions/commands
 (use-package crux :ensure t :defer t)
@@ -232,7 +219,10 @@
 ;; format all, formatter for almost languages
 ;; great for programmers
 (use-package format-all :ensure t :defer t
-  :bind ("C-c f" . #'format-all-buffer))
+  ;; enable format on save with format-all-mode
+  :hook (prog-mode . format-all-mode)
+  ;; and bind a shortcut to manual format
+  :bind ("C-c f" . #'format-all-region-or-buffer))
 
 ;; gnu-elpa-keyring-update
 (use-package gnu-elpa-keyring-update :ensure t :defer t)
@@ -247,6 +237,9 @@
 ;; Settings for which-key - suggest next key
 (use-package which-key :ensure t :defer t
   :hook (after-init . which-key-mode))
+
+;; activate the repeat mode
+(add-hook 'after-init-hook 'repeat-mode)
 
 ;;Configs for OS
 ;; Special configs for MS-Windows
@@ -327,19 +320,18 @@
 	  (yaml       . ("https://github.com/ikatyang/tree-sitter-yaml"))
 	  (toml       . ("https://github.com/tree-sitter/tree-sitter-toml"))
 	  (zig        . ("https://github.com/GrayJack/tree-sitter-zig"))))
-  (setq major-mode-remap-alist
-	'((sh-mode         . bash-ts-mode)
-	  (c-mode          . c-ts-mode)
-	  (c++-mode        . c++-ts-mode)
-	  (c-or-c++-mode   . c-or-c++-ts-mode)
-	  (css-mode        . css-ts-mode)
-	  (js-mode         . js-ts-mode)
-	  (java-mode       . java-ts-mode)
-	  (js-json-mode    . json-ts-mode)
-	  (makefile-mode   . cmake-ts-mode)
-	  (python-mode     . python-ts-mode)
-	  (ruby-mode       . ruby-ts-mode)
-	  (conf-toml-mode  . toml-ts-mode)))
+  (add-to-list 'major-mode-remap-alist '(sh-mode         . bash-ts-mode))
+  (add-to-list 'major-mode-remap-alist '(c-mode          . c-ts-mode))
+  (add-to-list 'major-mode-remap-alist '(c++-mode        . c++-ts-mode))
+  (add-to-list 'major-mode-remap-alist '(c-or-c++-mode   . c-or-c++-ts-mode))
+  (add-to-list 'major-mode-remap-alist '(css-mode        . css-ts-mode))
+  (add-to-list 'major-mode-remap-alist '(js-mode         . js-ts-mode))
+  (add-to-list 'major-mode-remap-alist '(java-mode       . java-ts-mode))
+  (add-to-list 'major-mode-remap-alist '(js-json-mode    . json-ts-mode))
+  (add-to-list 'major-mode-remap-alist '(makefile-mode   . cmake-ts-mode))
+  (add-to-list 'major-mode-remap-alist '(python-mode     . python-ts-mode))
+  (add-to-list 'major-mode-remap-alist '(ruby-mode       . ruby-ts-mode))
+  (add-to-list 'major-mode-remap-alist '(conf-toml-mode  . toml-ts-mode))
   (add-to-list 'auto-mode-alist '("\\(?:Dockerfile\\(?:\\..*\\)?\\|\\.[Dd]ockerfile\\)\\'" . dockerfile-ts-mode))
   (add-to-list 'auto-mode-alist '("\\.go\\'" . go-ts-mode))
   (add-to-list 'auto-mode-alist '("/go\\.mod\\'" . go-mod-ts-mode))
