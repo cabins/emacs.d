@@ -15,7 +15,6 @@
 ;; definitions
 (defvar cabins--os-win (memq system-type '(ms-dos windows-nt cygwin)))
 (defvar cabins--os-mac (eq system-type 'darwin))
-(defvar cabins--ver-28 (= emacs-major-version 28))
 
 ;;;###autoload
 (defun cabins--set-font-common (character font-list &optional scale-factor)
@@ -102,19 +101,12 @@
 	    (lambda (frame) (with-selected-frame frame
 			  (cabins--reset-ui)))))
 
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-(unless (bound-and-true-p package--initialized)
-  (package-initialize))
-(when cabins--ver-28
-  (package-install 'use-package))
-
-;; ;; packages
-;; (use-package package
-;;   :config
-;;   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-;;   (unless (bound-and-true-p package--initialized)
-;;     (package-initialize)))
+;; packages
+(use-package package
+  :config
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+  (unless (bound-and-true-p package--initialized)
+    (package-initialize)))
 
 ;; Emacs builtin packages
 (setq-default auto-window-vscroll nil
@@ -190,8 +182,7 @@
 (use-package recentf
   :hook (after-init . recentf-mode)
   ;; recentf-open since v29.1, recentf-open-files since v22
-  ;; for v28, here use the latter one
-  :bind (("C-c r" . #'recentf-open-files))
+  :bind (("C-c r" . #'recentf-open))
   :custom (add-to-list 'recentf-exclude '("~\/.emacs.d\/elpa\/")))
 
 ;; Show Paren Mode
@@ -227,11 +218,6 @@
 	 (inferior-emacs-lisp-mode . company-mode)))
 
 ;; crux, a collection of many useful extensions/commands
-;; without key-binding you can use
-;; C-a for its original definition
-;; M-m to the indentation of current line
-;; C-M-<ARROW> for duplicate lines
-;; crux commands? Pls use M-x.
 (use-package crux :ensure t :defer t)
 
 ;; Settings for exec-path-from-shell
@@ -253,10 +239,6 @@
 
 ;; iedit - edit same text in one buffer or region
 (use-package iedit :ensure t :defer t)
-
-;; info-colors, make the info manual as colorful
-(use-package info-colors :ensure t :defer t
-  :hook (Info-selection . info-colors-fontify-node))
 
 ;; move-dup, move/copy line or region
 (use-package move-dup :ensure t :defer t
@@ -304,17 +286,13 @@
   :mode (("\\.http\\'" . restclient-mode)))
 
 ;; Language Server (eglot - builtin since v29)
-(when cabins--ver-28
-  (package-install 'eglot))
-
 (use-package eglot
   :hook (prog-mode . eglot-ensure)
   :bind ("C-c e f" . eglot-format)
   :config (advice-add 'eglot-code-action-organize-imports :before #'eglot-format))
 
 (use-package treesit
-  :when (and (>= emacs-major-version 29)
-	     (fboundp 'treesit-available-p)
+  :when (and (fboundp 'treesit-available-p)
 	     (treesit-available-p))
   :config (setq treesit-font-lock-level 4)
   :init

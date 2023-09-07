@@ -3,8 +3,8 @@
 ;; Runs before package and UI initializetion happens.
 ;;; Code:
 
-(unless (>= emacs-major-version 28)
-  (error "ONLY EMACS v28+ IS SUPPORTED!"))
+(unless (>= emacs-major-version 29)
+  (error "ONLY EMACS v29+ IS SUPPORTED!"))
 
 ;; For speed up the startup, please do NOT forget reset it to default
 ;; after Emacs after-init-hook, or it may cause freezes.
