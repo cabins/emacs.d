@@ -267,8 +267,10 @@
 (add-hook 'prog-mode-hook 'prettify-symbols-mode)
 
 ;; Flymake
-(global-set-key (kbd "M-n") #'flymake-goto-next-error)
-(global-set-key (kbd "M-p") #'flymake-goto-prev-error)
+(use-package flymake
+  :hook (prog-mode . flymake-mode)
+  :bind (("M-n" . #'flymake-goto-next-error)
+	 ("M-p" . #'flymake-goto-prev-error)))
 
 ;; Language Server (eglot - builtin since v29)
 (use-package eglot
