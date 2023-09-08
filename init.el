@@ -141,7 +141,7 @@
 ;; for performance issue, do NOT use on Windows
 (use-package flyspell
   :unless cabins--os-win
-  :hook (text-mode . flspell-mode))
+  :hook (text-mode . flyspell-mode))
 
 ;; Highlight Current Line
 (use-package hl-line
@@ -167,6 +167,13 @@
   (advice-add cmd :after
 	      (lambda (&rest _) (pulse-momentary-highlight-one-line (point)))))
 
+;; Show Paren Mode
+(use-package paren
+  :config
+  (setq show-paren-when-point-in-periphery t
+	show-paren-when-point-inside-paren t
+	show-paren-style 'mixed))
+
 ;; Recentf
 (use-package recentf
   ;;:hook (after-init . recentf-mode)
@@ -174,12 +181,8 @@
   :bind (("C-c r" . #'recentf-open))
   :custom (add-to-list 'recentf-exclude '("~\/.emacs.d\/elpa\/")))
 
-;; Show Paren Mode
-(use-package paren
-  :config
-  (setq show-paren-when-point-in-periphery t
-	show-paren-when-point-inside-paren t
-	show-paren-style 'mixed))
+;; activate the repeat mode
+(add-hook 'after-init-hook 'repeat-mode)
 
 ;; Speedbar
 (use-package speedbar
@@ -236,9 +239,6 @@
 (use-package which-key :ensure t :defer t
   :hook (after-init . which-key-mode))
 
-;; activate the repeat mode
-(add-hook 'after-init-hook 'repeat-mode)
-
 ;;Configs for OS
 ;; Special configs for MS-Windows
 (when (and cabins--os-win
@@ -269,12 +269,6 @@
 ;; Flymake
 (global-set-key (kbd "M-n") #'flymake-goto-next-error)
 (global-set-key (kbd "M-p") #'flymake-goto-prev-error)
-
-;; Some useful tools
-(use-package protobuf-mode :ensure t :defer t)
-(use-package quickrun :ensure t :defer t)
-(use-package restclient :ensure t :defer t
-  :mode (("\\.http\\'" . restclient-mode)))
 
 ;; Language Server (eglot - builtin since v29)
 (use-package eglot
