@@ -2,6 +2,8 @@
 
 This is `NOT` a part of [GNU Emacs](https://www.gnu.org/software/emacs/) but a personal-daily-use configuration maintained by @ Cabins from China.
 
+More details can be found from wiki([wiki](https://github.com/cabins/emacs.d/wiki))
+
 # Dev Code
 
 `噪鹃`, English name? No, just Chinese `噪鹃`.
