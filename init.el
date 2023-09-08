@@ -96,7 +96,6 @@
   (cabins--load-theme))
 
 (add-hook 'after-init-hook #'cabins--reset-ui)
-(add-hook 'window-configuration-change-hook #'cabins--load-theme)
 (when (daemonp)
   (add-hook 'after-make-frame-functions
 	    (lambda (frame) (with-selected-frame frame
