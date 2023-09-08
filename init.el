@@ -37,11 +37,11 @@
 
   (interactive)
   (when (display-graphic-p)
-    (cabins--set-font-common nil (if default-fonts default-fonts cabins--fonts-default))
-    (cabins--set-font-common 'unicode (if unicode-fonts unicode-fonts cabins--fonts-unicode))
-    (cabins--set-font-common 'emoji (if emoji-fonts emoji-fonts cabins--fonts-emoji))
+    (cabins--set-font-common nil (or default-fonts cabins--fonts-default))
+    (cabins--set-font-common 'unicode (or unicode-fonts cabins--fonts-unicode))
+    (cabins--set-font-common 'emoji (or emoji-fonts cabins--fonts-emoji))
     (dolist (charset '(kana han bopomofo cjk-misc))
-      (cabins--set-font-common charset (if cjk-fonts cjk-fonts cabins--fonts-cjk) 1.2))))
+      (cabins--set-font-common charset (or cjk-fonts cabins--fonts-cjk) 1.2))))
 
 ;;;###autoload
 (defun cabins--cleaner-ui ()
