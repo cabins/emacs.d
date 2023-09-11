@@ -78,14 +78,14 @@
   "Nothing, but alias like `crux-find-user-init-file', inspired by VSCode."
 
   (interactive)
-  (find-file-other-window user-init-file))
+  (find-file user-init-file))
 
 ;;;###autoload
 (defun cabins--custom-file()
   "Nothing, but alias like `crux-find-user-custom-file', inspired by VSCode."
 
   (interactive)
-  (find-file-other-window custom-file))
+  (find-file custom-file))
 
 ;;;###autoload
 (defun cabins--reset-ui()
@@ -180,17 +180,11 @@
   :bind (("C-c r" . #'recentf-open))
   :custom (add-to-list 'recentf-exclude '("~\/.emacs.d\/elpa\/")))
 
-;; activate the repeat mode
-(add-hook 'after-init-hook 'repeat-mode)
-
 ;; Speedbar
 (use-package speedbar
   :config
   (setq speedbar-show-unknown-files t)
   (global-set-key (kbd "<f8>") #'speedbar))
-
-;; whitespace
-(add-hook 'before-save-hook #'whitespace-cleanup)
 
 ;; windmove.el, use  <SHIFT - arrow key> to switch buffers
 (use-package windmove
