@@ -9,7 +9,9 @@
 ;; For speed up the startup, please do NOT forget reset it to default
 ;; after Emacs after-init-hook, or it may cause freezes.
 (setq gc-cons-threshold most-positive-fixnum)
-(add-hook 'after-init-hook #'(lambda () (setq gc-cons-threshold 800000)))
+(add-hook 'after-init-hook
+	  (lambda ()
+	    (setq gc-cons-threshold 800000)))
 
 ;; Prevent unwanted runtime compilation for native-comp users
 (setq inhibit-automatic-native-compilation t)
@@ -29,19 +31,19 @@
 (setq frame-inhibit-implied-resize t)
 
 ;; Clean GUI
-(push '(scroll-bar-mode . nil) default-frame-alist)
-(push '(tool-bar-mode . nil) default-frame-alist)
-
-(when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-(when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+(when (fboundp 'tool-bar-mode)
+  (tool-bar-mode -1))
+(when (fboundp 'scroll-bar-mode)
+  (scroll-bar-mode -1))
 
 ;; System default coding
-;; (set-language-environment 'utf-8)
+(set-language-environment 'utf-8)
+(prefer-coding-system 'utf-8)
 
 ;; Misc settings
 (setq mode-line-compact t)
 
-(prefer-coding-system 'utf-8)
+(provide 'early-init)
 
 ;;; early-init.el ends here
 ;; Local Variables:

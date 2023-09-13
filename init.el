@@ -6,7 +6,6 @@
 ;; (c) Cabins Kong, 2022-
 
 ;;; Code:
-(require 'subr-x)
 
 ;; Default directory location(Not necessary, but RECOMMENDED)
 (setq default-directory "~/")
@@ -15,33 +14,35 @@
 ;; definitions
 (defvar cabins--os-win (memq system-type '(ms-dos windows-nt cygwin)))
 (defvar cabins--os-mac (eq system-type 'darwin))
+
 (defvar cabins--fonts-default '("Sometype Mono" "Cascadia Code PL" "Menlo" "Consolas"))
 (defvar cabins--fonts-unicode '("Segoe UI Symbol" "Symbola" "Symbol"))
-(defvar cabins--fonts-emoji '("Noto Color Emoji" "Apple Color Emoji"))
+(defvar cabins--fonts-emoji '("Apple Color Emoji" "Segoe UI Emoji" "Noto Color Emoji" "Noto Emoji"))
 (defvar cabins--fonts-cjk '("KaiTi" "STKaiTi" "WenQuanYi Micro Hei"))
 
-;;;###autoload
-(defun cabins--set-font-common (character font-list &optional scale-factor)
-  "Set fonts for multi CHARACTER from FONT-LIST and modify style with SCALE-FACTOR."
+(defun cabins--available-font (custom-fonts default-fonts)
+  "Get the first installed font from CUSTOM-FONTS and DEFAULT-FONTS."
 
-  (cl-loop for font in font-list
-	   when (find-font (font-spec :name font))
-	   return (if (not character)
-		      (set-face-attribute 'default nil :family font)
-		    (when scale-factor (setq face-font-rescale-alist `((,font . ,scale-factor))))
-		    (set-fontset-font t character (font-spec :family font) nil 'prepend))))
+  (catch 'font
+    (dolist (f (append custom-fonts default-fonts))
+      (when (find-font (font-spec :family f))
+	(throw 'font f)))))
 
 ;;;###autoload
-(defun cabins--font-setup (&optional default-fonts unicode-fonts emoji-fonts cjk-fonts)
-  "Font setup, with optional DEFAULT-FONTS, UNICODE-FONTS, EMOJI-FONTS, CJK-FONTS."
+(defun cabins--font-setup (&rest args)
+  "Setup fonts from ARGS."
 
   (interactive)
-  (when (display-graphic-p)
-    (cabins--set-font-common nil (or default-fonts cabins--fonts-default))
-    (cabins--set-font-common 'unicode (or unicode-fonts cabins--fonts-unicode))
-    (cabins--set-font-common 'emoji (or emoji-fonts cabins--fonts-emoji))
+  (let ((def-font (cabins--available-font (plist-get args :default) cabins--fonts-default))
+	(uni-font (cabins--available-font (plist-get args :unicode) cabins--fonts-unicode))
+	(emo-font (cabins--available-font (plist-get args :emoji) cabins--fonts-emoji))
+	(cjk-font (cabins--available-font (plist-get args :cjk) cabins--fonts-cjk)))
+    (set-face-attribute 'default nil :family def-font)
+    (set-fontset-font t 'unicode (font-spec :family uni-font))
+    (set-fontset-font t 'emoji (font-spec :family emo-font))
+    (setq face-font-rescale-alist `((,cjk-font . 1.2)))
     (dolist (charset '(kana han bopomofo cjk-misc))
-      (cabins--set-font-common charset (or cjk-fonts cabins--fonts-cjk) 1.2))))
+      (set-fontset-font t charset (font-spec :family cjk-font) nil 'prepend))))
 
 ;;;###autoload
 (defun cabins--cleaner-ui ()
@@ -97,9 +98,7 @@
 
 (add-hook 'after-init-hook #'cabins--reset-ui)
 (when (daemonp)
-  (add-hook 'after-make-frame-functions
-	    (lambda (frame) (with-selected-frame frame
-			      (cabins--reset-ui)))))
+  (add-hook 'after-make-frame-functions (lambda (frame) (with-selected-frame frame (cabins--reset-ui)))))
 
 ;; packages
 (use-package package
@@ -110,6 +109,7 @@
 
 ;; Emacs builtin packages
 (setq-default auto-window-vscroll nil
+	      help-window-select t
 	      inhibit-startup-screen t ; disable the startup screen splash
 	      isearch-allow-motion t
 	      isearch-lazy-count t
@@ -252,7 +252,7 @@
   (set-selection-coding-system 'utf-8))
 
 ;; Configs for programming languages
-(add-hook 'prog-mode-hook 'column-number-mode)
+(add-hook 'prog-mode-hook (lambda () (setq-local column-number-mode t)))
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 (add-hook 'prog-mode-hook 'electric-pair-mode)
 (add-hook 'prog-mode-hook 'flymake-mode)
@@ -272,10 +272,28 @@
   :config (advice-add 'eglot-code-action-organize-imports :before #'eglot-format))
 
 (use-package treesit
-  :when (and (fboundp 'treesit-available-p)
-	     (treesit-available-p))
+  :when (and (fboundp 'treesit-available-p) (treesit-available-p))
+  :mode (("\\(?:Dockerfile\\(?:\\..*\\)?\\|\\.[Dd]ockerfile\\)\\'" . dockerfile-ts-mode)
+	 ("\\.go\\'" . go-ts-mode)
+	 ("/go\\.mod\\'" . go-mod-ts-mode)
+	 ("\\.rs\\'" . rust-ts-mode)
+	 ("\\.ts\\'" . typescript-ts-mode)
+	 ("\\.y[a]?ml\\'" . yaml-ts-mode))
   :config (setq treesit-font-lock-level 4)
   :init
+  (setq major-mode-remap-alist
+	'((sh-mode         . bash-ts-mode)
+	  (c-mode          . c-ts-mode)
+	  (c++-mode        . c++-ts-mode)
+	  (c-or-c++-mode   . c-or-c++-ts-mode)
+	  (css-mode        . css-ts-mode)
+	  (js-mode         . js-ts-mode)
+	  (java-mode       . java-ts-mode)
+	  (js-json-mode    . json-ts-mode)
+	  (makefile-mode   . cmake-ts-mode)
+	  (python-mode     . python-ts-mode)
+	  (ruby-mode       . ruby-ts-mode)
+	  (conf-toml-mode  . toml-ts-mode)))
   (setq treesit-language-source-alist
 	'((bash       . ("https://github.com/tree-sitter/tree-sitter-bash"))
 	  (c          . ("https://github.com/tree-sitter/tree-sitter-c"))
@@ -306,25 +324,7 @@
 	  (vue        . ("https://github.com/merico-dev/tree-sitter-vue"))
 	  (yaml       . ("https://github.com/ikatyang/tree-sitter-yaml"))
 	  (toml       . ("https://github.com/tree-sitter/tree-sitter-toml"))
-	  (zig        . ("https://github.com/GrayJack/tree-sitter-zig"))))
-  (add-to-list 'major-mode-remap-alist '(sh-mode         . bash-ts-mode))
-  (add-to-list 'major-mode-remap-alist '(c-mode          . c-ts-mode))
-  (add-to-list 'major-mode-remap-alist '(c++-mode        . c++-ts-mode))
-  (add-to-list 'major-mode-remap-alist '(c-or-c++-mode   . c-or-c++-ts-mode))
-  (add-to-list 'major-mode-remap-alist '(css-mode        . css-ts-mode))
-  (add-to-list 'major-mode-remap-alist '(js-mode         . js-ts-mode))
-  (add-to-list 'major-mode-remap-alist '(java-mode       . java-ts-mode))
-  (add-to-list 'major-mode-remap-alist '(js-json-mode    . json-ts-mode))
-  (add-to-list 'major-mode-remap-alist '(makefile-mode   . cmake-ts-mode))
-  (add-to-list 'major-mode-remap-alist '(python-mode     . python-ts-mode))
-  (add-to-list 'major-mode-remap-alist '(ruby-mode       . ruby-ts-mode))
-  (add-to-list 'major-mode-remap-alist '(conf-toml-mode  . toml-ts-mode))
-  (add-to-list 'auto-mode-alist '("\\(?:Dockerfile\\(?:\\..*\\)?\\|\\.[Dd]ockerfile\\)\\'" . dockerfile-ts-mode))
-  (add-to-list 'auto-mode-alist '("\\.go\\'" . go-ts-mode))
-  (add-to-list 'auto-mode-alist '("/go\\.mod\\'" . go-mod-ts-mode))
-  (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-ts-mode))
-  (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
-  (add-to-list 'auto-mode-alist '("\\.y[a]?ml\\'" . yaml-ts-mode)))
+	  (zig        . ("https://github.com/GrayJack/tree-sitter-zig")))))
 
 (setq custom-file (locate-user-emacs-file "custom.el"))
 (when (file-exists-p custom-file)
