@@ -23,10 +23,9 @@
 (defun cabins--available-font (custom-fonts default-fonts)
   "Get the first installed font from CUSTOM-FONTS and DEFAULT-FONTS."
 
-  (catch 'font
-    (dolist (f (append custom-fonts default-fonts))
-      (when (find-font (font-spec :family f))
-	(throw 'font f)))))
+  (cl-loop for font in (append custom-fonts default-fonts)
+	   when (find-font (font-spec :family font))
+	   return font))
 
 ;;;###autoload
 (defun cabins--font-setup (&rest args)
