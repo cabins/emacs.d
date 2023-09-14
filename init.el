@@ -33,16 +33,17 @@
   "Setup fonts from ARGS."
 
   (interactive)
-  (let ((def-font (cabins--available-font (plist-get args :default) cabins--fonts-default))
-	(uni-font (cabins--available-font (plist-get args :unicode) cabins--fonts-unicode))
-	(emo-font (cabins--available-font (plist-get args :emoji) cabins--fonts-emoji))
-	(cjk-font (cabins--available-font (plist-get args :cjk) cabins--fonts-cjk)))
-    (set-face-attribute 'default nil :family def-font)
-    (set-fontset-font t 'unicode (font-spec :family uni-font))
-    (set-fontset-font t 'emoji (font-spec :family emo-font))
-    (setq face-font-rescale-alist `((,cjk-font . 1.2)))
-    (dolist (charset '(kana han bopomofo cjk-misc))
-      (set-fontset-font t charset (font-spec :family cjk-font) nil 'prepend))))
+  (when (display-graphic-p)
+    (let ((def-font (cabins--available-font (plist-get args :default) cabins--fonts-default))
+	  (uni-font (cabins--available-font (plist-get args :unicode) cabins--fonts-unicode))
+	  (emo-font (cabins--available-font (plist-get args :emoji) cabins--fonts-emoji))
+	  (cjk-font (cabins--available-font (plist-get args :cjk) cabins--fonts-cjk)))
+      (set-face-attribute 'default nil :family def-font)
+      (set-fontset-font t 'unicode (font-spec :family uni-font))
+      (set-fontset-font t 'emoji (font-spec :family emo-font))
+      (setq face-font-rescale-alist `((,cjk-font . 1.2)))
+      (dolist (charset '(kana han bopomofo cjk-misc))
+	(set-fontset-font t charset (font-spec :family cjk-font) nil 'prepend)))))
 
 ;;;###autoload
 (defun cabins--cleaner-ui ()
