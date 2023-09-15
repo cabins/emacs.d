@@ -23,9 +23,10 @@
 (defun cabins--available-font (custom-fonts default-fonts)
   "Get the first installed font from CUSTOM-FONTS and DEFAULT-FONTS."
 
-  (cl-loop for font in (append custom-fonts default-fonts)
-	   when (find-font (font-spec :family font))
-	   return font))
+  (catch 'font
+    (dolist (f (append custom-fonts default-fonts))
+      (when (find-font (font-spec :family f))
+	(throw 'font f)))))
 
 ;;;###autoload
 (defun cabins--font-setup (&rest args)
@@ -45,36 +46,6 @@
 	(set-fontset-font t charset (font-spec :family cjk-font) nil 'prepend)))))
 
 ;;;###autoload
-(defun cabins--cleaner-ui ()
-  "Remove all the unnecessary elements."
-
-  (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-  (when (fboundp 'tool-bar-mode) (tool-bar-mode -1)))
-
-;;;###autoload
-(defun cabins--load-theme()
-  "Load theme, Auto change color scheme according to system dark mode on Windows."
-
-  (interactive)
-  (when (display-graphic-p)
-    ;; choose theme according to system dark/light mode
-    (let* ((cmd (cond
-		 (cabins--os-win
-		  (concat
-		   "powershell "
-		   "(Get-ItemProperty -Path "
-		   "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize "
-		   "-Name AppsUseLightTheme).AppsUseLightTheme"))
-		 (cabins--os-mac
-		  "defaults read -g AppleInterfaceStyle")
-		 ((eq system-type 'gnu/linux)
-		  "gsettings get org.gnome.desktop.interface color-scheme")))
-	   (mode (string-trim (shell-command-to-string cmd))))
-      (if (member mode '("0" "Dark" "'prefer-dark'"))
-	  (load-theme 'modus-vivendi t)
-	(load-theme 'modus-operandi t)))))
-
-;;;###autoload
 (defun cabins--user-init-file()
   "Nothing, but alias like `crux-find-user-init-file', inspired by VSCode."
 
@@ -88,20 +59,13 @@
   (interactive)
   (find-file custom-file))
 
-;;;###autoload
-(defun cabins--reset-ui()
-  "Try to reset ui options."
-
-  (interactive)
-  (cabins--font-setup)
-  (cabins--load-theme))
-
-(add-hook 'after-init-hook #'cabins--reset-ui)
+(add-hook 'after-init-hook #'cabins--font-setup)
 (when (daemonp)
-  (add-hook 'after-make-frame-functions (lambda (frame) (with-selected-frame frame (cabins--reset-ui)))))
+  (add-hook 'after-make-frame-functions (lambda (frame) (with-selected-frame frame (cabins--font-setup)))))
 
 ;; packages
 (use-package package
+  :hook after-init-hook
   :config
   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
   (unless (bound-and-true-p package--initialized)
@@ -109,12 +73,18 @@
 
 ;; Emacs builtin packages
 (setq-default auto-window-vscroll nil
+	      mode-line-compact t
 	      help-window-select t
+	      initial-major-mode 'fundamental-mode
 	      inhibit-startup-screen t ; disable the startup screen splash
 	      isearch-allow-motion t
 	      isearch-lazy-count t
+	      load-prefer-newer 'noninteractive
 	      make-backup-files nil	; disable backup file
+	      read-process-output-max (* 4 1024 1024)
 	      use-short-answers t)
+
+(prefer-coding-system 'utf-8)
 
 ;; auto revert
 ;; `global-auto-revert-mode' is provided by autorevert.el (builtin)
@@ -140,12 +110,12 @@
 ;; for performance issue, do NOT use on Windows
 (use-package flyspell
   :unless cabins--os-win
-  :hook (text-mode . flyspell-mode))
+  :hook (prog-mode . flyspell-prog-mode))
 
 ;; Highlight Current Line
 (use-package hl-line
   :when (display-graphic-p)
-  :hook (after-init . global-hl-line-mode))
+  :hook (prog-mode . global-hl-line-mode))
 
 ;; ibuffer
 (defalias 'list-buffers 'ibuffer)
@@ -182,9 +152,9 @@
 
 ;; Speedbar
 (use-package speedbar
+  :bind ("<f8>" . #'speedbar)
   :config
-  (setq speedbar-show-unknown-files t)
-  (global-set-key (kbd "<f8>") #'speedbar))
+  (setq speedbar-show-unknown-files t))
 
 ;; windmove.el, use  <SHIFT - arrow key> to switch buffers
 (use-package windmove
@@ -198,8 +168,8 @@
       use-package-expand-minimally t)
 
 ;; Settings for company, auto-complete only for coding.
-(use-package company :ensure t :defer t
-  :hook (after-init . global-company-mode))
+(use-package company :ensure t
+  :hook (prog-mode . company-mode))
 
 ;; Settings for exec-path-from-shell
 ;; fix the PATH environment variable issue
@@ -212,24 +182,24 @@
 
 ;; format all, formatter for almost languages
 ;; great for programmers
-(use-package format-all :ensure t :defer t
+(use-package format-all :ensure t
   ;; enable format on save with format-all-mode
   :hook (prog-mode . format-all-mode)
   ;; and bind a shortcut to manual format
   :bind ("C-c f" . #'format-all-region-or-buffer))
 
-;; gnu-elpa-keyring-update
-(use-package gnu-elpa-keyring-update :ensure t :defer t)
-
 ;; iedit - edit same text in one buffer or region
-(use-package iedit :ensure t :defer t)
+(use-package iedit
+  :ensure t
+  :bind ("C-;" . iedit-mode))
 
 ;; move-dup, move/copy line or region
-(use-package move-dup :ensure t :defer t
+(use-package move-dup
+  :ensure t
   :hook (after-init . global-move-dup-mode))
 
 ;; Settings for which-key - suggest next key
-(use-package which-key :ensure t :defer t
+(use-package which-key :ensure t
   :hook (after-init . which-key-mode))
 
 ;;Configs for OS
@@ -248,6 +218,7 @@
 
 ;; solve the Chinese paste issue
 ;; let Emacs auto-guess the selection coding according to the Windows/system settings
+(setq locale-coding-system 'utf-8)
 (unless cabins--os-win
   (set-selection-coding-system 'utf-8))
 
