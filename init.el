@@ -15,7 +15,7 @@
 (defvar cabins--os-win (memq system-type '(ms-dos windows-nt cygwin)))
 (defvar cabins--os-mac (eq system-type 'darwin))
 
-(defvar cabins--fonts-default '("Sometype Mono" "Cascadia Code PL" "Menlo" "Consolas"))
+(defvar cabins--fonts-default '("Courier Prime" "Sometype Mono" "Cascadia Code PL" "JetBrains Mono" "Menlo" "Consolas"))
 (defvar cabins--fonts-unicode '("Segoe UI Symbol" "Symbola" "Symbol"))
 (defvar cabins--fonts-emoji '("Apple Color Emoji" "Segoe UI Emoji" "Noto Color Emoji" "Noto Emoji"))
 (defvar cabins--fonts-cjk '("KaiTi" "STKaiTi" "WenQuanYi Micro Hei"))
@@ -145,7 +145,7 @@
 
 ;; Recentf
 (use-package recentf
-  ;;:hook (after-init . recentf-mode)
+  :hook (after-init . recentf-mode)
   ;; recentf-open since v29.1, recentf-open-files since v22
   :bind (("C-c r" . #'recentf-open))
   :custom (add-to-list 'recentf-exclude '("~\/.emacs.d\/elpa\/")))
