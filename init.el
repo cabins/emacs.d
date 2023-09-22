@@ -79,7 +79,6 @@
 	      inhibit-startup-screen t ; disable the startup screen splash
 	      isearch-allow-motion t
 	      isearch-lazy-count t
-	      load-prefer-newer 'noninteractive
 	      make-backup-files nil	; disable backup file
 	      read-process-output-max (* 4 1024 1024)
 	      use-short-answers t)
@@ -169,7 +168,7 @@
 
 ;; Settings for company, auto-complete only for coding.
 (use-package company :ensure t
-  :hook (prog-mode . company-mode))
+  :hook (after-init . global-company-mode))
 
 ;; Settings for exec-path-from-shell
 ;; fix the PATH environment variable issue
@@ -184,7 +183,8 @@
 ;; great for programmers
 (use-package format-all :ensure t
   ;; enable format on save with format-all-mode
-  :hook (prog-mode . format-all-mode)
+  :hook ((prog-mode . format-all-mode)
+	 (format-all-mode . format-all-ensure-formatter))
   ;; and bind a shortcut to manual format
   :bind ("C-c f" . #'format-all-region-or-buffer))
 
@@ -240,7 +240,8 @@
 (use-package eglot
   :hook (prog-mode . eglot-ensure)
   :bind ("C-c e f" . eglot-format)
-  :config (advice-add 'eglot-code-action-organize-imports :before #'eglot-format))
+  :config
+  (advice-add 'eglot-code-action-organize-imports :before #'eglot-format))
 
 (use-package treesit
   :when (and (fboundp 'treesit-available-p) (treesit-available-p))
