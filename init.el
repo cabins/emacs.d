@@ -236,6 +236,25 @@
   :bind (("M-n" . #'flymake-goto-next-error)
 	 ("M-p" . #'flymake-goto-prev-error)))
 
+;; Protobuf file support
+(use-package protobuf-mode
+  :ensure t
+  :mode "\\.proto\\'")
+
+;; Markdown file support
+(use-package markdown-mode
+  :ensure t)
+
+;; Run code
+(use-package quickrun
+  :ensure t
+  :when (derived-mode-p 'prog-mode))
+
+;; HTTP Request
+(use-package restclient
+  :ensure t
+  :mode (("\\.http\\'" . restclient-mode)))
+
 ;; Language Server (eglot - builtin since v29)
 (use-package eglot
   :hook (prog-mode . eglot-ensure)
