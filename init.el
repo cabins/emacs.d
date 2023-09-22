@@ -167,8 +167,9 @@
       use-package-expand-minimally t)
 
 ;; Settings for company, auto-complete only for coding.
-(use-package company :ensure t
-  :hook (after-init . global-company-mode))
+(use-package company
+  :ensure t
+  :hook (prog-mode . company-mode))
 
 ;; Settings for exec-path-from-shell
 ;; fix the PATH environment variable issue
