@@ -1,6 +1,6 @@
 ;;; init.el --- the entry of emacs config -*- lexical-binding: t -*-
 ;; Author: Cabins
-;; Github: https://github.com/cabins/emacs.d
+;; Github: https://github.com/cabins-emacs.d
 
 ;;; Commentary:
 ;; (c) Cabins Kong, 2022-
@@ -12,15 +12,15 @@
 (add-to-list 'load-path (concat user-emacs-directory "lisp"))
 
 ;; definitions
-(defvar cabins--os-win (memq system-type '(ms-dos windows-nt cygwin)))
-(defvar cabins--os-mac (eq system-type 'darwin))
+(defvar cabins-os-win (memq system-type '(ms-dos windows-nt cygwin)))
+(defvar cabins-os-mac (eq system-type 'darwin))
 
-(defvar cabins--fonts-default '("Courier Prime" "Sometype Mono" "Cascadia Code PL" "JetBrains Mono" "Menlo" "Consolas"))
-(defvar cabins--fonts-unicode '("Segoe UI Symbol" "Symbola" "Symbol"))
-(defvar cabins--fonts-emoji '("Apple Color Emoji" "Segoe UI Emoji" "Noto Color Emoji" "Noto Emoji"))
-(defvar cabins--fonts-cjk '("KaiTi" "STKaiTi" "WenQuanYi Micro Hei"))
+(defvar cabins-fonts-default '("Courier Prime" "Sometype Mono" "Cascadia Code PL" "JetBrains Mono" "Menlo" "Consolas"))
+(defvar cabins-fonts-unicode '("Segoe UI Symbol" "Symbola" "Symbol"))
+(defvar cabins-fonts-emoji '("Apple Color Emoji" "Segoe UI Emoji" "Noto Color Emoji" "Noto Emoji"))
+(defvar cabins-fonts-cjk '("KaiTi" "STKaiTi" "WenQuanYi Micro Hei"))
 
-(defun cabins--available-font (custom-fonts default-fonts)
+(defun cabins-find-font (custom-fonts default-fonts)
   "Get the first installed font from CUSTOM-FONTS and DEFAULT-FONTS."
 
   (catch 'font
@@ -29,39 +29,30 @@
 	(throw 'font f)))))
 
 ;;;###autoload
-(defun cabins--font-setup (&rest args)
-  "Setup fonts from ARGS."
+(defun cabins-font-setup (&rest args)
+  "Setup fonts from ARGS, The accepted args are :default :unicode :emoji :cjk."
 
   (interactive)
   (when (display-graphic-p)
-    (let ((def-font (cabins--available-font (plist-get args :default) cabins--fonts-default))
-	  (uni-font (cabins--available-font (plist-get args :unicode) cabins--fonts-unicode))
-	  (emo-font (cabins--available-font (plist-get args :emoji) cabins--fonts-emoji))
-	  (cjk-font (cabins--available-font (plist-get args :cjk) cabins--fonts-cjk)))
-      (set-face-attribute 'default nil :family def-font)
-      (set-fontset-font t 'unicode (font-spec :family uni-font))
-      (set-fontset-font t 'emoji (font-spec :family emo-font))
-      (setq face-font-rescale-alist `((,cjk-font . 1.2)))
-      (dolist (charset '(kana han bopomofo cjk-misc))
-	(set-fontset-font t charset (font-spec :family cjk-font) nil 'prepend)))))
+    (let ((f-def (cabins-find-font (plist-get args :default) cabins-fonts-default))
+	  (f-uni (cabins-find-font (plist-get args :unicode) cabins-fonts-unicode))
+	  (f-emo (cabins-find-font (plist-get args :emoji) cabins-fonts-emoji))
+	  (f-cjk (cabins-find-font (plist-get args :cjk) cabins-fonts-cjk)))
+      (set-face-attribute 'default nil :family f-def)
+      (setq face-font-rescale-alist `((,f-cjk . 1.2)))
+      (dolist (pair `((unicode  . ,f-uni)
+		      (emoji    . ,f-emo)
+		      (kana     . ,f-cjk)
+		      (han      . ,f-cjk)
+		      (bopomofo . ,f-cjk)
+		      (cjk-misc . ,f-cjk)))
+	(set-fontset-font t (car pair) (font-spec :family (cdr pair)) nil 'prepend)))))
 
-;;;###autoload
-(defun cabins--user-init-file()
-  "Nothing, but alias like `crux-find-user-init-file', inspired by VSCode."
-
-  (interactive)
-  (find-file user-init-file))
-
-;;;###autoload
-(defun cabins--custom-file()
-  "Nothing, but alias like `crux-find-user-custom-file', inspired by VSCode."
-
-  (interactive)
-  (find-file custom-file))
-
-(add-hook 'after-init-hook #'cabins--font-setup)
+(add-hook 'after-init-hook #'cabins-font-setup)
 (when (daemonp)
-  (add-hook 'after-make-frame-functions (lambda (frame) (with-selected-frame frame (cabins--font-setup)))))
+  (add-hook 'after-make-frame-functions
+	    (lambda (frame)
+	      (with-selected-frame frame (cabins-font-setup)))))
 
 ;; packages
 (use-package package
@@ -108,19 +99,16 @@
 ;; and "pacman -S pacman -S mingw64/mingw-w64-x86_64-aspell{,-en}" on msys2 (Windows)
 ;; for performance issue, do NOT use on Windows
 (use-package flyspell
-  :unless cabins--os-win
+  :unless cabins-os-win
   :hook (prog-mode . flyspell-prog-mode))
 
 ;; Highlight Current Line
 (use-package hl-line
   :when (display-graphic-p)
-  :hook (prog-mode . global-hl-line-mode))
+  :hook (prog-mode . hl-line-mode))
 
 ;; ibuffer
 (defalias 'list-buffers 'ibuffer)
-
-;; minibuffer
-(add-hook 'after-init-hook 'minibuffer-electric-default-mode)
 
 ;; Org Mode
 (use-package org
@@ -146,14 +134,7 @@
 (use-package recentf
   :hook (after-init . recentf-mode)
   ;; recentf-open since v29.1, recentf-open-files since v22
-  :bind (("C-c r" . #'recentf-open))
-  :custom (add-to-list 'recentf-exclude '("~\/.emacs.d\/elpa\/")))
-
-;; Speedbar
-(use-package speedbar
-  :bind ("<f8>" . #'speedbar)
-  :config
-  (setq speedbar-show-unknown-files t))
+  :bind (("C-c r" . #'recentf-open)))
 
 ;; windmove.el, use  <SHIFT - arrow key> to switch buffers
 (use-package windmove
@@ -176,7 +157,7 @@
 (use-package exec-path-from-shell
   :ensure t
   :when (or (memq window-system '(mac ns x))
-	    (unless cabins--os-win
+	    (unless cabins-os-win
 	      (daemonp)))
   :init (exec-path-from-shell-initialize))
 
@@ -205,14 +186,14 @@
 
 ;;Configs for OS
 ;; Special configs for MS-Windows
-(when (and cabins--os-win
+(when (and cabins-os-win
 	   (boundp 'w32-get-true-file-attributes))
   (setq w32-get-true-file-attributes nil
 	w32-pipe-read-delay 0
 	w32-pipe-buffer-size (* 64 1024)))
 
 ;; Special configs for macOS
-(when cabins--os-mac
+(when cabins-os-mac
   (setq mac-command-modifier 'meta
 	mac-option-modifier 'super
 	ns-use-native-fullscreen t))
@@ -220,7 +201,7 @@
 ;; solve the Chinese paste issue
 ;; let Emacs auto-guess the selection coding according to the Windows/system settings
 (setq locale-coding-system 'utf-8)
-(unless cabins--os-win
+(unless cabins-os-win
   (set-selection-coding-system 'utf-8))
 
 ;; Configs for programming languages
