@@ -72,8 +72,10 @@
 	      isearch-lazy-count t
 	      make-backup-files nil	; disable backup file
 	      read-process-output-max (* 4 1024 1024)
+	      scroll-conservatively 1000
 	      use-short-answers t)
 
+(add-hook 'after-init-hook 'pixel-scroll-precision-mode)
 (prefer-coding-system 'utf-8)
 
 ;; auto revert
