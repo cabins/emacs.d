@@ -7,19 +7,14 @@
 
 ;;; Code:
 
-;; Default directory location(Not necessary, but RECOMMENDED)
-(setq default-directory "~/")
-(add-to-list 'load-path (concat user-emacs-directory "lisp"))
-
-;; definitions
 (defvar cabins-os-win (memq system-type '(ms-dos windows-nt cygwin)))
 (defvar cabins-os-mac (eq system-type 'darwin))
-
 (defvar cabins-fonts-default '("Courier Prime" "Sometype Mono" "Cascadia Code PL" "JetBrains Mono" "Menlo" "Consolas"))
 (defvar cabins-fonts-unicode '("Segoe UI Symbol" "Symbola" "Symbol"))
 (defvar cabins-fonts-emoji '("Apple Color Emoji" "Segoe UI Emoji" "Noto Color Emoji" "Noto Emoji"))
 (defvar cabins-fonts-cjk '("KaiTi" "STKaiTi" "WenQuanYi Micro Hei"))
 
+;;;###autoload
 (defun cabins-find-font (custom-fonts default-fonts)
   "Get the first installed font from CUSTOM-FONTS and DEFAULT-FONTS."
 
@@ -55,6 +50,7 @@
 	      (with-selected-frame frame (cabins-font-setup)))))
 
 ;; packages
+(add-to-list 'load-path (concat user-emacs-directory "lisp"))
 (use-package package
   :hook after-init-hook
   :config
@@ -64,6 +60,7 @@
 
 ;; Emacs builtin packages
 (setq-default auto-window-vscroll nil
+	      default-directory "~"
 	      mode-line-compact t
 	      help-window-select t
 	      initial-major-mode 'fundamental-mode
@@ -76,7 +73,6 @@
 	      use-short-answers t)
 
 (add-hook 'after-init-hook 'pixel-scroll-precision-mode)
-(prefer-coding-system 'utf-8)
 
 ;; auto revert
 ;; `global-auto-revert-mode' is provided by autorevert.el (builtin)
@@ -122,8 +118,7 @@
 
 ;; Pulse the cursor line
 (dolist (cmd '(recenter-top-bottom other-window))
-  (advice-add cmd :after
-	      (lambda (&rest _) (pulse-momentary-highlight-one-line (point)))))
+  (advice-add cmd :after (lambda (&rest _) (pulse-momentary-highlight-one-line))))
 
 ;; Show Paren Mode
 (use-package paren
@@ -202,6 +197,7 @@
 
 ;; solve the Chinese paste issue
 ;; let Emacs auto-guess the selection coding according to the Windows/system settings
+(prefer-coding-system 'utf-8)
 (setq locale-coding-system 'utf-8)
 (unless cabins-os-win
   (set-selection-coding-system 'utf-8))
