@@ -209,6 +209,7 @@
 (add-hook 'prog-mode-hook 'flymake-mode)
 (add-hook 'prog-mode-hook 'hs-minor-mode)
 (add-hook 'prog-mode-hook 'prettify-symbols-mode)
+(add-hook 'prog-mode-hook 'which-function-mode)
 
 ;; Flymake
 (use-package flymake
