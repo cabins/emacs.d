@@ -9,7 +9,7 @@
 
 (defvar cabins-os-win (memq system-type '(ms-dos windows-nt cygwin)))
 (defvar cabins-os-mac (eq system-type 'darwin))
-(defvar cabins-fonts-default '("Courier Prime" "Sometype Mono" "Cascadia Code PL" "JetBrains Mono" "Menlo" "Consolas"))
+(defvar cabins-fonts-default '("Roboto Mono" "Jetbrains Mono" "Courier Prime" "Cascadia Code PL" "Menlo" "Consolas"))
 (defvar cabins-fonts-unicode '("Segoe UI Symbol" "Symbola" "Symbol"))
 (defvar cabins-fonts-emoji '("Apple Color Emoji" "Segoe UI Emoji" "Noto Color Emoji" "Noto Emoji"))
 (defvar cabins-fonts-cjk '("KaiTi" "STKaiTi" "WenQuanYi Micro Hei"))
@@ -61,18 +61,19 @@
 ;; Emacs builtin packages
 (setq-default auto-window-vscroll nil
 	      default-directory "~"
-	      mode-line-compact t
 	      help-window-select t
 	      initial-major-mode 'fundamental-mode
 	      inhibit-startup-screen t ; disable the startup screen splash
 	      isearch-allow-motion t
 	      isearch-lazy-count t
+	      kill-whole-line t
+	      mode-line-compact t
 	      make-backup-files nil	; disable backup file
 	      read-process-output-max (* 4 1024 1024)
+	      require-final-newline t
 	      scroll-conservatively 1000
+	      show-trailing-whitespace t
 	      use-short-answers t)
-
-(add-hook 'after-init-hook 'pixel-scroll-precision-mode)
 
 ;; auto revert
 ;; `global-auto-revert-mode' is provided by autorevert.el (builtin)
