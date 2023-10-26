@@ -73,6 +73,7 @@
 	      require-final-newline t
 	      scroll-conservatively 1000
 	      show-trailing-whitespace t
+	      system-time-locale "C"
 	      use-short-answers t)
 
 ;; auto revert
@@ -85,6 +86,9 @@
 ;; Delete Behavior
 ;; `delete-selection-mode' is provided by delsel.el (builtin)
 (add-hook 'after-init-hook 'delete-selection-mode)
+
+;; visual-line-mode
+(add-hook 'after-init-hook 'global-visual-line-mode)
 
 ;; fido-mode
 ;; `fido-mode' is provided by icomplete.el
