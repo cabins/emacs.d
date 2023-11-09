@@ -9,7 +9,7 @@
 
 (defvar cabins-os-win (memq system-type '(ms-dos windows-nt cygwin)))
 (defvar cabins-os-mac (eq system-type 'darwin))
-(defvar cabins-fonts-default '("Roboto Mono" "Jetbrains Mono" "Courier Prime" "Cascadia Code PL" "Menlo" "Consolas"))
+(defvar cabins-fonts-default '("Courier Prime" "Jetbrains Mono" "Roboto Mono" "Cascadia Code PL" "Menlo" "Consolas"))
 (defvar cabins-fonts-unicode '("Segoe UI Symbol" "Symbola" "Symbol"))
 (defvar cabins-fonts-emoji '("Apple Color Emoji" "Segoe UI Emoji" "Noto Color Emoji" "Noto Emoji"))
 (defvar cabins-fonts-cjk '("KaiTi" "STKaiTi" "WenQuanYi Micro Hei"))
@@ -95,15 +95,6 @@
 (use-package icomplete
   :hook (after-init . fido-vertical-mode)
   :config (setq completions-detailed t))
-
-;; Flyspell
-;; to use this package, you may install 'aspell' and dict by manual
-;; for example, "pacman -S aspell" on archlinux
-;; and "pacman -S pacman -S mingw64/mingw-w64-x86_64-aspell{,-en}" on msys2 (Windows)
-;; for performance issue, do NOT use on Windows
-(use-package flyspell
-  :unless cabins-os-win
-  :hook (prog-mode . flyspell-prog-mode))
 
 ;; Highlight Current Line
 (use-package hl-line
