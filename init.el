@@ -51,6 +51,8 @@
 
 ;; packages
 (add-to-list 'load-path (concat user-emacs-directory "lisp"))
+(require 'init-functions)
+
 (use-package package
   :hook after-init-hook
   :config
