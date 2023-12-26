@@ -236,10 +236,13 @@
 
 ;; Language Server (eglot - builtin since v29)
 (use-package eglot
-  :hook (prog-mode . eglot-ensure)
   :bind ("C-c e f" . eglot-format)
-  :config
-  (advice-add 'eglot-code-action-organize-imports :before #'eglot-format))
+  :init
+  (advice-add 'eglot-code-action-organize-imports :before #'eglot-format-buffer)
+  (add-hook 'eglot-connect-hook (lambda () (add-hook 'before-save-hook 'eglot-format-buffer)))
+  (add-hook 'prog-mode-hook
+	    (lambda () (unless (member major-mode '(emacs-lisp-mode))
+		     (eglot-ensure)))))
 
 (use-package treesit
   :when (and (fboundp 'treesit-available-p) (treesit-available-p))
