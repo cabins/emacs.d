@@ -1,18 +1,16 @@
 ;;; init.el --- the entry of emacs config -*- lexical-binding: t -*-
 ;; Author: Cabins
 ;; Github: https://github.com/cabins-emacs.d
-
 ;;; Commentary:
 ;; (c) Cabins Kong, 2022-
-
 ;;; Code:
 
 (defvar cabins-os-win (memq system-type '(ms-dos windows-nt cygwin)))
 (defvar cabins-os-mac (eq system-type 'darwin))
-(defvar cabins-fonts-default '("Courier Prime" "Jetbrains Mono" "Roboto Mono" "Cascadia Code PL" "Menlo" "Consolas"))
+(defvar cabins-fonts-default '("Cascadia Code PL" "Courier Prime" "Jetbrains Mono" "Roboto Mono" "Menlo" "Consolas"))
 (defvar cabins-fonts-unicode '("Segoe UI Symbol" "Symbola" "Symbol"))
 (defvar cabins-fonts-emoji '("Apple Color Emoji" "Segoe UI Emoji" "Noto Color Emoji" "Noto Emoji"))
-(defvar cabins-fonts-cjk '("KaiTi" "STKaiTi" "WenQuanYi Micro Hei"))
+(defvar cabins-fonts-cjk '("WeRead Font" "KaiTi" "STKaiTi" "WenQuanYi Micro Hei"))
 
 ;;;###autoload
 (defun cabins-find-font (custom-fonts default-fonts)
@@ -63,6 +61,8 @@
 ;; Emacs builtin packages
 (setq-default auto-window-vscroll nil
 	      default-directory "~"
+	      default-text-properties '(line-spacing 0.2 line-height 1.2) ;default line height
+	      frame-title-format "%b"
 	      help-window-select t
 	      initial-major-mode 'fundamental-mode
 	      inhibit-startup-screen t ; disable the startup screen splash
@@ -92,10 +92,13 @@
 ;; visual-line-mode
 (add-hook 'after-init-hook 'global-visual-line-mode)
 
+;; pixel-scroll-precise-mode
+(add-hook 'after-init-hook 'pixel-scroll-precision-mode)
+
 ;; fido-mode
 ;; `fido-mode' is provided by icomplete.el
 (use-package icomplete
-  :hook (after-init . fido-vertical-mode)
+  :hook (after-init . fido-mode)
   :config (setq completions-detailed t))
 
 ;; Highlight Current Line
@@ -160,8 +163,8 @@
 ;; great for programmers
 (use-package format-all :ensure t
   ;; enable format on save with format-all-mode
-  :hook ((prog-mode . format-all-mode)
-	 (format-all-mode . format-all-ensure-formatter))
+  ;; :hook ((prog-mode . format-all-mode)
+  ;; 	   (format-all-mode . format-all-ensure-formatter))
   ;; and bind a shortcut to manual format
   :bind ("C-c f" . #'format-all-region-or-buffer))
 
@@ -239,10 +242,10 @@
   :bind ("C-c e f" . eglot-format)
   :init
   (advice-add 'eglot-code-action-organize-imports :before #'eglot-format-buffer)
-  (add-hook 'eglot-connect-hook (lambda () (add-hook 'before-save-hook 'eglot-format-buffer)))
+  (add-hook 'eglot-managed-mode-hook (lambda () (add-hook 'before-save-hook #'eglot-format-buffer)))
   (add-hook 'prog-mode-hook
 	    (lambda () (unless (member major-mode '(emacs-lisp-mode))
-		     (eglot-ensure)))))
+			 (eglot-ensure)))))
 
 (use-package treesit
   :when (and (fboundp 'treesit-available-p) (treesit-available-p))
