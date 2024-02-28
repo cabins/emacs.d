@@ -5,7 +5,7 @@
 ;;; Code:
 
 (require 'quail)
-(quail-define-package "chinese-wb98" "Chinese-GB" "〔五〕" t
+(quail-define-package "chinese-wb98" "Chinese-GB" "(WB98)" t
                       "98五笔输入法"
                       '((" " . quail-select-current)
                         (";" . (lambda () (interactive)(quail-next-translation)(quail-select-current))))
