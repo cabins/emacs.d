@@ -5,10 +5,9 @@
 ;;; Code:
 
 (require 'quail)
-(quail-define-package "chinese-flypy" "Chinese-GB" "〔鹤〕" t
+(quail-define-package "chinese-flypy" "Chinese-GB" "鹤" t
                       "小鹤音形输入法"
-                      '((" " . quail-select-current)
-                        (";" . (lambda () (interactive)(quail-next-translation)(quail-select-current))))
+                      '((" " . quail-select-current))
                       t nil nil nil)
 
 
@@ -57538,6 +57537,7 @@
  ("(" "（")
  (")" "）")
  ("`" "·")
+ (";" "；")
  )
 
 ;; use flypy as default
