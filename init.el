@@ -15,8 +15,8 @@
 (require 'init-functions)
 
 (use-package package
-  :hook after-init-hook
   :config
+  (setq package-quickstart t)
   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
   (unless (bound-and-true-p package--initialized)
     (package-initialize)))
@@ -101,6 +101,10 @@
 (use-package windmove
   :config (windmove-default-keybindings))
 
+;; Settings for which-key - suggest next key, Builtin package now
+(use-package which-key
+  :hook (after-init . which-key-mode))
+
 ;; Third part packages
 ;; make use-package default behavior better
 ;; with `use-package-always-ensure' you won't need ":ensure t" all the time
@@ -140,10 +144,6 @@
 (use-package move-dup
   :ensure t
   :hook (after-init . global-move-dup-mode))
-
-;; Settings for which-key - suggest next key
-(use-package which-key :ensure t
-  :hook (after-init . which-key-mode))
 
 ;;Configs for OS
 ;; Special configs for MS-Windows
