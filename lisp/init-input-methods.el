@@ -3,10 +3,10 @@
 ;;; Code:
 
 ;; 小鹤音形输入法
-(require 'init-chinese-flypy)
+(use-package init-chinese-flypy)
 
 ;; 98五笔输入法
-(require 'init-chinese-wb98)
+(use-package init-chinese-wb98)
 
 (provide 'init-input-methods)
 

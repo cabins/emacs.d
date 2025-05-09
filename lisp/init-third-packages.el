@@ -2,6 +2,10 @@
 ;;; Commentary:
 ;;; Code:
 
+;; benchmark-init
+(use-package benchmark-init
+  :ensure t
+  :config (add-hook 'after-init-hook 'benchmark-init/deactivate))
 
 ;; Settings for company, auto-complete only for coding.
 (use-package company
@@ -38,7 +42,10 @@
 
 ;; Markdown file support
 (use-package markdown-mode
-  :ensure t)
+  :ensure t
+  :mode (("README\\.md\\'" . gfm-mode)
+	 ("\\.md\\'" . markdown-mode)
+	 ("\\markdown\\'" . markdown-mode)))
 
 ;; Protobuf file support
 (use-package protobuf-mode

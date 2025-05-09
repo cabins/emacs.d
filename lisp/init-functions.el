@@ -40,6 +40,14 @@
   (interactive)
   (find-file custom-file))
 
+;;;###autoload
+(defun input-chinese-methods()
+  "Enable the Chinese input methods"
+
+  (interactive)
+  (require 'init-input-methods)
+  (toggle-input-method))
+
 (provide 'init-functions)
 
 ;;; init-functions.el ends here
