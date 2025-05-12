@@ -21,10 +21,9 @@
   (set-selection-coding-system 'utf-8))
 
 ;; core package settings
-(use-package package
-  :config
-  (setq package-quickstart t)
-  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/")))
+(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+			 ("melpa" . "https://melpa.org/packages/")
+			 ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
 
 ;; make use-package default behavior better
 ;; with `use-package-always-ensure' you won't need ":ensure t" all the time

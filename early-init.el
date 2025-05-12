@@ -8,10 +8,12 @@
 
 ;; For speed up the startup, please do NOT forget reset it to default
 ;; after Emacs after-init-hook, or it may cause freezes.
-(setq gc-cons-threshold most-positive-fixnum)
+(setq gc-cons-threshold most-positive-fixnum
+      gc-cons-percentage 0.5)
 (add-hook 'emacs-startup-hook
 	  (lambda ()
-	    (setq gc-cons-threshold 800000)))
+	    (setq gc-cons-threshold (* 8 100 100)
+		  gc-cons-percentage 0.1)))
 
 ;; Prevent unwanted runtime compilation for native-comp users
 ;; (setq inhibit-automatic-native-compilation t)
@@ -19,7 +21,7 @@
 ;; Package initialize occurs automatically, before `user-init-file' is loaded
 ;; but after `early-init-file'. If you want to handle package initialization,
 ;; you can prevent Emacs from doing it early by uncomment next line!
-;; (setq package-enable-at-startup nil)
+(setq package-enable-at-startup t)
 
 ;; Clean GUI
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
