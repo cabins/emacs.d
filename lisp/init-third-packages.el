@@ -10,7 +10,10 @@
 ;; Settings for company, auto-complete only for coding.
 (use-package company
   :ensure t
-  :hook (prog-mode . company-mode))
+  :hook (prog-mode . company-mode)
+  :config (setq company-show-quick-access 'left
+		company-minimum-prefix-length 1
+		company-format-margin-function nil))
 
 ;; Settings for exec-path-from-shell
 ;; fix the PATH environment variable issue
