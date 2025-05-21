@@ -58,7 +58,8 @@
 ;; Run code
 (use-package quickrun
   :ensure t
-  :when (derived-mode-p 'prog-mode))
+  :commands (quickrun quickrun-region))
+  ;;:when (derived-mode-p 'prog-mode))
 
 ;; HTTP Request
 (use-package restclient

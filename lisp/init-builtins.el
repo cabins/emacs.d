@@ -71,7 +71,7 @@
 
 ;; visual-line-mode
 (use-package simple
-  :hook (after-init . global-visual-line-mode))
+  :hook (prog-mode . visual-line-mode))
 
 ;; pixel-scroll-precise-mode
 (use-package pixel-scroll
