@@ -28,9 +28,10 @@
 ;; great for programmers
 (use-package format-all :ensure t
   ;; enable format on save with format-all-mode
-  ;; :hook ((prog-mode . format-all-mode)
+  :hook ((prog-mode . format-all-mode))
   ;; 	   (format-all-mode . format-all-ensure-formatter))
   ;; and bind a shortcut to manual format
+  :commands (format-all-buffer format-all-region-or-buffer format-all-mode)
   :bind ("C-c f" . #'format-all-region-or-buffer))
 
 ;; iedit - edit same text in one buffer or region
