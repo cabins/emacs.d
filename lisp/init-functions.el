@@ -48,6 +48,14 @@
   (require 'init-input-methods)
   (toggle-input-method))
 
+;;;###autoload
+(defun treesit-install-language-grammar-all()
+  "Install all treesit language grammar"
+
+  (interactive)
+  (dolist (lang '(bash c go gomod html java javascript json markdown python rust typescript yaml))
+    (treesit-install-language-grammar lang)))
+
 (provide 'init-functions)
 
 ;;; init-functions.el ends here
