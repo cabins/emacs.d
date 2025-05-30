@@ -9,8 +9,9 @@
 (defvar cabins-os-mac (eq system-type 'darwin))
 
 ;; font settings
-(when (find-font (font-spec :family "Sarasa Mono SC"))
-  (set-face-attribute 'default nil :family "Sarasa Mono SC"))
+(defvar font-name "Maple Mono Normal NF CN")
+(when (find-font (font-spec :family font-name))
+  (set-face-attribute 'default nil :family font-name))
 
 ;; pre-settings
 (add-to-list 'load-path (concat user-emacs-directory "lisp"))
