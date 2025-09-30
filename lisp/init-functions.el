@@ -32,6 +32,7 @@
 
   (interactive)
   (find-file user-init-file))
+(global-set-key (kbd "C-,") 'preferences)
 
 ;;;###autoload
 (defun preference-custom()

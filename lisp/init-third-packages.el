@@ -13,6 +13,7 @@
   :hook (prog-mode . company-mode)
   :config (setq company-show-quick-access 'left
 		company-minimum-prefix-length 1
+		company-idle-delay 0.1
 		company-format-margin-function nil))
 
 ;; Settings for exec-path-from-shell

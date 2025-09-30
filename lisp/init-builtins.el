@@ -25,6 +25,16 @@
 			 ("melpa" . "https://melpa.org/packages/")
 			 ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
 
+;; the basic usage for `use-package'
+;; (use-package package-name
+;;   :ensure t       ; package will be installed automatically, if the package is not installed
+;;   :init (code)    ; execute before package loading
+;;   :config (code)  ; execute after package loading
+;;   :bind (keybindings)
+;;   :hook (hooks)
+;;   :defer t        ; defer loading, until needed (speep up)
+;; )
+
 ;; make use-package default behavior better
 ;; with `use-package-always-ensure' you won't need ":ensure t" all the time
 ;; with `use-package-always-defer' you won't need ":defer t" all the time
