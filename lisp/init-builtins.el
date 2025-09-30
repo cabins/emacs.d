@@ -1,4 +1,4 @@
-;;; init-builtins --- settings for builtins
+;;; init-builtins --- settings for builtins  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 

@@ -9,7 +9,7 @@
 (defvar cabins-os-mac (eq system-type 'darwin))
 
 ;; font settings
-(defvar font-name "Maple Mono Normal NF CN")
+(defvar font-name "Maple Mono NF CN")
 (when (find-font (font-spec :family font-name))
   (set-face-attribute 'default nil :family font-name))
 

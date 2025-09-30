@@ -1,4 +1,4 @@
-;;; init-third-packages --- settings for third-party packages (sorted by package names)
+;;; init-third-packages --- settings for third-party packages (sorted by package names)  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 

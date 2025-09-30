@@ -1,4 +1,4 @@
-;;; init-functions.el --- provides some useful functions.
+;;; init-functions.el --- provides some useful functions.  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 
