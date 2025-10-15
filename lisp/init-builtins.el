@@ -3,11 +3,11 @@
 ;;; Code:
 
 ;; os & coding settings
-(when (and cabins-os-win
-	   (boundp 'w32-get-true-file-attributes))
-  (setq w32-get-true-file-attributes nil
-	w32-pipe-read-delay 0
-	w32-pipe-buffer-size (* 64 1024)))
+(with-eval-after-load 'w32-win
+  (when cabins-os-win
+    (setq w32-get-true-file-attributes nil
+          w32-pipe-read-delay 0
+          w32-pipe-buffer-size (* 64 1024))))
 
 (when cabins-os-mac
   (setq mac-command-modifier 'meta
@@ -103,11 +103,9 @@
 
 ;; Org Mode
 (use-package org
-  :hook (org-mode . org-num-mode)
   :config
-  (setq org-hide-leading-stars t
-	org-hide-emphasis-markers t
-	org-startup-indented t))
+  (setq org-startup-indented t
+	org-modules-loaded t))
 
 ;; Pulse the cursor line
 (dolist (cmd '(recenter-top-bottom other-window))
@@ -135,12 +133,17 @@
   :hook (after-init . which-key-mode))
 
 ;; programming language hooks
-(add-hook 'prog-mode-hook (lambda () (setq-local column-number-mode t)))
-(add-hook 'prog-mode-hook 'display-line-numbers-mode)
-(add-hook 'prog-mode-hook 'electric-pair-mode)
-(add-hook 'prog-mode-hook 'hs-minor-mode)
-(add-hook 'prog-mode-hook 'prettify-symbols-mode)
-(add-hook 'prog-mode-hook 'which-function-mode)
+(defun my/prog-mode-common-setup ()
+  "通用编程模式设置，包括显示列号、行号和启用次模式等."
+  (setq-local column-number-mode t)
+  (display-line-numbers-mode 1)
+  (electric-pair-mode 1)
+  (hs-minor-mode 1)
+  (prettify-symbols-mode 1)
+  (which-function-mode 1))
+
+(use-package prog-mode
+  :hook ((prog-mode . my/prog-mode-common-setup)))
 
 ;; Flymake
 (use-package flymake
@@ -151,68 +154,11 @@
 
 ;; Language Server (eglot - builtin since v29)
 (use-package eglot
-  :bind ("C-c e f" . eglot-format)
-  :init
-  (advice-add 'eglot-code-action-organize-imports :before #'eglot-format-buffer)
-  (add-hook 'eglot-managed-mode-hook (lambda () (add-hook 'before-save-hook #'eglot-format-buffer)))
-  (add-hook 'prog-mode-hook
-	    (lambda () (unless (member major-mode '(emacs-lisp-mode))
-			 (eglot-ensure)))))
-
-(use-package treesit
-  :when (and (fboundp 'treesit-available-p) (treesit-available-p))
-  :mode (("\\(?:Dockerfile\\(?:\\..*\\)?\\|\\.[Dd]ockerfile\\)\\'" . dockerfile-ts-mode)
-	 ("\\.go\\'" . go-ts-mode)
-	 ("/go\\.mod\\'" . go-mod-ts-mode)
-	 ("\\.rs\\'" . rust-ts-mode)
-	 ("\\.ts\\'" . typescript-ts-mode)
-	 ("\\.y[a]?ml\\'" . yaml-ts-mode))
-  :config (setq treesit-font-lock-level 4)
-  :init
-  (setq major-mode-remap-alist
-	'((sh-mode         . bash-ts-mode)
-	  (c-mode          . c-ts-mode)
-	  (c++-mode        . c++-ts-mode)
-	  (c-or-c++-mode   . c-or-c++-ts-mode)
-	  (css-mode        . css-ts-mode)
-	  (js-mode         . js-ts-mode)
-	  (java-mode       . java-ts-mode)
-	  (js-json-mode    . json-ts-mode)
-	  (makefile-mode   . cmake-ts-mode)
-	  (python-mode     . python-ts-mode)
-	  (ruby-mode       . ruby-ts-mode)
-	  (conf-toml-mode  . toml-ts-mode)))
-  (setq treesit-language-source-alist
-	'((bash       . ("https://github.com/tree-sitter/tree-sitter-bash"))
-	  (c          . ("https://github.com/tree-sitter/tree-sitter-c"))
-	  (cpp        . ("https://github.com/tree-sitter/tree-sitter-cpp"))
-	  (css        . ("https://github.com/tree-sitter/tree-sitter-css"))
-	  (cmake      . ("https://github.com/uyha/tree-sitter-cmake"))
-	  (csharp     . ("https://github.com/tree-sitter/tree-sitter-c-sharp.git"))
-	  (dockerfile . ("https://github.com/camdencheek/tree-sitter-dockerfile"))
-	  (elisp      . ("https://github.com/Wilfred/tree-sitter-elisp"))
-	  (go         . ("https://github.com/tree-sitter/tree-sitter-go"))
-	  (gomod      . ("https://github.com/camdencheek/tree-sitter-go-mod.git"))
-	  (html       . ("https://github.com/tree-sitter/tree-sitter-html"))
-	  (java       . ("https://github.com/tree-sitter/tree-sitter-java.git"))
-	  (javascript . ("https://github.com/tree-sitter/tree-sitter-javascript"))
-	  (json       . ("https://github.com/tree-sitter/tree-sitter-json"))
-	  (lua        . ("https://github.com/Azganoth/tree-sitter-lua"))
-	  (make       . ("https://github.com/alemuller/tree-sitter-make"))
-	  (markdown   . ("https://github.com/MDeiml/tree-sitter-markdown" nil "tree-sitter-markdown/src"))
-	  (ocaml      . ("https://github.com/tree-sitter/tree-sitter-ocaml" nil "ocaml/src"))
-	  (org        . ("https://github.com/milisims/tree-sitter-org"))
-	  (python     . ("https://github.com/tree-sitter/tree-sitter-python"))
-	  (php        . ("https://github.com/tree-sitter/tree-sitter-php"))
-	  (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" nil "typescript/src"))
-	  (tsx        . ("https://github.com/tree-sitter/tree-sitter-typescript" nil "tsx/src"))
-	  (ruby       . ("https://github.com/tree-sitter/tree-sitter-ruby"))
-	  (rust       . ("https://github.com/tree-sitter/tree-sitter-rust"))
-	  (sql        . ("https://github.com/m-novikov/tree-sitter-sql"))
-	  (vue        . ("https://github.com/merico-dev/tree-sitter-vue"))
-	  (yaml       . ("https://github.com/ikatyang/tree-sitter-yaml"))
-	  (toml       . ("https://github.com/tree-sitter/tree-sitter-toml"))
-	  (zig        . ("https://github.com/GrayJack/tree-sitter-zig")))))
+  :bind (:map eglot-mode-map ("C-c e f" . eglot-format-buffer))
+  :custom
+  (eglot-autoshutdown t)
+  (eglot-send-changes-idle-time 0.1)
+  :hook (prog-mode . eglot-ensure))
 
 (provide 'init-builtins)
 

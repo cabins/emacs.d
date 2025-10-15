@@ -29,8 +29,8 @@
 ;; great for programmers
 (use-package format-all :ensure t
   ;; enable format on save with format-all-mode
-  :hook ((prog-mode . format-all-mode))
-  ;; 	   (format-all-mode . format-all-ensure-formatter))
+  :hook ((prog-mode . format-all-mode)
+	 (format-all-mode . format-all-ensure-formatter))
   ;; and bind a shortcut to manual format
   :commands (format-all-buffer format-all-region-or-buffer format-all-mode)
   :bind ("C-c f" . #'format-all-region-or-buffer))
@@ -61,13 +61,20 @@
 (use-package quickrun
   :ensure t
   :commands (quickrun quickrun-region))
-  ;;:when (derived-mode-p 'prog-mode))
+;;:when (derived-mode-p 'prog-mode))
 
 ;; HTTP Request
 (use-package restclient
   :ensure t
   :mode (("\\.http\\'" . restclient-mode)))
 
+;; treesit-auto, solve treesit issues
+(use-package treesit-auto
+  :ensure t
+  :custom (treesit-auto-install 'prompt)
+  :config
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode))
 
 (provide 'init-third-packages)
 

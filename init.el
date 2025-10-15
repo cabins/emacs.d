@@ -1,7 +1,7 @@
 ;;; init.el --- the entry of emacs config -*- lexical-binding: t -*-
 ;; Author: Cabins
 ;; Github: https://github.com/cabins-emacs.d
-;;; Commentary: (c) Cabins Kong, 2022-
+;;; Commentary: (c) Cabins Kong, 2022-Present
 ;;; Code:
 
 ;; variables definition
@@ -14,7 +14,7 @@
   (set-face-attribute 'default nil :family font-name))
 
 ;; pre-settings
-(add-to-list 'load-path (concat user-emacs-directory "lisp"))
+(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
 ;; customized functions
 (require 'init-functions)
@@ -28,7 +28,7 @@
 ;; custom file settings
 (setq custom-file (locate-user-emacs-file "custom.el"))
 (when (file-exists-p custom-file)
-  (load custom-file))
+  (load custom-file nil))
 
 (provide 'init)
 
