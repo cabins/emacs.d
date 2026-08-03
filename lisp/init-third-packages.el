@@ -27,10 +27,10 @@
 
 ;; format all, formatter for almost languages
 ;; great for programmers
-(use-package format-all :ensure t
+(use-package format-all
+  :ensure t
   ;; enable format on save with format-all-mode
-  :hook ((prog-mode . format-all-mode)
-	 (format-all-mode . format-all-ensure-formatter))
+  :hook (prog-mode . format-all-mode)
   ;; and bind a shortcut to manual format
   :commands (format-all-buffer format-all-region-or-buffer format-all-mode)
   :bind ("C-c f" . #'format-all-region-or-buffer))
@@ -44,13 +44,6 @@
 (use-package move-dup
   :ensure t
   :hook (after-init . global-move-dup-mode))
-
-;; Markdown file support
-(use-package markdown-mode
-  :ensure t
-  :mode (("README\\.md\\'" . gfm-mode)
-	 ("\\.md\\'" . markdown-mode)
-	 ("\\markdown\\'" . markdown-mode)))
 
 ;; Protobuf file support
 (use-package protobuf-mode
@@ -67,14 +60,6 @@
 (use-package restclient
   :ensure t
   :mode (("\\.http\\'" . restclient-mode)))
-
-;; treesit-auto, solve treesit issues
-(use-package treesit-auto
-  :ensure t
-  :custom (treesit-auto-install 'prompt)
-  :config
-  (treesit-auto-add-to-auto-mode-alist 'all)
-  (global-treesit-auto-mode))
 
 (provide 'init-third-packages)
 

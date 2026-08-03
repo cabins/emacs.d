@@ -12,7 +12,7 @@ More details can be found from wiki([wiki](https://github.com/cabins/emacs.d/wik
 
 1. Works on Windows & macOS & GNU/Linux & Android (By [termux](https://termux.com/))
 2. Lightweight (as possible as vanilla with built-in packages)
-3. Only latest version of Emacs (current is 29) is supported, old version config may be found in other branch
+3. Only latest version of Emacs (current is 31+) is supported, old version config may be found in other branch (v28, v30...)
 
 # Programming
 
@@ -35,3 +35,9 @@ git clone https://github.com/cabins/emacs.d ~/.emacs.d
 
 2. Launch Emacs, and wait the package installation.
 3. Enjoy the life.
+
+# Change Log since v31
+
+- treesit settings
+- markdown-ts-mode built-in
+- smarter, eager completion

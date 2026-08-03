@@ -10,22 +10,6 @@
 	   gcs-done))
 (add-hook 'emacs-startup-hook #'efs/display-startup-time)
 
-(defun dark-theme ()
-  "Activate dark theme."
-
-  (interactive)
-  (dolist (theme custom-enabled-themes)
-    (disable-theme theme))
-  (load-theme 'modus-vivendi t))
-
-(defun light-theme ()
-  "Activate light theme."
-
-  (interactive)
-  (dolist (theme custom-enabled-themes)
-    (disable-theme theme))
-  (load-theme 'modus-operandi t))
-
 ;;;###autoload
 (defun preferences()
   "Nothing, but alias like `crux-find-user-init-file', inspired by VSCode."
@@ -48,14 +32,6 @@
   (interactive)
   (require 'init-input-methods)
   (toggle-input-method))
-
-;;;###autoload
-(defun treesit-install-language-grammar-all()
-  "Install all treesit language grammar"
-
-  (interactive)
-  (dolist (lang '(bash c go gomod html java javascript json markdown python rust typescript yaml))
-    (treesit-install-language-grammar lang)))
 
 (provide 'init-functions)
 

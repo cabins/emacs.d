@@ -1,13 +1,13 @@
-;;; init-programming.el --- configurations for Programmers
+;;; init-programming.el --- configurations for Programmers -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 
-;;;;;;;;;;;;;;;;;;;;;;
-;; Rust Programming ;;
-;;;;;;;;;;;;;;;;;;;;;;
+;; Python
+(add-to-list 'eglot-server-programs
+             '((python-ts-mode python-mode) . ("uvx" "ty" "server")))
+
+;; Rust
 (use-package rust-mode :ensure t)
-
-
 
 (provide 'init-programming)
 

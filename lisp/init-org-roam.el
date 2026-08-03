@@ -1,4 +1,4 @@
-;;; init-org-roam --- org roam configurations
+;;; init-org-roam --- org roam configurations -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 

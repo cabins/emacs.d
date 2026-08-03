@@ -1,10 +1,10 @@
-;;; early-init.el --- Emacs 27 introduces early-init.el, which runs before init.el
+;;; early-init.el --- Emacs 27 introduces early-init.el, which runs before init.el  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;; Runs before package and UI initializetion happens.
 ;;; Code:
 
-(unless (>= emacs-major-version 29)
-  (error "ONLY EMACS v29+ IS SUPPORTED!"))
+(unless (>= emacs-major-version 31)
+  (error "ONLY EMACS v31+ IS SUPPORTED!"))
 
 ;; For speed up the startup, please do NOT forget reset it to default
 ;; after Emacs after-init-hook, or it may cause freezes.

@@ -1,4 +1,4 @@
-;;; init-input-methods --- Settings for Flypy & Wubi98 input method by Quail.
+;;; init-input-methods --- Settings for Flypy & Wubi98 input method by Quail. -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 
