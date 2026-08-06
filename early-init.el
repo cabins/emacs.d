@@ -18,19 +18,19 @@
 ;; Prevent unwanted runtime compilation for native-comp users
 ;; (setq inhibit-automatic-native-compilation t)
 
-;; Package initialize occurs automatically, before `user-init-file' is loaded
-;; but after `early-init-file'. If you want to handle package initialization,
-;; you can prevent Emacs from doing it early by uncomment next line!
-(setq package-enable-at-startup t)
+;; No third-party packages by design: skip package.el initialization.
+;; Set to t if you ever re-enable package management.
+(setq package-enable-at-startup nil)
 
 ;; Clean GUI
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+(load-theme 'modus-operandi t)
 
 (provide 'early-init)
 
 ;;; early-init.el ends here
 ;; Local Variables:
 ;; byte-compile-warnings: (not free-vars)
-;; END:
+;; End:

@@ -16,7 +16,7 @@ More details can be found from wiki([wiki](https://github.com/cabins/emacs.d/wik
 
 # Programming
 
-By [Eglot](https://github.com/joaotavora/eglot) (built-in since v29), you may use [lsp-mode](https://github.com/emacs-lsp/lsp-mode) as prefer by yourself.
+By [Eglot](https://github.com/joaotavora/eglot) (built-in since v29).
 
 All you need to do is `install the specific server and put it into the PATH environment variable`. The supported servers are listed in Eglot / lsp-mode repo.
 
@@ -33,7 +33,8 @@ As treesit is added as built-in package, some programming mode now is managed by
 git clone https://github.com/cabins/emacs.d ~/.emacs.d
 ```
 
-2. Launch Emacs, and wait the package installation.
+2. Launch Emacs. No package installation is needed: this config only uses
+   built-in packages (Emacs 31+).
 3. Enjoy the life.
 
 # Change Log since v31
@@ -41,3 +42,4 @@ git clone https://github.com/cabins/emacs.d ~/.emacs.d
 - treesit settings
 - markdown-ts-mode built-in
 - smarter, eager completion
+- dropped all third-party packages, pure builtin config
