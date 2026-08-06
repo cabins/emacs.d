@@ -2,93 +2,89 @@
 ;; Author: Cabins
 ;; Github: https://github.com/cabins-emacs.d
 ;;; Commentary:
-;; 纯内置配置，依赖 Emacs 31+，不安装任何第三方包。
+;; Built-in only configuration, requires Emacs 31+. No third-party packages installed.
 ;;; Code:
 
 ;;;===========================================================================
-;;; 平台检测
+;;; Fonts
 ;;;===========================================================================
 
-(defvar cabins-os-win (memq system-type '(ms-dos windows-nt cygwin))
-  "非 nil 表示当前运行在 Windows。")
+(defvar this/font-name "Maple Mono NF CN"
+  "The default font family for the Emacs frame.")
 
-(defvar cabins-os-mac (eq system-type 'darwin)
-  "非 nil 表示当前运行在 macOS。")
-
-;;;===========================================================================
-;;; 字体
-;;;===========================================================================
-
-(defvar my/font-name "Maple Mono NF CN"
-  "默认字体族。")
-
-;; 启动帧在读取 init.el 之前就已创建并带有显式 font 参数，
-;; 因此除 `set-face-attribute'（作用于后续帧）外，
-;; 还需 `set-frame-font' 刷新所有已存在的帧。
-(when (find-font (font-spec :family my/font-name))
-  (set-face-attribute 'default t :family my/font-name)
-  (set-frame-font my/font-name nil t))
+(when (find-font (font-spec :family this/font-name))
+  (set-face-attribute 'default t :family this/font-name)
+  (set-frame-font this/font-name t)
+)
 
 ;;;===========================================================================
-;;; 编码与环境
+;;; Environment & Encoding
 ;;;===========================================================================
 
-;; 统一 UTF-8，避免 Windows 中文粘贴乱码
+;; Use UTF-8 as the default coding system to prevent encoding issues
 (prefer-coding-system 'utf-8)
-(unless cabins-os-win
+
+;; selection coding system adjustments for non-Windows platforms
+(unless (memq system-type '(ms-dos windows-nt cygwin))
   (set-selection-coding-system 'utf-8))
 
-;; Windows 管道优化
-(with-eval-after-load 'w32-win
-  (when cabins-os-win
+;; Windows pipe and I/O optimizations for LSP/Eglot performance
+(when (memq system-type '(ms-dos windows-nt cygwin))
+  (with-suppressed-warnings ((free-vars w32-get-true-file-attributes
+                                        w32-pipe-read-delay
+                                        w32-pipe-buffer-size))
     (setq w32-get-true-file-attributes nil
           w32-pipe-read-delay 0
-          w32-pipe-buffer-size (* 64 1024))))
+          w32-pipe-buffer-size 65536
+          process-adaptive-read-buffering nil)))
 
-;; macOS 修饰键映射
-(with-suppressed-warnings ((free-vars mac-command-modifier
-                                      mac-option-modifier
-                                      ns-use-native-fullscreen))
-  (when cabins-os-mac
+;; macOS modifier keys and native fullscreen setup
+(when (eq system-type 'darwin)
+  (with-suppressed-warnings ((free-vars mac-command-modifier
+                                        mac-option-modifier
+                                        ns-use-native-fullscreen))
     (setq mac-command-modifier 'meta
           mac-option-modifier 'super
           ns-use-native-fullscreen t)))
 
 ;;;===========================================================================
-;;; 工具函数
+;;; Utility Functions & Global Hooks
 ;;;===========================================================================
 
-(defun my/display-startup-time ()
-  "回显启动耗时与垃圾回收次数。"
-  (message "Emacs 启动耗时 %.2f 秒（%d 次 GC）"
+(defun this/display-startup-time ()
+  "Display Emacs startup time and the number of garbage collections."
+  (message "Emacs started in %.2f seconds with %d GCs."
            (float-time (time-since before-init-time))
            gcs-done))
-(add-hook 'emacs-startup-hook #'my/display-startup-time)
+(add-hook 'emacs-startup-hook #'this/display-startup-time)
 
-(defun my/prog-mode-common-setup ()
-  "编程模式通用设置：行号、列号与常用次模式。"
+(defun this/prog-mode-common-setup ()
+  "Local configurations applied to all programming modes."
   (setq-local column-number-mode t)
   (display-line-numbers-mode 1)
-  (electric-pair-mode 1)
   (hl-line-mode 1)
   (hs-minor-mode 1)
-  (visual-line-mode 1)
-  (which-function-mode 1))
+  (visual-line-mode 1))
 
-(defun my/open-init-file ()
-  "打开配置文件 init.el。"
+(defun this/open-init-file ()
+  "Open the user initialization file (init.el) interactively."
   (interactive)
   (find-file user-init-file))
 
-(defun my/open-custom-file ()
-  "打开定制文件 custom.el。"
+(defun this/open-custom-file ()
+  "Open the customization storage file (custom.el) interactively."
   (interactive)
   (find-file custom-file))
 
-(global-set-key (kbd "C-,") #'my/open-init-file)
+;; Bind init file opening shortcut
+(global-set-key (kbd "C-,") #'this/open-init-file)
+
+;; Enable global minor modes
+(electric-pair-mode 1)
+(which-function-mode 1)
 
 ;;;===========================================================================
-;;; 全局默认值
+;;; Global Defaults
 ;;;===========================================================================
 
 (setq-default auto-window-vscroll nil
@@ -96,25 +92,25 @@
               default-text-properties '(line-spacing 0.2 line-height 1.2)
               frame-title-format "%b"
               help-window-select t
-	      initial-major-mode 'text-mode
+              initial-major-mode 'text-mode
               kill-whole-line t
               mode-line-compact t
-              make-backup-files nil              ; 不生成备份文件
-              read-process-output-max (* 4 1024 1024)
+              make-backup-files nil
+              read-process-output-max 4194304 ; Pre-calculated (* 4 1024 1024) for optimal LSP data transfer
               require-final-newline t
               scroll-conservatively 1000
               show-trailing-whitespace t
               system-time-locale "C"
-	      treesit-enabled-modes t
+              treesit-enabled-modes t
               use-short-answers t)
 
-;; use-package 默认行为更友好
+;; Configure use-package default behaviors
 (require 'use-package)
 (setq use-package-enable-imenu-support t
       use-package-expand-minimally t)
 
 ;;;===========================================================================
-;;; 内置包配置
+;;; Built-in Package Configurations (via use-package)
 ;;;===========================================================================
 
 (use-package autorevert
@@ -123,43 +119,54 @@
 (use-package delsel
   :hook (after-init . delete-selection-mode))
 
-;; 语言服务（Emacs 29+ 内置），依赖 markdown-ts-mode 渲染文档
 (use-package eglot
-  :bind (:map eglot-mode-map ("C-c e f" . eglot-format-buffer))
-  :preface
-  (defvar my/eglot-ignored-modes
-    '(emacs-lisp-mode        ; Elisp 编程模式
-      lisp-interaction-mode  ; Elisp 交互模式（如 *scratch* 缓冲）
-      )
-    "不自动启用 Eglot 的主模式列表。")
+  :ensure nil ; Eglot is natively built-in since Emacs 29+
 
-  (defun my/eglot-ensure-unless-ignored ()
-    "如果当前模式不在黑名单中，则自动启用 Eglot。"
-    (unless (or (minibufferp)
-                (member major-mode my/eglot-ignored-modes))
-      (eglot-ensure)))
+  :bind (:map eglot-mode-map
+              ("C-c e f" . eglot-format-buffer)   ; Format code via LSP
+              ("C-c e r" . eglot-rename)          ; Rename symbols project-wide
+              ("C-c e a" . eglot-code-actions))   ; Trigger quick-fixes/actions
 
   :hook
-  (prog-mode . my/eglot-ensure-unless-ignored)
-  :config
-  (setq eglot-events-buffer-size 0) ; 禁用事件日志以提升性能（可选）
+  ;; Target ONLY your requested 5 core languages (Supports both standard & modern Tree-sitter modes)
+  ((c-mode-common-hook      . eglot-ensure) ; C/C++
+   (c-ts-mode-hook          . eglot-ensure)
+   (c++-ts-mode-hook        . eglot-ensure)
+   (go-mode-hook            . eglot-ensure) ; Go
+   (go-ts-mode-hook         . eglot-ensure)
+   (python-mode-hook        . eglot-ensure) ; Python
+   (python-ts-mode-hook     . eglot-ensure)
+   (rust-mode-hook          . eglot-ensure) ; Rust
+   (rust-ts-mode-hook       . eglot-ensure)
+   (js-mode-hook            . eglot-ensure) ; JavaScript / TypeScript
+   (js-ts-mode-hook         . eglot-ensure)
+   (typescript-mode-hook    . eglot-ensure)
+   (typescript-ts-mode-hook . eglot-ensure)
+   (tsx-ts-mode-hook        . eglot-ensure))
+
   :custom
-  (eglot-autoshutdown t)
-  (eglot-send-changes-idle-time 0.1)
-  (eglot-documentation-renderer 'markdown-ts-view-mode)
-  (eglot-code-action-indications nil)
+  ;; --- Performance Adjustments ---
+  (eglot-events-buffer-size 0)             ; Disable event logs completely to avoid massive memory leaks
+  (eglot-send-changes-idle-time 0.15)      ; Optimize buffer sync intervals for snappy completion (default 0.5)
+  (eglot-connect-timeout 15)               ; Fast fallback timeout for lagging or crashed servers
+
+  ;; --- User Experience & UI Cleanliness ---
+  (eglot-sync-connect nil)                 ; CONNECT ASYNCHRONOUSLY. Never block Emacs UI on project load!
+  (eglot-autoshutdown t)                   ; Automatically kill LSP processes when the last project buffer closes
+  (eglot-code-action-indications nil)     ; Suppress distracting visual noises/margins for code actions
+  (eglot-report-progress nil)              ; Kill mode-line flickering spinners during long background compilations
+  (eglot-documentation-renderer 'markdown-ts-view-mode) ; Render rich markdown docs cleanly using tree-sitter
   )
+
 
 (use-package files
   :hook (after-init . auto-save-visited-mode))
 
-;; 编译/语法错误导航
 (use-package flymake
   :hook (prog-mode . flymake-mode)
   :bind (("M-n" . #'flymake-goto-next-error)
          ("M-p" . #'flymake-goto-prev-error)))
 
-;; 补全 UI（fido 垂直菜单）
 (use-package icomplete
   :hook (after-init . fido-vertical-mode)
   :custom
@@ -194,36 +201,32 @@
 (use-package pixel-scroll
   :hook (after-init . pixel-scroll-precision-mode))
 
-;; 编程模式通用设置
 (use-package prog-mode
-  :hook (prog-mode . my/prog-mode-common-setup))
+  :hook (prog-mode . this/prog-mode-common-setup))
 
-;; 最近打开文件
 (use-package recentf
   :hook (after-init . recentf-mode)
   :bind (("C-c r" . #'recentf-open)))
 
-;; 窗口切换（SHIFT + 方向键）
 (use-package windmove
   :config (windmove-default-keybindings))
 
-;; 按键提示
 (use-package which-key
   :hook (after-init . which-key-mode))
 
 ;;;===========================================================================
-;;; 其它设置
+;;; UI Enhancements & Advices
 ;;;===========================================================================
 
-;; 用 ibuffer 替代默认 buffer 列表
+;; Substitute default buffer list with ibuffer
 (defalias 'list-buffers 'ibuffer)
 
-;; 重绘与切换窗口时高亮当前行
+;; Highlight the current line temporarily when recentering or switching windows
 (dolist (cmd '(recenter-top-bottom other-window))
   (advice-add cmd :after #'pulse-momentary-highlight-one-line))
 
 ;;;===========================================================================
-;;; custom 文件
+;;; Custom Storage Serialization
 ;;;===========================================================================
 
 (setq custom-file (locate-user-emacs-file "custom.el"))
