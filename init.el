@@ -61,10 +61,8 @@
 (defun this/prog-mode-common-setup ()
   "Local configurations applied to all programming modes."
   (setq-local column-number-mode t)
-  (display-line-numbers-mode 1)
   (hl-line-mode 1)
-  (hs-minor-mode 1)
-  (visual-line-mode 1))
+  (hs-minor-mode 1))
 
 (defun this/open-init-file ()
   "Open the user initialization file (init.el) interactively."
@@ -105,8 +103,14 @@
               use-short-answers t)
 
 ;; Configure use-package default behaviors
+(setq package-archives '(("gnu"    . "https://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+                         ("nongnu" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/nongnu/")
+                         ("melpa"  . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
+(package-initialize)
 (require 'use-package)
 (setq use-package-enable-imenu-support t
+      use-package-always-defer t
+      use-package-always-ensure nil
       use-package-expand-minimally t)
 
 ;;;===========================================================================
@@ -115,6 +119,10 @@
 
 (use-package autorevert
   :hook (after-init . global-auto-revert-mode))
+
+(use-package company
+  :ensure t
+  :hook (prog-mode . company-mode))
 
 (use-package delsel
   :hook (after-init . delete-selection-mode))
@@ -126,24 +134,21 @@
               ("C-c e f" . eglot-format-buffer)   ; Format code via LSP
               ("C-c e r" . eglot-rename)          ; Rename symbols project-wide
               ("C-c e a" . eglot-code-actions))   ; Trigger quick-fixes/actions
-
+  :config
+  (add-to-list 'eglot-server-programs
+	       `(python-base-mode . ("ty" "server")))
   :hook
   ;; Target ONLY your requested 5 core languages (Supports both standard & modern Tree-sitter modes)
-  ((c-mode-common-hook      . eglot-ensure) ; C/C++
-   (c-ts-mode-hook          . eglot-ensure)
-   (c++-ts-mode-hook        . eglot-ensure)
-   (go-mode-hook            . eglot-ensure) ; Go
-   (go-ts-mode-hook         . eglot-ensure)
-   (python-mode-hook        . eglot-ensure) ; Python
-   (python-ts-mode-hook     . eglot-ensure)
-   (rust-mode-hook          . eglot-ensure) ; Rust
-   (rust-ts-mode-hook       . eglot-ensure)
-   (js-mode-hook            . eglot-ensure) ; JavaScript / TypeScript
-   (js-ts-mode-hook         . eglot-ensure)
-   (typescript-mode-hook    . eglot-ensure)
-   (typescript-ts-mode-hook . eglot-ensure)
-   (tsx-ts-mode-hook        . eglot-ensure))
-
+  ((c-mode-common      . eglot-ensure) ; C/C++
+   (c-ts-mode          . eglot-ensure)
+   (c++-ts-mode        . eglot-ensure)
+   (go-mode            . eglot-ensure) ; Go
+   (go-ts-mode         . eglot-ensure)
+   (python-base-mode        . eglot-ensure) ; Python
+   (rust-mode          . eglot-ensure) ; Rust
+   (rust-ts-mode       . eglot-ensure)
+   (js-base-mode            . eglot-ensure) ; JavaScript / TypeScript
+   (typescript-ts-base-mode    . eglot-ensure))
   :custom
   ;; --- Performance Adjustments ---
   (eglot-events-buffer-size 0)             ; Disable event logs completely to avoid massive memory leaks
@@ -168,13 +173,11 @@
          ("M-p" . #'flymake-goto-prev-error)))
 
 (use-package icomplete
-  :hook (after-init . fido-vertical-mode)
+  :hook (after-init . fido-mode)
   :custom
   (completion-auto-select t)
   (completion-auto-help 'always)
-  (completions-detailed t)
-  (icomplete-vertical-in-buffer-adjust-list t)
-  (icomplete-vertical-render-prefix-indicator t))
+  (completions-detailed t))
 
 (use-package isearch
   :custom
