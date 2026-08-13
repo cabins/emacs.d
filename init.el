@@ -21,6 +21,11 @@
 ;; Force UTF-8 as the primary coding system across all operations.
 (prefer-coding-system 'utf-8)
 
+;;; File Associations
+
+;; Associate .vue files with built-in html-mode.
+(add-to-list 'auto-mode-alist '("\\.vue\\'" . html-mode))
+
 ;;; Utility Functions & Global Hooks
 
 ;; Display total startup time and garbage collection statistics in the minibuffer.
@@ -37,22 +42,28 @@
 
 ;;; Global Defaults Settings
 
-;; Configure general editor behaviors and defaults.
-(setq-default auto-window-vscroll nil
-              default-directory "~"
-              default-text-properties '(line-spacing 0.2 line-height 1.2)
+;; UI and Display preferences
+(setq-default default-text-properties '(line-spacing 0.2 line-height 1.2)
               frame-title-format "%b"
-              help-window-select t
+              mode-line-compact t
+              show-trailing-whitespace t)
+
+;; Editing behavior and interaction defaults
+(setq-default help-window-select t
               initial-major-mode 'text-mode
               kill-whole-line t
-              mode-line-compact t
-              make-backup-files nil
-              read-process-output-max 4194304
-              require-final-newline t
-              scroll-conservatively 1000
-              show-trailing-whitespace t
-              system-time-locale "C"
               use-short-answers t)
+
+;; Scrolling behavior and I/O buffer performance
+(setq-default auto-window-vscroll nil
+              read-process-output-max 4194304
+              scroll-conservatively 1000)
+
+;; Files, backup, and environment locale settings
+(setq-default default-directory "~"
+              make-backup-files nil
+              require-final-newline t
+              system-time-locale "C")
 
 ;; Configure minibuffer and tab completion behaviors.
 (setq tab-always-indent 'complete
@@ -80,7 +91,7 @@
               ("C-c e f" . eglot-format-buffer)
               ("C-c e r" . eglot-rename)
               ("C-c e a" . eglot-code-actions))
-  ;; 在编程模式（含各类 ts-mode）和 HTML 模式下自动尝试启动 Eglot
+  ;; 在编程模式（含各类 ts-mode）和 HTML 模式（含 .vue 文件）下自动尝试启动 Eglot
   :hook ((prog-mode . eglot-ensure)
          (html-mode . eglot-ensure))
   :custom
@@ -92,7 +103,13 @@
   (eglot-autoshutdown t)
   :config
   ;; 指定 Python 使用 ty server (python-base-mode 同时覆盖 python-mode 与 python-ts-mode)
-  (add-to-list 'eglot-server-programs '(python-base-mode "ty" "server")))
+  (add-to-list 'eglot-server-programs '(python-base-mode "ty" "server"))
+  ;; 配置 Vue 与 TS/JS 使用 vtsls（优先选择 vtsls，若未安装则降级回 vue-language-server）
+  (add-to-list 'eglot-server-programs
+               `((html-mode typescript-mode typescript-ts-mode js-mode js-ts-mode)
+                 . ,(eglot-alternatives
+                     '(("vtsls" "--stdio")
+                       ("vue-language-server" "--stdio"))))))
 
 ;; Automatically insert matching pairs of parentheses and brackets.
 (use-package elec-pair
