@@ -7,14 +7,30 @@
 
 ;;; Fonts Configuration
 
-;; Define and set the default font family for graphic frames.
+;; Global unified font family and default size (130 = 13pt).
 (defvar this/font-name "Maple Mono NF CN"
-  "The default font family for the Emacs frame.")
+  "The unified font family for all Emacs UI elements.")
 
-(when (and (display-graphic-p)
-           (find-font (font-spec :family this/font-name)))
-  (set-face-attribute 'default t :family this/font-name)
-  (set-frame-font this/font-name t))
+(defvar this/font-size 130
+  "The default font size in 1/10 pt.")
+
+(defun this/setup-fonts (&optional frame)
+  "Apply Maple Mono NF CN across all faces, character sets, and FRAME."
+  (with-selected-frame (or frame (selected-frame))
+    (when (and (display-graphic-p)
+               (find-font (font-spec :family this/font-name)))
+      ;; Set default face font and height
+      (set-face-attribute 'default nil :family this/font-name :height this/font-size)
+      ;; Force all character sets (including CJK and symbols) to use Maple Mono NF CN
+      (set-fontset-font t nil (font-spec :family this/font-name)))))
+
+;; Apply font configuration on startup and for future frames (e.g. emacsclient/daemon)
+(if (daemonp)
+    (add-hook 'after-make-frame-functions #'this/setup-fonts)
+  (this/setup-fonts))
+
+;; Ensure new graphic frames inherit the font settings directly
+(add-to-list 'default-frame-alist `(font . ,(format "%s-%d" this/font-name (/ this/font-size 10))))
 
 ;;; Encoding & Environment
 
