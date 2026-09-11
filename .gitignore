@@ -1,0 +1,7 @@
+*
+
+!/.gitignore
+!/.project
+
+!/early-init.el
+!/init.el
