@@ -119,8 +119,12 @@
   :hook
   (prog-mode . eglot-ensure)
   :custom
-  (eglot-events-buffer-size 0)
   (eglot-autoshutdown t)
+  (eglot-documentation-renderer 'markdown-ts-view-mode)
+  (eglot-events-buffer-size 0)
+  ;; 关闭 eglot 的 JSON-RPC 日志记录
+  (eglot-events-buffer-config '(:size 0 :v-ssl nil))
+  (eglot-sync-connect 1)
   :config
   ;; 使用rass(需要手动安装uv tool install rassumfrassum)配置ty+ruff为python的语言服务器
   (add-to-list 'eglot-server-programs '(python-base-mode . ("rass" "--" "ty" "server" "--" "ruff" "server")))
@@ -134,6 +138,14 @@
   :custom
   ;;将带有.project的目录自动识别为项目根目录
   (project-vc-extra-root-markers '(".project")))
+
+(use-package flymake
+  :hook
+  (prog-mode . flymake-mode)
+  :bind
+  (:map flymake-mode-map
+        ("M-n" . flymake-goto-next-error)
+        ("M-p" . flymake-goto-prev-error)))
 
 ;; =============================================================================
 ;; 5. 自定义函数 (Custom Functions)
