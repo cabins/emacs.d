@@ -36,7 +36,7 @@
 
   :config
   ;; 主题加载
-  (load-theme 'modus-operandi-tinted t)
+  ;; (load-theme 'modus-operandi-tinted t)
   ;; ModeLine背景透明
   (set-face-background 'mode-line 'unspecified)
   (set-face-background 'mode-line-active 'unspecified)
