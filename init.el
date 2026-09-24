@@ -222,11 +222,27 @@
   (interactive)
   (unless (executable-find "oxfmt")
     (user-error "未找到 oxfmt 可执行文件，请检查 PATH 设置"))
-  (let ((pt (point)))
-    (call-process-region (point-min) (point-max)
-                         "oxfmt" t t nil
-                         "--stdin-filepath" (buffer-file-name))
-    (goto-char (min pt (point-max)))))
+  ;; 只有当buffer-file-name存在（即保存过成文件才执行格式化）
+  (when-let ((file (buffer-file-name)))
+    (let ((pt (point)))
+      (call-process-region (point-min) (point-max)
+                           "oxfmt" t t nil
+                           "--stdin-filepath" file)
+      (goto-char (min pt (point-max))))))
+(defun format-with-oxfmt ()
+  "Format current buffer with oxfmt."
+  (interactive)
+  (unless (executable-find "oxfmt")
+    (user-error "未找到 oxfmt 可执行文件，请检查 PATH 设置"))
+  (if-let ((file (buffer-file-name)))
+      (let ((pt (point)))
+        (call-process-region (point-min) (point-max)
+                             "oxfmt" t t nil
+                             "--stdin-filepath" file)
+        (goto-char (min pt (point-max))))
+    ;; 当未保存成文件时：仅在交互式 M-x 手动调用时提示，静默不阻断 Hook 保存
+    (when (called-interactively-p 'interactive)
+      (message "[oxfmt] 当前 Buffer 未保存为文件，请先保存 (C-x C-s) 后再格式化"))))
 
 (defun oxfmt-before-save-hook ()
   "仅在前端相关模式且 oxfmt 存在时，于保存前自动格式化。"
