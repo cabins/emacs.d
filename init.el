@@ -171,15 +171,30 @@
   ;; 同步建立连接，打开文件时 LSP 立即可用
   (eglot-sync-connect 1)
   :config
+  ;; 1. 当 Eglot 接管 Buffer 时的统一初始化逻辑
+  (add-hook 'eglot-managed-mode-hook
+            (lambda ()
+              ;; 启用内联类型提示
+              (eglot-inlay-hints-mode 1)
+
+              ;; 针对 Vue 模式，局部禁用格式化能力，彻底规避 vue-language-server 卡死
+              (when (derived-mode-p 'vue-mode)
+                (setq-local eglot-ignored-server-capabilities
+                            (append '(:documentFormattingProvider :documentRangeFormattingProvider)
+                                    eglot-ignored-server-capabilities)))))
   ;; 每次 Eglot 接管 buffer 时启用内联类型提示
   (add-hook 'eglot-managed-mode-hook #'eglot-inlay-hints-mode)
   ;; 使用rass(需要手动安装uv tool install rassumfrassum)配置ty+ruff为python的语言服务器
-  (add-to-list 'eglot-server-programs '(python-base-mode . ("rass" "--" "ty" "server" "--" "ruff" "server")))
+  (add-to-list 'eglot-server-programs '(python-base-mode . ("rass" "python")))
+  ;; 使用rass配置vue的语言服务器
+  (add-to-list 'eglot-server-programs '(vue-mode . ("rass" "vue")))
   ;; 保存时自动格式化 (限制仅在 Eglot 管理的 Buffer 生效)
   (add-hook 'before-save-hook
             (lambda ()
-              (when (eglot-managed-p)
-                (eglot-format-buffer)))))
+              (when (and (eglot-managed-p)
+                         (not (member :documentFormattingProvider eglot-ignored-server-capabilities))
+                         (eglot-server-capable :documentFormattingProvider))
+                (ignore-errors (eglot-format-buffer))))))
 
 (use-package project
   :demand t
@@ -205,11 +220,12 @@
 (defun format-with-oxfmt ()
   "Format current buffer with oxfmt."
   (interactive)
-  (if (executable-find "oxfmt")
-      (call-process-region (point-min) (point-max)
-                           "oxfmt" t t t
-                           "--stdin-filepath" (buffer-file-name))
-    (user-error "未找到 oxfmt 可执行文件，请检查 PATH 设置")))
+  (save-excursion
+    (if (executable-find "oxfmt")
+        (call-process-region (point-min) (point-max)
+                             "oxfmt" t t t
+                             "--stdin-filepath" (buffer-file-name))
+      (user-error "未找到 oxfmt 可执行文件，请检查 PATH 设置"))))
 
 (provide 'init)
 
