@@ -220,12 +220,27 @@
 (defun format-with-oxfmt ()
   "Format current buffer with oxfmt."
   (interactive)
-  (save-excursion
-    (if (executable-find "oxfmt")
-        (call-process-region (point-min) (point-max)
-                             "oxfmt" t t t
-                             "--stdin-filepath" (buffer-file-name))
-      (user-error "未找到 oxfmt 可执行文件，请检查 PATH 设置"))))
+  (unless (executable-find "oxfmt")
+    (user-error "未找到 oxfmt 可执行文件，请检查 PATH 设置"))
+  (let ((pt (point)))
+    (call-process-region (point-min) (point-max)
+                         "oxfmt" t t nil
+                         "--stdin-filepath" (buffer-file-name))
+    (goto-char (min pt (point-max)))))
+
+(defun oxfmt-before-save-hook ()
+  "仅在前端相关模式且 oxfmt 存在时，于保存前自动格式化。"
+  (when (and (derived-mode-p 'js-base-mode
+                             'typescript-ts-base-mode
+                             'css-base-mode
+                             'json-ts-mode
+                             'markdown-ts-mode
+                             'toml-ts-mode
+                             'yaml-ts-mode)
+             (executable-find "oxfmt"))
+    (ignore-errors (format-with-oxfmt))))
+
+(add-hook 'before-save-hook #'oxfmt-before-save-hook)
 
 (provide 'init)
 
