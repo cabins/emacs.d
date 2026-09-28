@@ -131,7 +131,6 @@
 ;; =============================================================================
 ;; 4. 编程语言 & Eglot (LSP) & Tree-sitter & project
 ;; =============================================================================
-
 ;; Tree-sitter：高性能增量语法解析 (供字体锁定/缩进等使用)
 (use-package treesit
   :demand t
@@ -215,6 +214,11 @@
 (use-package smerge-mode
   :ensure nil
   :hook (find-file . smerge-start-session))
+
+;; Subword: 驼峰命名光标跳转
+(use-package subword
+  :hook
+  (prog-mode . subword-mode))
 
 ;; =============================================================================
 ;; 5. 自定义函数 (Custom Functions)
