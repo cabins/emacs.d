@@ -88,8 +88,6 @@
 ;; 记录并恢复每个文件上次的光标位置
 (use-package save-place
   :init
-  ;; 复用已有的 places.eld 文件
-  (setq save-place-file (locate-user-emacs-file "places.eld"))
   (save-place-mode 1))
 
 ;; 大纲折叠
@@ -213,28 +211,20 @@
         ;; 跳转到上一个错误
         ("M-p" . flymake-goto-prev-error)))
 
+;; Smerge: git有冲突的时候用于解决冲突
+(use-package smerge-mode
+  :ensure nil
+  :hook (find-file . smerge-start-session))
+
 ;; =============================================================================
 ;; 5. 自定义函数 (Custom Functions)
 ;; =============================================================================
-
 (defun format-with-oxfmt ()
   "Format current buffer with oxfmt."
   (interactive)
   (unless (executable-find "oxfmt")
     (user-error "未找到 oxfmt 可执行文件，请检查 PATH 设置"))
-  ;; 只有当buffer-file-name存在（即保存过成文件才执行格式化）
-  (when-let ((file (buffer-file-name)))
-    (let ((pt (point)))
-      (call-process-region (point-min) (point-max)
-                           "oxfmt" t t nil
-                           "--stdin-filepath" file)
-      (goto-char (min pt (point-max))))))
-(defun format-with-oxfmt ()
-  "Format current buffer with oxfmt."
-  (interactive)
-  (unless (executable-find "oxfmt")
-    (user-error "未找到 oxfmt 可执行文件，请检查 PATH 设置"))
-  (if-let ((file (buffer-file-name)))
+  (if-let* ((file (buffer-file-name)))
       (let ((pt (point)))
         (call-process-region (point-min) (point-max)
                              "oxfmt" t t nil
@@ -245,7 +235,7 @@
       (message "[oxfmt] 当前 Buffer 未保存为文件，请先保存 (C-x C-s) 后再格式化"))))
 
 (defun oxfmt-before-save-hook ()
-  "仅在前端相关模式且 oxfmt 存在时，于保存前自动格式化。"
+  "仅在前端相关模式且 oxfmt 存在时，于保存前自动格式化."
   (when (and (derived-mode-p 'js-base-mode
                              'typescript-ts-base-mode
                              'css-base-mode
