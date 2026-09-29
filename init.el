@@ -56,9 +56,9 @@
 
   :config
   ;; 主题与 Mode-line 面板优化：将模式行背景设为透明以契合终端/系统主题
-  (set-face-attribute 'mode-line nil :underline nil :box nil :background 'unspecified)
-  (set-face-attribute 'mode-line-active nil :underline nil :box nil :background 'unspecified)
-  (set-face-attribute 'mode-line-inactive nil :underline nil :box nil :background 'unspecified)
+  (set-face-background 'mode-line 'unspecified)
+  (set-face-background 'mode-line-active 'unspecified)
+  (set-face-background 'mode-line-inactive 'unspecified)
 
   ;; 开启全局轻量级基础 Mode
   ;; 磁盘文件变更时自动刷新 Buffer
