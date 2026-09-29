@@ -41,7 +41,9 @@
         ;; 启用模式行紧凑显示，自动清理多余空格
         mode-line-compact t
         ;; 关闭自动生成备份文件 (file~)
-        make-backup-files nil)
+        make-backup-files nil
+        ;; 选中可以直接替换/删除
+        delete-selection-mode t)
 
   ;; 全局文本缩进规则：一律替换为空格，Tab 缩进宽度固定为 4 列
   (setq-default indent-tabs-mode nil
@@ -54,9 +56,9 @@
 
   :config
   ;; 主题与 Mode-line 面板优化：将模式行背景设为透明以契合终端/系统主题
-  (set-face-attribute 'mode-line nil :underline nil :box nil)
-  (set-face-attribute 'mode-line-active nil :underline nil :box nil)
-  (set-face-attribute 'mode-line-inactive nil :underline nil :box nil)
+  (set-face-attribute 'mode-line nil :underline nil :box nil :background 'unspecified)
+  (set-face-attribute 'mode-line-active nil :underline nil :box nil :background 'unspecified)
+  (set-face-attribute 'mode-line-inactive nil :underline nil :box nil :background 'unspecified)
 
   ;; 开启全局轻量级基础 Mode
   ;; 磁盘文件变更时自动刷新 Buffer
@@ -67,6 +69,8 @@
   (global-hl-line-mode 1)
   ;; 括号与引号自动配对闭合
   (electric-pair-mode 1)
+  ;; 防止打开大文件卡死Emacs
+  (global-so-long-mode 1)
 
   ;; 终端集成：开启 TTY 环境下的鼠标点击与滚动支持
   (add-hook 'tty-setup-hook #'xterm-mouse-mode))
