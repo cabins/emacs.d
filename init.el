@@ -43,7 +43,9 @@
         ;; 关闭自动生成备份文件 (file~)
         make-backup-files nil
         ;; 选中可以直接替换/删除
-        delete-selection-mode t)
+        delete-selection-mode t
+        ;; 光标跟随帮助buffer跳转，这样就可以直接使用q等关闭
+        help-window-select t)
 
   ;; 全局文本缩进规则：一律替换为空格，Tab 缩进宽度固定为 4 列
   (setq-default indent-tabs-mode nil
@@ -56,9 +58,9 @@
 
   :config
   ;; 主题与 Mode-line 面板优化：将模式行背景设为透明以契合终端/系统主题
-  (set-face-background 'mode-line 'unspecified)
-  (set-face-background 'mode-line-active 'unspecified)
-  (set-face-background 'mode-line-inactive 'unspecified)
+  (set-face-attribute 'mode-line nil :underline t :background 'unspecified)
+  (set-face-attribute 'mode-line-active nil :underline t :background 'unspecified)
+  (set-face-attribute 'mode-line-inactive nil :underline t :background 'unspecified)
 
   ;; 开启全局轻量级基础 Mode
   ;; 磁盘文件变更时自动刷新 Buffer
