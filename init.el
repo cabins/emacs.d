@@ -189,23 +189,19 @@
   ;; 在帮助缓冲区中按需生成完整文档
   (eldoc-help-at-pt t))
 
-;; SGML-Mode：HTML/XML 编辑模式扩展
-;; 此处用于派生出虚拟的 vue-mode，以便 Eglot 与 LSP 能够正确识别与接管 .vue 文件
-(use-package sgml-mode
-  :init
-  ;; 从内置 html-mode 派生 vue-mode
-  (define-derived-mode vue-mode html-mode "Vue")
-  ;; 建立文件后缀名关联
-  (add-to-list 'auto-mode-alist '("\\.vue\\'" . vue-mode)))
+(defun eglot-format-before-save ()
+  "Format the current buffer with Eglot before saving."
+  (when (eglot-managed-p)
+    (eglot-format-buffer)))
 
 ;; Eglot：内置轻量级 LSP (Language Server Protocol) 客户端
 ;; 提供代码跳转、智能补全、重构、诊断与类型提示等语言服务
 (use-package eglot
   :hook
   ;; 编程模式下自动启动/挂载 Eglot
-  (prog-mode . eglot-ensure)
-  ;; 单独为 Vue 模式挂载 Eglot
-  (vue-mode . eglot-ensure)
+  ((prog-mode . eglot-ensure)
+   (eglot-managed-mode . eglot-inlay-hints-mode)
+   (before-save . eglot-format-before-save))
   :custom
   ;; 关闭最后一个相关 Buffer 时自动关停 LSP 服务器
   (eglot-autoshutdown t)
@@ -217,28 +213,7 @@
   (eglot-sync-connect 1)
   :config
   ;; 建立 LSP 服务映射 (通过外部 Rass 工具分发)
-  (add-to-list 'eglot-server-programs '(python-base-mode . ("rass" "python")))
-  (add-to-list 'eglot-server-programs '(vue-mode . ("rass" "vue")))
-
-  ;; 当 Eglot 成功管理当前 Buffer 时的初始化 Hook
-  (add-hook 'eglot-managed-mode-hook
-            (lambda ()
-              ;; 自动启用内联类型提示 (Inlay Hints)
-              (eglot-inlay-hints-mode 1)
-
-              ;; Vue 模式局部禁用格式化，避免卡死
-              (when (derived-mode-p 'vue-mode)
-                (setq-local eglot-ignored-server-capabilities
-                            (append '(:documentFormattingProvider :documentRangeFormattingProvider)
-                                    eglot-ignored-server-capabilities)))))
-
-  ;; 保存文件前自动执行 LSP 格式化 (仅在服务器支持且未禁用的 Buffer 生效)
-  (add-hook 'before-save-hook
-            (lambda ()
-              (when (and (eglot-managed-p)
-                         (not (member :documentFormattingProvider eglot-ignored-server-capabilities))
-                         (eglot-server-capable :documentFormattingProvider))
-                (ignore-errors (eglot-format-buffer))))))
+  (add-to-list 'eglot-server-programs '(python-base-mode . ("rass" "python"))))
 
 ;; Project：内置项目管理架构
 ;; 基于版本控制系统或标记文件识别项目边界，提供项目级文件查找与全局搜索
