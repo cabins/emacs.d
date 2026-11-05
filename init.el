@@ -171,6 +171,12 @@
 ;; 4. 编程语言 & Eglot (LSP) & Tree-sitter & Project
 ;; =============================================================================
 
+;; IMenu: 快速代码跳转
+(use-package imenu
+  :config
+  ;; 自动扫描 imenu 目录
+  (setq imenu-auto-rescan t))
+
 ;; Tree-sitter：高性能增量语法解析引擎
 ;; 用于实现准确的语法高亮 (Tree-sitter Major Modes) 以及智能代码缩进
 (use-package treesit
