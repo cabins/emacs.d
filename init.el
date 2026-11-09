@@ -73,7 +73,6 @@
   (electric-pair-mode 1)
   ;; 防止打开大文件卡死Emacs
   (global-so-long-mode 1)
-
   ;; 终端集成：开启 TTY 环境下的鼠标点击与滚动支持
   (add-hook 'tty-setup-hook #'xterm-mouse-mode))
 
@@ -84,8 +83,7 @@
 ;; Which-Key：按键序列提示工具
 ;; 当输入未完成的快捷键组合时，在底部自动弹出候选快捷键提示面板
 (use-package which-key
-  :init
-  (which-key-mode 1))
+  :init (which-key-mode 1))
 
 ;; Dired：内置文件管理器
 ;; 提供高效的文件/目录浏览、批量重命名及文件操作能力
@@ -102,28 +100,23 @@
 ;; iBuffer：高级 Buffer 管理面板
 ;; 替换默认的 list-buffers，提供对打开 Buffer 的分类、筛选与批量操作
 (use-package ibuffer
-  :bind
-  ([remap list-buffers] . ibuffer))
+  :bind ([remap list-buffers] . ibuffer))
 
 ;; Recentf：最近打开文件记录器
 ;; 自动追踪并记录最近访问过的文件历史，方便快速二次打开
 (use-package recentf
-  :init
-  (recentf-mode 1)
-  :bind
-  ("C-c r" . recentf-open-files))
+  :init (recentf-mode 1)
+  :bind ("C-c r" . recentf-open-files))
 
 ;; Savehist：Minibuffer 输入历史持久化
 ;; 保存命令历史 (M-x)、搜索历史等，在 Emacs 重启后依然可复用
 (use-package savehist
-  :init
-  (savehist-mode 1))
+  :init (savehist-mode 1))
 
 ;; Save-Place：光标位置记忆器
 ;; 自动记录并恢复上次关闭文件时光标所处的精确位置
 (use-package save-place
-  :init
-  (save-place-mode 1))
+  :init (save-place-mode 1))
 
 ;; Outline：代码与文本大纲折叠工具
 ;; 基于层级结构对文本或代码块进行展开与折叠
@@ -232,14 +225,12 @@
 ;; Flymake：内置即时代码语法诊断框架
 ;; 配合 LSP 或外部 Linter，在代码行旁高亮显示 Warning 和 Error
 (use-package flymake
-  :hook
-  (prog-mode . flymake-mode)
-  :bind
-  (:map flymake-mode-map
-        ;; 跳转至下一个语法错误
-        ("M-n" . flymake-goto-next-error)
-        ;; 跳转至上一个语法错误
-        ("M-p" . flymake-goto-prev-error)))
+  :hook (prog-mode . flymake-mode)
+  :bind (:map flymake-mode-map
+              ;; 跳转至下一个语法错误
+              ("M-n" . flymake-goto-next-error)
+              ;; 跳转至上一个语法错误
+              ("M-p" . flymake-goto-prev-error)))
 
 ;; Smerge-Mode：Git 冲突解决辅助模式
 ;; 打开包含 Git 冲突标记 (<<<<<<< / ======= / >>>>>>>) 的文件时自动激活辅助面板
@@ -250,41 +241,7 @@
 ;; Subword：驼峰命名法光标移动模式
 ;; 让 M-f 和 M-b 可以在驼峰命名 (CamelCase) 的每个单词内部进行跳转
 (use-package subword
-  :hook
-  (prog-mode . subword-mode))
-
-;; =============================================================================
-;; 5. 自定义函数与保存 Hook (Custom Functions)
-;; =============================================================================
-
-(defun format-with-oxfmt ()
-  "使用外部工具 oxfmt 格式化当前 Buffer 内容."
-  (interactive)
-  (unless (executable-find "oxfmt")
-    (user-error "未找到 oxfmt 可执行文件，请检查 PATH 设置"))
-  (if-let* ((file (buffer-file-name)))
-      (let ((pt (point)))
-        (call-process-region (point-min) (point-max)
-                             "oxfmt" t t nil
-                             "--stdin-filepath" file)
-        (goto-char (min pt (point-max))))
-    (when (called-interactively-p 'interactive)
-      (message "[oxfmt] 当前 Buffer 未保存为文件，请先保存 (C-x C-s) 后再格式化"))))
-
-(defun oxfmt-before-save-hook ()
-  "仅在前端及相关配置文件模式下，于文件保存前自动调用 oxfmt 进行格式化."
-  (when (and (derived-mode-p 'js-base-mode
-                             'typescript-ts-base-mode
-                             'css-base-mode
-                             'json-ts-mode
-                             'markdown-ts-mode
-                             'toml-ts-mode
-                             'yaml-ts-mode)
-             (executable-find "oxfmt"))
-    (ignore-errors (format-with-oxfmt))))
-
-;; 将前端格式化函数挂载至全局保存前 Hook
-(add-hook 'before-save-hook #'oxfmt-before-save-hook)
+  :hook (prog-mode . subword-mode))
 
 (provide 'init)
 

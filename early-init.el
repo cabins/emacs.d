@@ -66,6 +66,8 @@
 ;; 禁止将系统 X Resources 混入 Emacs 配置
 (setq inhibit-x-resources t)
 
+(setq package-enable-at-startup t)
+
 (provide 'early-init)
 
 ;;; early-init.el ends here
